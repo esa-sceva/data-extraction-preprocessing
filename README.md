@@ -22,3 +22,16 @@ Current tools experimented with
 [Ground truth creation notebook](notebooks/generate_groundtruth.ipynb) - Pdfs split into images, and encoded images and passed to gpt4 to get ground truths.
 
 [Evaluation script](src/evaluate_gt.py) - This script compares the ground truth vs extractions, extracts tables and formulas and compute a levenshtein distance over it and saves in a sheet.
+
+
+### Evaluation Results
+
+| Tool       | Text Levenshtein score | Formulas Levenshtein score | Tables Levenshtein score |
+|------------|------------------------|----------------------------|--------------------------|
+| Mathpix    | 0.83002                | 0.540                      | 0.5269                   |
+| Markitdown | 0.80                   | 0                          | 0                        |
+| Nougat     | 0.73                   | 0.55                       | 0.41                     |
+| Docling    | 0.78                   | 0                          | 0.40                     |
+| pypdf4llm  | 0.80                   | 0                          | 0.26                     |
+| pypdf2     | 0.83                   | 0                          | 0                        |
+| marker     | 0.79                   | 0.31                       | 0.418                    |

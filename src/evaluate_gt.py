@@ -256,6 +256,6 @@ class Evaluator:
         df.to_csv(output_path, index=False)
         print(f"Results saved to {output_path}")
 
-evaluator = Evaluator("../data/extraction_metrics/truths/", "../data/extraction_metrics/predictions/nougat/", "*.md")
+evaluator = Evaluator("../data/truths/", "../data/predictions/mathpix/", "*.md")
 results = evaluator.evaluate_all()
-evaluator.save_results("evaluation_results_nougat.csv")
+evaluator.save_results("evaluation_results_mathpix.csv")
