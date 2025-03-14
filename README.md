@@ -10,6 +10,7 @@ Current tools experimented with
 - [Pymupdf4llm](notebooks/04_pymupdf4llm.ipynb)
 - [Pypdf2](notebooks/05_pypdf2.ipynb)
 - [Unstructured.io](notebooks/06_unstructured.ipynb)
+- [Mistral](notebooks/07-mistralocr.ipynb)
 - [Marker](notebooks/08-marker.ipynb)
 - [Gemini](notebooks/09-gemini.ipynb)
 - [Qwen](notebooks/10-qwen.ipynb)
@@ -35,3 +36,4 @@ Current tools experimented with
 | Marker        | 0.79                   | 0.31                       | 0.418                    |
 | Unstructured  | 0.78                   | 0                          | 0                        |
 | Pdfminer      | 0.80                   | 0                          | 0                        |
+| Mistral       | 0.845                  | 0.53                       | 0.54                     |
