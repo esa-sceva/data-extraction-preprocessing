@@ -36,3 +36,4 @@ Current tools experimented with
 | Pypdf2        | 0.83                   | 0                          | 0                        |
 | Marker        | 0.79                   | 0.31                       | 0.418                    |
 | Unstructured  | 0.78                   | 0                          | 0                        |
+| Pdfminer      | 0.80                   | 0                          | 0                        |
