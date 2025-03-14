@@ -26,12 +26,13 @@ Current tools experimented with
 
 ### Evaluation Results
 
-| Tool       | Text Levenshtein score | Formulas Levenshtein score | Tables Levenshtein score |
-|------------|------------------------|----------------------------|--------------------------|
-| Mathpix    | 0.83002                | 0.540                      | 0.5269                   |
-| Markitdown | 0.80                   | 0                          | 0                        |
-| Nougat     | 0.73                   | 0.55                       | 0.41                     |
-| Docling    | 0.78                   | 0                          | 0.40                     |
-| pypdf4llm  | 0.80                   | 0                          | 0.26                     |
-| pypdf2     | 0.83                   | 0                          | 0                        |
-| marker     | 0.79                   | 0.31                       | 0.418                    |
+| Tool          | Text Levenshtein score | Formulas Levenshtein score | Tables Levenshtein score |
+|---------------|------------------------|----------------------------|--------------------------|
+| Mathpix       | 0.83002                | 0.540                      | 0.5269                   |
+| Markitdown    | 0.80                   | 0                          | 0                        |
+| Nougat        | 0.73                   | 0.55                       | 0.41                     |
+| Docling       | 0.78                   | 0                          | 0.40                     |
+| Pymupdf4llm   | 0.80                   | 0                          | 0.26                     |
+| Pypdf2        | 0.83                   | 0                          | 0                        |
+| Marker        | 0.79                   | 0.31                       | 0.418                    |
+| Unstructured  | 0.78                   | 0                          | 0                        |
