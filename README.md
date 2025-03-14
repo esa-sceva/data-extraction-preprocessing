@@ -13,10 +13,8 @@ Current tools experimented with
 - [Marker](notebooks/08-marker.ipynb)
 - [Gemini](notebooks/09-gemini.ipynb)
 - [Qwen](notebooks/10-qwen.ipynb)
+- [Pdfminer](notebooks/11-pdfminer.ipynb)
 - Mathpix - Annotations generated via the webpage
-
-#TO-DO
-- Pdfminer
 
 
 [Ground truth creation notebook](notebooks/generate_groundtruth.ipynb) - Pdfs split into images, and encoded images and passed to gpt4 to get ground truths.
