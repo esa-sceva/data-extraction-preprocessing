@@ -12,9 +12,10 @@ Current tools experimented with
 - [Unstructured.io](notebooks/06_unstructured.ipynb)
 - [Mistral](notebooks/07-mistralocr.ipynb)
 - [Marker](notebooks/08-marker.ipynb)
-- [Gemini](notebooks/09-gemini.ipynb)
-- [Qwen](notebooks/10-qwen.ipynb)
+- [Gemini](notebooks/09-gemini.ipynb) --> triggers a content warning for many pdfs, so abandoned
+- [Qwen](notebooks/10-qwen.ipynb) --> hallucinates with random tokens , so pipeline abandoned
 - [Pdfminer](notebooks/11-pdfminer.ipynb)
+- [GOT_OCR2](notebooks/12-GOT_OCR2_0.ipynb) --> hallucinates with random tokens, so pipeline abandoned
 - Mathpix - Annotations generated via the webpage
 
 
