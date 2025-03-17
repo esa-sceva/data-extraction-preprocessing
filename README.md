@@ -12,10 +12,11 @@ Current tools experimented with
 - [Unstructured.io](notebooks/06_unstructured.ipynb)
 - [Mistral](notebooks/07-mistralocr.ipynb)
 - [Marker](notebooks/08-marker.ipynb)
-- [Gemini](notebooks/09-gemini.ipynb) --> triggers a content warning for many pdfs, so abandoned
-- [Qwen](notebooks/10-qwen.ipynb) --> hallucinates with random tokens , so pipeline abandoned
+- [Gemini](notebooks/09-gemini.ipynb) --> triggers a content warning for many pdfs
+- [Qwen](notebooks/10-qwen.ipynb) --> hallucinates with random tokens
 - [Pdfminer](notebooks/11-pdfminer.ipynb)
-- [GOT_OCR2](notebooks/12-GOT_OCR2_0.ipynb) --> hallucinates with random tokens, so pipeline abandoned
+- [GOT_OCR2](notebooks/12-GOT_OCR2_0.ipynb) --> hallucinates with random tokens
+- [SmolDocling](notebooks/13-smoldocling.ipynb) --> seems to extract only half the page(max tokens 8192), raised an issue in the forum with the developer
 - Mathpix - Annotations generated via the webpage
 
 
