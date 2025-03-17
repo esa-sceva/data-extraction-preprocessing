@@ -20,8 +20,12 @@ Current tools experimented with
 
 [Ground truth creation notebook](notebooks/generate_groundtruth.ipynb) - Pdfs split into images, and encoded images and passed to gpt4 to get ground truths.
 
-[Evaluation script](src/evaluate_gt.py) - This script compares the ground truth vs extractions, extracts tables and formulas and compute a levenshtein distance over it and saves in a sheet.
+[Evaluation script](src/evaluate_gt.py) - This script compares the ground truth vs extractions, extracts tables and formulas and compute a levenshtein ratio over it and saves in a sheet.
 
+
+### Metric Used
+
+Levenshtein ratio - This ratio takes the inverse of the levenshtein distance and normalizes it to a range between 0 to 1, higher the score, more the similarity.
 
 ### Evaluation Results
 
