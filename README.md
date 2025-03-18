@@ -38,13 +38,13 @@ All experiments done via Colab.
 
 | Tool          | Text Levenshtein ratio | Formulas Levenshtein ratio | Tables Levenshtein ratio | Latency (per page) | Hardware  |
 |---------------|------------------------|----------------------------|--------------------------|--------------------|-----------|
-| Mathpix       | 0.83002                | 0.540                      | 0.5269                   | NA                 | NA        |
-| Markitdown    | 0.80                   | 0                          | 0                        | 0.04 s             | Colab CPU |
-| Nougat        | 0.73                   | 0.55                       | 0.41                     | 0.009 s            | Colab GPU |
-| Docling       | 0.78                   | 0                          | 0.40                     | 0.42 s             | Colab GPU |
-| Pymupdf4llm   | 0.80                   | 0                          | 0.26                     | 0.27 s             | Colab CPU |
-| Pypdf2        | 0.83                   | 0                          | 0                        | 0.01 s             | Colab CPU |
-| Marker        | 0.79                   | 0.31                       | 0.418                    | 0.22 s             | Colab GPU |
-| Unstructured  | 0.78                   | 0                          | 0                        | 0.07 s             | Colab CPU |
-| Pdfminer      | 0.80                   | 0                          | 0                        | 0.03 s             | Colab CPU |
-| Mistral       | 0.845                  | 0.53                       | 0.54                     | NA                 | NA        |
+| Mathpix       | 0.84002                | 0.540                      | 0.5269                   | NA                 | NA        |
+| Markitdown    | 0.81                   | 0                          | 0                        | 0.04 s             | Colab CPU |
+| Nougat        | 0.74                   | 0.55                       | 0.41                     | 0.009 s            | Colab GPU |
+| Docling       | 0.79                   | 0                          | 0.40                     | 0.42 s             | Colab GPU |
+| Pymupdf4llm   | 0.81                   | 0                          | 0.26                     | 0.27 s             | Colab CPU |
+| Pypdf2        | 0.84                   | 0                          | 0                        | 0.01 s             | Colab CPU |
+| Marker        | 0.80                   | 0.31                       | 0.418                    | 0.22 s             | Colab GPU |
+| Unstructured  | 0.79                   | 0                          | 0                        | 0.07 s             | Colab CPU |
+| Pdfminer      | 0.81                   | 0                          | 0                        | 0.03 s             | Colab CPU |
+| Mistral       | 0.855                  | 0.53                       | 0.54                     | NA                 | NA        |
