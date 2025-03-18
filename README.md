@@ -36,15 +36,15 @@ All experiments done via Colab.
 
 ### Evaluation Results
 
-| Tool          | Text Levenshtein ratio | Formulas Levenshtein ratio | Tables Levenshtein ratio | Latency (per page) | Hardware  |
-|---------------|------------------------|----------------------------|--------------------------|--------------------|-----------|
-| Mathpix       | 0.84002                | 0.540                      | 0.5269                   | NA                 | NA        |
-| Markitdown    | 0.81                   | 0                          | 0                        | 0.04 s             | Colab CPU |
-| Nougat        | 0.74                   | 0.55                       | 0.41                     | 0.009 s            | Colab GPU |
-| Docling       | 0.79                   | 0                          | 0.40                     | 0.42 s             | Colab GPU |
-| Pymupdf4llm   | 0.81                   | 0                          | 0.26                     | 0.27 s             | Colab CPU |
-| Pypdf2        | 0.84                   | 0                          | 0                        | 0.01 s             | Colab CPU |
-| Marker        | 0.80                   | 0.31                       | 0.418                    | 0.22 s             | Colab GPU |
-| Unstructured  | 0.79                   | 0                          | 0                        | 0.07 s             | Colab CPU |
-| Pdfminer      | 0.81                   | 0                          | 0                        | 0.03 s             | Colab CPU |
-| Mistral       | 0.855                  | 0.53                       | 0.54                     | NA                 | NA        |
+| Tool          | Text Levenshtein ratio | Formulas Levenshtein ratio | Tables Levenshtein ratio | Latency (per page) | Hardware  | Raw text only Levenshtein ratio |
+|---------------|------------------------|----------------------------|--------------------------|--------------------|-----------|----------------------------------|
+| Mathpix       | 0.84002                | 0.540                      | 0.5269                   | NA                 | NA        | 0.89                             |
+| Markitdown    | 0.81                   | 0                          | 0                        | 0.04 s             | Colab CPU | 0.86                             |
+| Nougat        | 0.74                   | 0.55                       | 0.41                     | 0.009 s            | Colab GPU | 0.77                             |
+| Docling       | 0.79                   | 0                          | 0.40                     | 0.42 s             | Colab GPU | 0.86                             |
+| Pymupdf4llm   | 0.81                   | 0                          | 0.26                     | 0.27 s             | Colab CPU | 0.85                             |
+| Pypdf2        | 0.84                   | 0                          | 0                        | 0.01 s             | Colab CPU | 0.887                            |
+| Marker        | 0.80                   | 0.31                       | 0.418                    | 0.22 s             | Colab GPU | 0.87                             |
+| Unstructured  | 0.79                   | 0                          | 0                        | 0.07 s             | Colab CPU | 0.82                             |
+| Pdfminer      | 0.81                   | 0                          | 0                        | 0.03 s             | Colab CPU | 0.86                             |
+| Mistral       | 0.855                  | 0.53                       | 0.54                     | NA                 | NA        | 0.902                            |
