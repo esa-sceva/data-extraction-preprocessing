@@ -36,15 +36,15 @@ All experiments done via Colab.
 
 ### Evaluation Results
 
-| Tool          | Text Levenshtein ratio | Formulas Levenshtein ratio | Tables Levenshtein ratio | Latency (per page) | Hardware  | Raw text only Levenshtein ratio |
-|---------------|------------------------|----------------------------|--------------------------|--------------------|-----------|----------------------------------|
-| Mathpix       | 0.84002                | 0.540                      | 0.5269                   | NA                 | NA        | 0.89                             |
-| Markitdown    | 0.81                   | 0                          | 0                        | 0.04 s             | Colab CPU | 0.86                             |
-| Nougat        | 0.74                   | 0.55                       | 0.41                     | 0.009 s            | Colab GPU | 0.77                             |
-| Docling       | 0.79                   | 0                          | 0.40                     | 0.42 s             | Colab GPU | 0.86                             |
-| Pymupdf4llm   | 0.81                   | 0                          | 0.26                     | 0.27 s             | Colab CPU | 0.85                             |
-| Pypdf2        | 0.84                   | 0                          | 0                        | 0.01 s             | Colab CPU | 0.887                            |
-| Marker        | 0.80                   | 0.31                       | 0.418                    | 0.22 s             | Colab GPU | 0.87                             |
-| Unstructured  | 0.79                   | 0                          | 0                        | 0.07 s             | Colab CPU | 0.82                             |
-| Pdfminer      | 0.81                   | 0                          | 0                        | 0.03 s             | Colab CPU | 0.86                             |
-| Mistral       | 0.855                  | 0.53                       | 0.54                     | NA                 | NA        | 0.902                            |
+| Tool          | Text Levenshtein ratio | Formulas Levenshtein ratio | Tables Levenshtein ratio | Latency (per page) | Hardware  | Raw text only Levenshtein ratio | Markdown only score(total/formulas/tables) | LaTeX only score |
+|---------------|------------------------|----------------------------|--------------------------|--------------------|-----------|----------------------------------|---------------------|------------------|
+| Mathpix       | 0.84002                | 0.540                      | 0.5269                   | NA                 | NA        | 0.89                             | 0.82/0.60/0.40                  | 0                |
+| Markitdown    | 0.81                   | 0                          | 0                        | 0.04 s             | Colab CPU | 0.86                             | 0.80/0/0                   | 0                |
+| Nougat        | 0.74                   | 0.55                       | 0.41                     | 0.009 s            | Colab GPU | 0.77                             | 0.78/0.65/0.39                   | 0                |
+| Docling       | 0.79                   | 0                          | 0.40                     | 0.42 s             | Colab GPU | 0.86                             | 0.80/0/0.64                   | 0                |
+| Pymupdf4llm   | 0.81                   | 0                          | 0.26                     | 0.27 s             | Colab CPU | 0.85                             | 0.80/0/0.36                   | 0                |
+| Pypdf2        | 0.84                   | 0                          | 0                        | 0.01 s             | Colab CPU | 0.887                            | 0.81/0/0                   | 0                |
+| Marker        | 0.80                   | 0.31                       | 0.418                    | 0.22 s             | Colab GPU | 0.87                             | 0.81/0.32/0.67                   | 0                |
+| Unstructured  | 0.79                   | 0                          | 0                        | 0.07 s             | Colab CPU | 0.82                             | 0.78/0/0                   | 0                |
+| Pdfminer      | 0.81                   | 0                          | 0                        | 0.03 s             | Colab CPU | 0.86                             | 0.80/0/0                   | 0                |
+| Mistral       | 0.855                  | 0.53                       | 0.54                     | NA                 | NA        | 0.902                            | 0.84/0.44/0.60                   | 0                |
