@@ -3,3 +3,6 @@ __pycache__/
 play.ipynb
 
 .venv/
+.env
+sql_queries/
+pdfs/
