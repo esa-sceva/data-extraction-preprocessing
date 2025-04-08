@@ -6,3 +6,7 @@ play.ipynb
 .env
 sql_queries/
 pdfs/
+logs.txt
+
+fastapi_expts/
+
