@@ -1,16 +1,22 @@
 import os
 from bs4 import BeautifulSoup
-from pypdf import PdfReader
 import json
 from log_db import Severity
+import requests
 
 def extract_pdf_text(file_path, log_entry=None):
     """Extract text from PDF files."""
+    endpoint = "http://127.0.0.1:8001/predict/"
     try:
-        with open(file_path, 'rb') as file:
-            reader = PdfReader(file)
-            text = "".join(page.extract_text() or "" for page in reader.pages)
-        return text
+        with open(file_path, "rb") as f:
+            files = {
+                'file': ('PDFFILE.pdf', f, 'application/pdf')
+            }
+            headers = {
+                'accept': 'application/json'
+            }
+            response = requests.post(endpoint, headers=headers, files=files)
+        return response.text
     except Exception as e:
         if log_entry:
             log_entry.log(f"PDF extraction error: {str(e)}", severity=Severity.ERROR)

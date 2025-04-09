@@ -15,12 +15,13 @@ def process_file(file_path, subdir_name, save_to_local, bucket_name, destination
                                        file_path=file_path)
 
         file_extension = file_path.suffix.lower().lstrip('.')
+
         key = str(file_path.relative_to(file_path.parent.parent)
                   if file_path.parent.parent != file_path.parent else file_path.name)
 
         processor_func, file_type = get_file_processor(file_extension)
         
-        if processor_func is None:
+        if processor_func is None or file_extension != 'pdf':
             log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
             log_entry.finalize_log("error")
             return
