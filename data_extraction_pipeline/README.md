@@ -1,6 +1,11 @@
 ### How to run this pipeline
 
 1. Start the fastapi server after changing the port number in `app.py` in one terminal.
+
+```
+python app.py
+```
+
 2. Open another terminal, run the `main_multiprocess.py` file after matching the port number of the fastapi endpoint.
 
 Ideas
