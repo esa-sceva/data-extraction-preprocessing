@@ -104,14 +104,14 @@ class DataExtractionS3Pipeline:
                 extracted_text = DataExtractionS3Pipeline.extract_pdf_text(file_path, log_entry)
                 file_type = "PDF"
             elif file_extension == "html":
-                extracted_text = DataExtractionS3Pipeline.extract_html_text(file_path, log_entry)
-                file_type = "HTML"
+                log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
+                log_entry.finalize_log("error")
             elif file_extension == "txt":
-                extracted_text = DataExtractionS3Pipeline.extract_txt_text(file_path, log_entry)
-                file_type = "Text"
+                log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
+                log_entry.finalize_log("error")
             elif file_extension == "json":
-                extracted_text = DataExtractionS3Pipeline.extract_json_text(file_path, log_entry)
-                file_type = "JSON"
+                log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
+                log_entry.finalize_log("error")
             else:
                 log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
                 log_entry.finalize_log("error")
@@ -134,8 +134,7 @@ class DataExtractionS3Pipeline:
 
     @staticmethod
     def extract_pdf_text(file_path, log_entry=None):
-        endpoint = "http://127.0.0.1:8503/predict/"
-        print(file_path)
+        endpoint = "http://127.0.0.1:8001/predict/"
         try:
             with open(file_path, "rb") as f:
                 files = {
@@ -241,7 +240,7 @@ class DataExtractionS3Pipeline:
 
 if __name__ == '__main__':
     extractor = DataExtractionS3Pipeline(
-        base_dir='data2',
+        base_dir='data',
         save_to_local=True,
     )
     extractor.process_files()
