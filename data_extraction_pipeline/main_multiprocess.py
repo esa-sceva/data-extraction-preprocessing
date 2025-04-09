@@ -138,9 +138,14 @@ class DataExtractionS3Pipeline:
         print(file_path)
         try:
             with open(file_path, "rb") as f:
-                files = {"file": (file_path, f, "application/pdf")}
-                response = requests.post(endpoint, files = files)
-                return response.text
+                files = {
+                    'file': ('PDFFILE.pdf', f, 'application/pdf')
+                }
+                headers = {
+                    'accept': 'application/json'
+                }
+                response = requests.post(endpoint, headers=headers, files=files)
+            return response.text
         except Exception as e:
             if log_entry:
                 log_entry.log(f"PDF extraction error: {str(e)}", severity=Severity.ERROR)

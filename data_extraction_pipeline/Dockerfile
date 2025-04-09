@@ -15,7 +15,7 @@ WORKDIR /app
 RUN pip install --no-cache-dir nougat-ocr
 RUN pip install --no-cache-dir "nougat-ocr[api]"
 RUN pip install --no-cache-dir fastapi uvicorn
-
+RUN pip install albumentations==1.0
 
 EXPOSE 8503
 
