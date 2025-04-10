@@ -25,7 +25,7 @@ from tqdm import tqdm
 
 
 SAVE_DIR = Path("./pdfs")
-BATCHSIZE = int(os.environ.get("NOUGAT_BATCHSIZE", default_batch_size()))
+BATCHSIZE = 4
 NOUGAT_CHECKPOINT = get_checkpoint()
 if NOUGAT_CHECKPOINT is None:
     print(
