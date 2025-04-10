@@ -39,6 +39,7 @@ class LogEntry:
     status: str = 'in progress'
     log_format: str = '{timestamp} - {severity}:\n{log}'
     extracted_text_length: int = 0
+    duration: int = 0
 
     def save(self):
         """Save the log entry to the database. If log_id is None, insert a new entry, otherwise update."""
@@ -63,19 +64,19 @@ class LogEntry:
             if self.log_id is None:
                 # If no log_id, insert a new entry
                 cursor.execute(f"""
-                    INSERT INTO {db_table} (filename, log, provider, status, file_path, extracted_text_length, created_at)
-                    VALUES (%s, %s, %s, %s, %s, %s, NOW())
-                """, (self.filename, self.log_text, self.provider, self.status, self.file_path, 0))
+                    INSERT INTO {db_table} (filename, log, provider, status, file_path, extracted_text_length, duration, created_at)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, NOW())
+                """, (self.filename, self.log_text, self.provider, self.status, self.file_path, 0, 0))
                 self.log_id = cursor.lastrowid
             else:
                 # If log_id exists, update the existing entry
                 # Option 1: Use string formatting before passing to execute
                 query = f"""
                     UPDATE {db_table}
-                    SET log = %s, status = %s, extracted_text_length = %s
+                    SET log = %s, status = %s, extracted_text_length = %s, duration = %s
                     WHERE id = %s
                 """
-                cursor.execute(query, (self.log_text, self.status, self.extracted_text_length, self.log_id))
+                cursor.execute(query, (self.log_text, self.status, self.extracted_text_length, self.log_id, self.duration))
 
             # Commit changes to the database
             connection.commit()
@@ -96,13 +97,14 @@ class LogEntry:
         self.log_text += f"\n{new_message}"
         self.save()
 
-    def finalize_log(self, status="success", extracted_text_length=0):
+    def finalize_log(self, status="success", extracted_text_length=0, duration=0):
         """Finalize the log entry by updating its status."""
         if self.log_id is None:
             raise ValueError("Cannot finalize a non-existent log entry.")
 
         self.status = status
         self.extracted_text_length = extracted_text_length
+        self.duration = duration
         self.save()
 
 

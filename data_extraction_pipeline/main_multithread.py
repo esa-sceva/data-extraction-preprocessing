@@ -107,7 +107,6 @@ class DataExtractionS3Pipeline:
 
     @staticmethod
     def process_pdf_file(file_path, subdir_name, save_to_local, bucket_name, destination_bucket, endpoint):
-        start_time = time.time()
         filename = file_path.name
         try:
             log_entry = LogEntry.start_new(filename, provider=subdir_name, 
@@ -116,17 +115,17 @@ class DataExtractionS3Pipeline:
 
             key = str(file_path.relative_to(file_path.parent.parent)
                      if file_path.parent.parent != file_path.parent else file_path.name)
-            
+            start_time = time.time()
             extracted_text = DataExtractionS3Pipeline.extract_pdf_text(file_path, endpoint, log_entry)
-            
+            duration = time.time() - start_time
             if extracted_text:
                 DataExtractionS3Pipeline.save_extracted_markdown(
                     key, extracted_text, "PDF", subdir_name, save_to_local, bucket_name, destination_bucket, log_entry)
                 text_len = len(extracted_text)
                 log_entry.log(f"Extracted {text_len} characters.")
-                duration = time.time() - start_time
+
                 log_entry.log(f"Processing time: {duration:.2f}s")
-                log_entry.finalize_log("success", text_len)
+                log_entry.finalize_log("success", text_len, duration)
                 return duration
             else:
                 duration = time.time() - start_time
