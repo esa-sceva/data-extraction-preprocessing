@@ -123,7 +123,6 @@ class DataExtractionS3Pipeline:
                     key, extracted_text, "PDF", subdir_name, save_to_local, bucket_name, destination_bucket, log_entry)
                 text_len = len(extracted_text)
                 log_entry.log(f"Extracted {text_len} characters.")
-
                 log_entry.log(f"Processing time: {duration:.2f}s")
                 log_entry.finalize_log("success", text_len, duration)
                 return duration
