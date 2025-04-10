@@ -76,7 +76,7 @@ class LogEntry:
                     SET log = %s, status = %s, extracted_text_length = %s, duration = %s
                     WHERE id = %s
                 """
-                cursor.execute(query, (self.log_text, self.status, self.extracted_text_length, self.log_id, self.duration))
+                cursor.execute(query, (self.log_text, self.status, self.extracted_text_length, self.duration, self.log_id))
 
             # Commit changes to the database
             connection.commit()
