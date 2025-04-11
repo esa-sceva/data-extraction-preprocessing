@@ -4,6 +4,7 @@ Copyright (c) Meta Platforms, Inc. and affiliates.
 This source code is licensed under the MIT license found in the
 LICENSE file in the root directory of this source tree.
 """
+import argparse
 import os
 import sys
 from functools import partial
@@ -166,7 +167,13 @@ async def predict(
 def main():
     import uvicorn
 
-    uvicorn.run("app:app", port=8001)
+    # Add argument parser for port number
+    parser = argparse.ArgumentParser(description='Nougat API Server')
+    parser.add_argument('--port', type=int, default=8001, help='Port number to run the server on')
+    args = parser.parse_args()
+
+    # Use the port number from command line arguments
+    uvicorn.run("app:app", port=args.port, host="0.0.0.0")
 
 
 if __name__ == "__main__":
