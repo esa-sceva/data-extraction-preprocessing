@@ -237,6 +237,7 @@ class DataExtractionS3Pipeline:
             file_path = f"{destination_bucket}/{subdir_name}/{base_filename}.md"
 
             # Process the extracted text to remove unwanted characters
+            extracted_text = DataExtractionS3Pipeline.process_text(extracted_text)
 
             if save_to_local:
                 with open(file_path, 'w', encoding='utf-8') as f:
