@@ -2,14 +2,15 @@ import os
 import boto3
 from typing import Final
 from pathlib import Path
-import mysql.connector
 from tqdm.auto import tqdm
+import mysql.connector
 import datetime
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from log_db import Severity, LogEntry
 import re
 import requests
+
 
 class DataExtractionS3Pipeline:
     def __init__(self, base_dir='', sub_folder='', save_to_local=False, max_workers=None):
@@ -18,7 +19,7 @@ class DataExtractionS3Pipeline:
         self.destination_bucket = "raw_data_dedup_extractions"
         self.sub_folder = sub_folder
         self.max_workers = 4
-        
+
         self.pdf_servers = [
             "http://127.0.0.1:8002/predict/",
             "http://127.0.0.1:8003/predict/",
@@ -77,13 +78,17 @@ class DataExtractionS3Pipeline:
             list: List of files with status 'success' for the specified provider
         """
         # Database connection parameters
-        db_config = {
-            'host': 'your_host',
-            'user': 'your_username',
-            'password': 'your_password',
-            'database': 'your_database'
-        }
+        db_host = os.getenv("DB_HOST")
+        db_user = os.getenv("DB_USER")
+        db_password = os.getenv("DB_PASSWORD")
+        db_name = os.getenv("DB_NAME")
 
+        db_config = {
+            'host': db_host,
+            'user': db_user,
+            'password': db_password,
+            'database': db_name
+        }
         try:
             # Establish database connection
             conn = mysql.connector.connect(**db_config)
@@ -91,16 +96,16 @@ class DataExtractionS3Pipeline:
 
             # Execute query with parameter binding for security
             query = """
-                SELECT filename
-                FROM text_extraction_logs
-                WHERE provider = %s
-                AND status = 'success'
-            """
+                    SELECT filename
+                    FROM text_extraction_logs
+                    WHERE provider = %s
+                      AND status = 'success' \
+                    """
             cursor.execute(query, (provider,))
 
             # Fetch all matching records
             results = cursor.fetchall()
-            results = [result[0] for result in results]
+            results = [result['filename'] for result in results]
 
             cursor.close()
             conn.close()
@@ -119,37 +124,38 @@ class DataExtractionS3Pipeline:
 
             # Remove files that have already been processed successfully
             successful_files = self.get_successful_files_by_provider(subdir_name)
+            print('Files already processed successfully:', len(successful_files))
             files = [f for f in files if f.name not in successful_files]
             print(f"Remaining files to process: {len(files)}")
-            
+
             tasks = []
             for i, file_path in enumerate(files):
                 file_extension = file_path.suffix.lower().lstrip('.')
                 if file_extension == "pdf":
                     # Assign server in round-robin fashion
                     server = self.pdf_servers[i % len(self.pdf_servers)]
-                    tasks.append((file_path, subdir_name, self.save_to_local, 
-                                 self.bucket_name, self.destination_bucket, server))
+                    tasks.append((file_path, subdir_name, self.save_to_local,
+                                  self.bucket_name, self.destination_bucket, server))
                 else:
-                    #log_entry = LogEntry.start_new(file_path.name, provider=subdir_name,
-                                                  log_text=f'Started processing {file_path}...', 
-                                                 # file_path=file_path)
-                    #log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
-                    #log_entry.finalize_log("error")
-            
+                    # log_entry = LogEntry.start_new(file_path.name, provider=subdir_name,
+                    log_text = f'Started processing {file_path}...',
+                    # file_path=file_path)
+                # log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
+                # log_entry.finalize_log("error")
+
             if not tasks:
                 print(f"No supported files found in {directory_path}")
                 return
-                
+
             # Process files in parallel
             total_start = time.time()
             with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
                 futures = [executor.submit(self.process_pdf_file, *task) for task in tasks]
-                
-                for _ in tqdm(as_completed(futures), total=len(futures), 
-                             desc=f"Processing files in {subdir_name}"):
+
+                for _ in tqdm(as_completed(futures), total=len(futures),
+                              desc=f"Processing files in {subdir_name}"):
                     pass
-                    
+
             total_duration = time.time() - total_start
             print(f"Total processing time: {total_duration:.2f}s")
 
@@ -160,14 +166,14 @@ class DataExtractionS3Pipeline:
     def process_pdf_file(file_path, subdir_name, save_to_local, bucket_name, destination_bucket, endpoint):
         filename = file_path.name
         try:
-            #log_entry = LogEntry.start_new(filename, provider=subdir_name,
+            # log_entry = LogEntry.start_new(filename, provider=subdir_name,
             #                              log_text=f'Started processing {file_path}...',
             #                              file_path=file_path)
 
             log_entry = None
 
             key = str(file_path.relative_to(file_path.parent.parent)
-                     if file_path.parent.parent != file_path.parent else file_path.name)
+                      if file_path.parent.parent != file_path.parent else file_path.name)
             start_time = time.time()
             extracted_text = DataExtractionS3Pipeline.extract_pdf_text(file_path, endpoint, log_entry)
             duration = time.time() - start_time
@@ -204,21 +210,21 @@ class DataExtractionS3Pipeline:
                     'accept': 'application/json'
                 }
                 response = requests.post(endpoint, headers=headers, files=files)
-                
+
                 if log_entry:
                     log_entry.log(f"Used PDF server: {endpoint}")
-                    
+
                 if response.status_code != 200:
                     if log_entry:
-                        log_entry.log(f"PDF server returned status code {response.status_code}", severity=Severity.ERROR)
+                        log_entry.log(f"PDF server returned status code {response.status_code}",
+                                      severity=Severity.ERROR)
                     return None
-                    
+
             return response.text
         except Exception as e:
             if log_entry:
                 log_entry.log(f"PDF extraction error: {str(e)}", severity=Severity.ERROR)
             return None
-
 
     @staticmethod
     def process_text(text):
@@ -230,7 +236,8 @@ class DataExtractionS3Pipeline:
         return text
 
     @staticmethod
-    def save_extracted_markdown(key, extracted_text, file_type, subdir_name, save_to_local, bucket_name, destination_bucket, log_entry=None):
+    def save_extracted_markdown(key, extracted_text, file_type, subdir_name, save_to_local, bucket_name,
+                                destination_bucket, log_entry=None):
         try:
             base_filename = DataExtractionS3Pipeline.get_safe_filename(key)
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -268,9 +275,10 @@ class DataExtractionS3Pipeline:
         safe_name = re.sub(r'[^a-zA-Z0-9]', '_', base_name)
         return safe_name
 
+
 if __name__ == '__main__':
     extractor = DataExtractionS3Pipeline(
         base_dir='data',
-        save_to_local=True,
+        save_to_local=False,
     )
     extractor.process_files()
