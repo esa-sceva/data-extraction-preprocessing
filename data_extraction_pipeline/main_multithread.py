@@ -2,6 +2,7 @@ import os
 import boto3
 from typing import Final
 from pathlib import Path
+import mysql.connector
 from tqdm.auto import tqdm
 import datetime
 import time
@@ -16,13 +17,13 @@ class DataExtractionS3Pipeline:
         self.save_to_local = save_to_local
         self.destination_bucket = "raw_data_dedup_extractions"
         self.sub_folder = sub_folder
-        self.max_workers = max_workers if max_workers else os.cpu_count()
+        self.max_workers = 4
         
         self.pdf_servers = [
-            "http://127.0.0.1:8501/predict/",
-            "http://127.0.0.1:8502/predict/",
-            "http://127.0.0.1:8503/predict/",
-            "http://127.0.0.1:8504/predict/"
+            "http://127.0.0.1:8002/predict/",
+            "http://127.0.0.1:8003/predict/",
+            "http://127.0.0.1:8004/predict/",
+            "http://127.0.0.1:8005/predict/"
         ]
 
         self.bucket_name: Final[str] = os.getenv("AWS_BUCKET_NAME", 'llm4eo-s3')
@@ -65,11 +66,61 @@ class DataExtractionS3Pipeline:
             print(f"Error discovering subdirectories: {str(e)}")
         return subdirs
 
+    def get_successful_files_by_provider(self, provider):
+        """
+        Get all files with status 'success' for a specific provider from the database
+
+        Parameters:
+            provider (str): The provider name to filter by
+
+        Returns:
+            list: List of files with status 'success' for the specified provider
+        """
+        # Database connection parameters
+        db_config = {
+            'host': 'your_host',
+            'user': 'your_username',
+            'password': 'your_password',
+            'database': 'your_database'
+        }
+
+        try:
+            # Establish database connection
+            conn = mysql.connector.connect(**db_config)
+            cursor = conn.cursor(dictionary=True)
+
+            # Execute query with parameter binding for security
+            query = """
+                SELECT filename
+                FROM text_extraction_logs
+                WHERE provider = %s
+                AND status = 'success'
+            """
+            cursor.execute(query, (provider,))
+
+            # Fetch all matching records
+            results = cursor.fetchall()
+            results = [result[0] for result in results]
+
+            cursor.close()
+            conn.close()
+
+            return results
+
+        except mysql.connector.Error as err:
+            print(f"Database error: {err}")
+            return []
+
     def _process_directory(self, directory_path, subdir_name):
         try:
             file_list = list(directory_path.glob('**/*'))
             files = [f for f in file_list if f.is_file()]
             print(f"Found {len(files)} files in {directory_path}")
+
+            # Remove files that have already been processed successfully
+            successful_files = self.get_successful_files_by_provider(subdir_name)
+            files = [f for f in files if f.name not in successful_files]
+            print(f"Remaining files to process: {len(files)}")
             
             tasks = []
             for i, file_path in enumerate(files):
@@ -80,11 +131,11 @@ class DataExtractionS3Pipeline:
                     tasks.append((file_path, subdir_name, self.save_to_local, 
                                  self.bucket_name, self.destination_bucket, server))
                 else:
-                    log_entry = LogEntry.start_new(file_path.name, provider=subdir_name, 
+                    #log_entry = LogEntry.start_new(file_path.name, provider=subdir_name,
                                                   log_text=f'Started processing {file_path}...', 
-                                                  file_path=file_path)
-                    log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
-                    log_entry.finalize_log("error")
+                                                 # file_path=file_path)
+                    #log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
+                    #log_entry.finalize_log("error")
             
             if not tasks:
                 print(f"No supported files found in {directory_path}")
@@ -109,9 +160,11 @@ class DataExtractionS3Pipeline:
     def process_pdf_file(file_path, subdir_name, save_to_local, bucket_name, destination_bucket, endpoint):
         filename = file_path.name
         try:
-            log_entry = LogEntry.start_new(filename, provider=subdir_name, 
-                                          log_text=f'Started processing {file_path}...', 
-                                          file_path=file_path)
+            #log_entry = LogEntry.start_new(filename, provider=subdir_name,
+            #                              log_text=f'Started processing {file_path}...',
+            #                              file_path=file_path)
+
+            log_entry = None
 
             key = str(file_path.relative_to(file_path.parent.parent)
                      if file_path.parent.parent != file_path.parent else file_path.name)
@@ -166,12 +219,24 @@ class DataExtractionS3Pipeline:
                 log_entry.log(f"PDF extraction error: {str(e)}", severity=Severity.ERROR)
             return None
 
+
+    @staticmethod
+    def process_text(text):
+        # Remove the starting and ending quotes
+        text = text.strip('"')
+
+        # Replace the escaped "\n" with actual newline characters
+        text = text.replace('\\n', '\n')
+        return text
+
     @staticmethod
     def save_extracted_markdown(key, extracted_text, file_type, subdir_name, save_to_local, bucket_name, destination_bucket, log_entry=None):
         try:
             base_filename = DataExtractionS3Pipeline.get_safe_filename(key)
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             file_path = f"{destination_bucket}/{subdir_name}/{base_filename}.md"
+
+            # Process the extracted text to remove unwanted characters
 
             if save_to_local:
                 with open(file_path, 'w', encoding='utf-8') as f:
