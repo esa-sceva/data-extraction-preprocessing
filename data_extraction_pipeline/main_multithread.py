@@ -137,11 +137,11 @@ class DataExtractionS3Pipeline:
                     tasks.append((file_path, subdir_name, self.save_to_local,
                                   self.bucket_name, self.destination_bucket, server))
                 else:
-                    # log_entry = LogEntry.start_new(file_path.name, provider=subdir_name,
-                    log_text = f'Started processing {file_path}...',
-                    # file_path=file_path)
-                # log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
-                # log_entry.finalize_log("error")
+                    log_entry = LogEntry.start_new(file_path.name, provider=subdir_name,
+                                                   log_text=f'Started processing {file_path}...',
+                                                   file_path=file_path)
+                    log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
+                    log_entry.finalize_log("error")
 
             if not tasks:
                 print(f"No supported files found in {directory_path}")
@@ -166,11 +166,10 @@ class DataExtractionS3Pipeline:
     def process_pdf_file(file_path, subdir_name, save_to_local, bucket_name, destination_bucket, endpoint):
         filename = file_path.name
         try:
-            # log_entry = LogEntry.start_new(filename, provider=subdir_name,
-            #                              log_text=f'Started processing {file_path}...',
-            #                              file_path=file_path)
+            log_entry = LogEntry.start_new(filename, provider=subdir_name,
+                                           log_text=f'Started processing {file_path}...',
+                                           file_path=file_path)
 
-            log_entry = None
 
             key = str(file_path.relative_to(file_path.parent.parent)
                       if file_path.parent.parent != file_path.parent else file_path.name)
