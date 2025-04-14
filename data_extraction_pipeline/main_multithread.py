@@ -96,7 +96,7 @@ class DataExtractionS3Pipeline:
 
             # Execute query with parameter binding for security
             query = """
-                    SELECT filename
+                    SELECT filename, log
                     FROM text_extraction_logs
                     WHERE provider = %s
                       AND status = 'success' \
@@ -105,6 +105,13 @@ class DataExtractionS3Pipeline:
 
             # Fetch all matching records
             results = cursor.fetchall()
+
+            # Filter according to the error in log
+            error_log_str = 'Error saving markdown: Unable to locate credentials'
+
+            # Filter out the logs that contain the error
+            results = [result for result in results if error_log_str not in result['log']]
+
             results = [result['filename'] for result in results]
 
             cursor.close()
@@ -177,12 +184,15 @@ class DataExtractionS3Pipeline:
             extracted_text = DataExtractionS3Pipeline.extract_pdf_text(file_path, endpoint, log_entry)
             duration = time.time() - start_time
             if extracted_text:
-                DataExtractionS3Pipeline.save_extracted_markdown(
+                result = DataExtractionS3Pipeline.save_extracted_markdown(
                     key, extracted_text, "PDF", subdir_name, save_to_local, bucket_name, destination_bucket, log_entry)
                 text_len = len(extracted_text)
                 log_entry.log(f"Extracted {text_len} characters.")
                 log_entry.log(f"Processing time: {duration:.2f}s")
-                log_entry.finalize_log("success", text_len, duration)
+                if result:
+                    log_entry.finalize_log("success", text_len, duration)
+                else:
+                    log_entry.finalize_log("error", text_len, duration)
                 return duration
             else:
                 duration = time.time() - start_time
@@ -263,9 +273,11 @@ class DataExtractionS3Pipeline:
                 )
             if log_entry:
                 log_entry.log(f"Saved markdown to {'local' if save_to_local else 'S3'}: {file_path}")
+            return True
         except Exception as e:
             if log_entry:
                 log_entry.log(f"Error saving markdown: {str(e)}", severity=Severity.ERROR)
+            return False
 
     @staticmethod
     def get_safe_filename(key):
