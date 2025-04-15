@@ -8,7 +8,6 @@ import datetime
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from zope.interface import provider
 
 from log_db import Severity, LogEntry
 import re
