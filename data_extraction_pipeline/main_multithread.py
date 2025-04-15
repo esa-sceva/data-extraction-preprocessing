@@ -7,6 +7,9 @@ import mysql.connector
 import datetime
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+from zope.interface import provider
+
 from log_db import Severity, LogEntry
 import re
 import requests
@@ -96,12 +99,12 @@ class DataExtractionS3Pipeline:
 
             # Execute query with parameter binding for security
             query = """
-                    SELECT filename, log
+                    SELECT filename, log, provider
                     FROM text_extraction_logs
-                    WHERE provider = %s
+                    WHERE provider LIKE %s
                       AND status = 'success' \
                     """
-            cursor.execute(query, (provider,))
+            cursor.execute(query, (f'{provider}%',))
 
             # Fetch all matching records
             results = cursor.fetchall()
@@ -112,7 +115,7 @@ class DataExtractionS3Pipeline:
             # Filter out the logs that contain the error
             results = [result for result in results if error_log_str not in result['log']]
 
-            results = [result['filename'] for result in results]
+            results = [f"{result['provider']}/{result['filename']}" for result in results]
 
             cursor.close()
             conn.close()
@@ -123,6 +126,23 @@ class DataExtractionS3Pipeline:
             print(f"Database error: {err}")
             return []
 
+    def get_relative_provider_path(self, filepath: Path, subdir_name: str) -> Path:
+        """
+        Get the relative path of the provider from the file path.
+
+        Parameters:
+            file_path (str): The full file path
+
+        Returns:
+            str: The relative path of the provider
+        """
+        parts = filepath.parts
+        subfolder_index = parts.index(subdir_name)
+        result_parts = parts[subfolder_index:]
+        return Path(*result_parts)
+
+
+
     def _process_directory(self, directory_path, subdir_name):
         try:
             file_list = list(directory_path.glob('**/*'))
@@ -132,7 +152,7 @@ class DataExtractionS3Pipeline:
             # Remove files that have already been processed successfully
             successful_files = self.get_successful_files_by_provider(subdir_name)
             print('Files already processed successfully:', len(successful_files))
-            files = [f for f in files if f.name not in successful_files]
+            files = [f for f in files if self.get_relative_provider_path(f, subdir_name).as_posix() not in successful_files]
             print(f"Remaining files to process: {len(files)}")
 
             tasks = []
@@ -172,8 +192,18 @@ class DataExtractionS3Pipeline:
     @staticmethod
     def process_pdf_file(file_path, subdir_name, save_to_local, bucket_name, destination_bucket, endpoint):
         filename = file_path.name
+        # Get the path after the subdir_name
+        # Find the index of 'mdpi' in the path parts
+        parts = file_path.parts
+        subdir_index = parts.index(subdir_name)
+
+        # Extract the parts starting from 'mdpi'
+        result_parts = parts[subdir_index:-1]
+
+        # Join them back into a path
+        provider_path = Path(*result_parts)
         try:
-            log_entry = LogEntry.start_new(filename, provider=subdir_name,
+            log_entry = LogEntry.start_new(filename, provider=provider_path.as_posix(),
                                            log_text=f'Started processing {file_path}...',
                                            file_path=file_path)
 
@@ -185,7 +215,7 @@ class DataExtractionS3Pipeline:
             duration = time.time() - start_time
             if extracted_text:
                 result = DataExtractionS3Pipeline.save_extracted_markdown(
-                    key, extracted_text, "PDF", subdir_name, save_to_local, bucket_name, destination_bucket, log_entry)
+                    key, extracted_text, "PDF", provider_path, save_to_local, bucket_name, destination_bucket, log_entry)
                 text_len = len(extracted_text)
                 log_entry.log(f"Extracted {text_len} characters.")
                 log_entry.log(f"Processing time: {duration:.2f}s")
