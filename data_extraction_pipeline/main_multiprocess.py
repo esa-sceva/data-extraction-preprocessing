@@ -1,3 +1,8 @@
+"""
+This code uses multiple processes to handle only html, txt and json.
+"""
+
+
 import os
 import io
 import boto3
@@ -100,18 +105,15 @@ class DataExtractionS3Pipeline:
             key = str(file_path.relative_to(file_path.parent.parent)
                       if file_path.parent.parent != file_path.parent else file_path.name)
 
-            if file_extension == "pdf":
-                extracted_text = DataExtractionS3Pipeline.extract_pdf_text(file_path, log_entry)
-                file_type = "PDF"
-            elif file_extension == "html":
-                log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
-                log_entry.finalize_log("error")
+            if file_extension == "html":
+                extracted_text = DataExtractionS3Pipeline.extract_html_text(file_path, log_entry)
+                file_type = "HTML"
             elif file_extension == "txt":
-                log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
-                log_entry.finalize_log("error")
+                extracted_text = DataExtractionS3Pipeline.extract_txt_text(file_path, log_entry)
+                file_type = "TXT"
             elif file_extension == "json":
-                log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
-                log_entry.finalize_log("error")
+                extracted_text = DataExtractionS3Pipeline.extract_json_text(file_path, log_entry)
+                file_type = "JSON"
             else:
                 log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
                 log_entry.finalize_log("error")
@@ -131,24 +133,6 @@ class DataExtractionS3Pipeline:
         except Exception as e:
             log_entry.log(f"Error processing file: {str(e)}", severity=Severity.ERROR)
             log_entry.finalize_log("error")
-
-    @staticmethod
-    def extract_pdf_text(file_path, log_entry=None):
-        endpoint = "http://127.0.0.1:8001/predict/"
-        try:
-            with open(file_path, "rb") as f:
-                files = {
-                    'file': ('PDFFILE.pdf', f, 'application/pdf')
-                }
-                headers = {
-                    'accept': 'application/json'
-                }
-                response = requests.post(endpoint, headers=headers, files=files)
-            return response.text
-        except Exception as e:
-            if log_entry:
-                log_entry.log(f"PDF extraction error: {str(e)}", severity=Severity.ERROR)
-            return None
 
     @staticmethod
     def extract_html_text(file_path, log_entry=None):
