@@ -7,8 +7,8 @@ import os
 import io
 import boto3
 import pandas as pd
+from trafilatura import extract
 from typing import Final
-from bs4 import BeautifulSoup
 from pathlib import Path
 
 from pypdf import PdfReader
@@ -108,15 +108,15 @@ class DataExtractionS3Pipeline:
             if file_extension == "html":
                 extracted_text = DataExtractionS3Pipeline.extract_html_text(file_path, log_entry)
                 file_type = "HTML"
-            elif file_extension == "txt":
-                extracted_text = DataExtractionS3Pipeline.extract_txt_text(file_path, log_entry)
-                file_type = "TXT"
-            elif file_extension == "json":
-                extracted_text = DataExtractionS3Pipeline.extract_json_text(file_path, log_entry)
-                file_type = "JSON"
+            # elif file_extension == "txt":
+            #     extracted_text = DataExtractionS3Pipeline.extract_txt_text(file_path, log_entry)
+            #     file_type = "TXT"
+            # elif file_extension == "json":
+            #     extracted_text = DataExtractionS3Pipeline.extract_json_text(file_path, log_entry)
+            #     file_type = "JSON"
             else:
-                log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
-                log_entry.finalize_log("error")
+                # log_entry.log(f"Unsupported file type: {file_extension}", severity=Severity.ERROR)
+                # log_entry.finalize_log("error")
                 return
 
 
@@ -138,52 +138,51 @@ class DataExtractionS3Pipeline:
     def extract_html_text(file_path, log_entry=None):
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
-                soup = BeautifulSoup(file, 'html.parser')
-                text = soup.get_text().strip()
-                text = os.linesep.join([s for s in text.splitlines() if s.strip()])
+                data = file.read()
+                text = extract(data)
             return text
         except Exception as e:
             if log_entry:
                 log_entry.log(f"HTML extraction error: {str(e)}", severity=Severity.ERROR)
             return None
 
-    @staticmethod
-    def extract_txt_text(file_path, log_entry=None):
-        try:
-            encodings_to_try = ['utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
-            text = None
+    # @staticmethod
+    # def extract_txt_text(file_path, log_entry=None):
+    #     try:
+    #         encodings_to_try = ['utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
+    #         text = None
 
-            for encoding in encodings_to_try:
-                try:
-                    with open(file_path, 'r', encoding=encoding) as file:
-                        text = file.read()
-                    log_entry.log(f"Successfully read file with {encoding} encoding")
-                    break
-                except UnicodeDecodeError:
-                    continue
+    #         for encoding in encodings_to_try:
+    #             try:
+    #                 with open(file_path, 'r', encoding=encoding) as file:
+    #                     text = file.read()
+    #                 log_entry.log(f"Successfully read file with {encoding} encoding")
+    #                 break
+    #             except UnicodeDecodeError:
+    #                 continue
 
-            return text
-        except Exception as e:
-            if log_entry:
-                log_entry.log(f"TXT extraction error: {str(e)}")
-            return None
+    #         return text
+    #     except Exception as e:
+    #         if log_entry:
+    #             log_entry.log(f"TXT extraction error: {str(e)}")
+    #         return None
 
-    @staticmethod
-    def extract_json_text(file_path, log_entry=None):
-        try:
-            with open(file_path, 'r', encoding='utf-8') as file:
-                raw_content = file.read()
-            try:
-                json_data = json.loads(raw_content)
-                text = json.dumps(json_data, indent=2)
-            except json.JSONDecodeError as json_err:
-                text = raw_content
-                log_entry.log(f"JSON parsing error: {str(json_err)}. Using raw content.", severity=Severity.ERROR)
-            return text
-        except Exception as e:
-            if log_entry:
-                log_entry.log(f"JSON extraction error: {str(e)}", severity=Severity.ERROR)
-            return None
+    # @staticmethod
+    # def extract_json_text(file_path, log_entry=None):
+    #     try:
+    #         with open(file_path, 'r', encoding='utf-8') as file:
+    #             raw_content = file.read()
+    #         try:
+    #             json_data = json.loads(raw_content)
+    #             text = json.dumps(json_data, indent=2)
+    #         except json.JSONDecodeError as json_err:
+    #             text = raw_content
+    #             log_entry.log(f"JSON parsing error: {str(json_err)}. Using raw content.", severity=Severity.ERROR)
+    #         return text
+    #     except Exception as e:
+    #         if log_entry:
+    #             log_entry.log(f"JSON extraction error: {str(e)}", severity=Severity.ERROR)
+    #         return None
 
     @staticmethod
     def save_extracted_markdown(key, extracted_text, file_type, subdir_name, save_to_local, bucket_name, destination_bucket, log_entry=None):
@@ -225,6 +224,6 @@ class DataExtractionS3Pipeline:
 if __name__ == '__main__':
     extractor = DataExtractionS3Pipeline(
         base_dir='data',
-        save_to_local=True,
+        save_to_local=False,
     )
     extractor.process_files()
