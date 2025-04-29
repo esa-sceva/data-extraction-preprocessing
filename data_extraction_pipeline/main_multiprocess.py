@@ -137,9 +137,18 @@ class DataExtractionS3Pipeline:
     @staticmethod
     def extract_html_text(file_path, log_entry=None):
         try:
-            with open(file_path, 'r', encoding='utf-8') as file:
-                data = file.read()
-                text = extract(data)
+            encodings_to_try = ['utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
+            text = None
+
+            for encoding in encodings_to_try:
+                try:
+                    with open(file_path, 'r', encoding=encoding) as file:
+                        data = file.read()
+                        text = extract(data)
+                    break
+                except:
+                    continue
+
             return text
         except Exception as e:
             if log_entry:
