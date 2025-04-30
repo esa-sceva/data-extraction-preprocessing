@@ -1,13 +1,17 @@
 ### How to run this pipeline
 
+
+#### Process pdf files using NOUGAT
+
 1. Start the fastapi server after changing the port number in `app.py` in one terminal.
 
 ```
 python app.py
 ```
 
-2. Open another terminal, run the `main_multiprocess.py` file after matching the port number of the fastapi endpoint.
+2. Open another terminal, run the `pdf_extract_nougat.py` file after matching the port number of the fastapi endpoint.
 
-Ideas
-1. Start a fastapi server for one folder within the same GPU. example 3 fastapi servers on 3 ports and 3 multiprocesss script for each folder.
-2. Use multiple workers using uvicorn itself and run multiprocess script.
+
+#### Process non-pdf
+
+1. Run the `non_pdf_extract.py`, after adjusting the number of processes needed.

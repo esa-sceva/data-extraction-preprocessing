@@ -27,7 +27,7 @@ class DataExtractionS3Pipeline:
         self.save_to_local = save_to_local
         self.destination_bucket = "raw_data_dedup_extractions"
         self.sub_folder = sub_folder
-        self.num_processes = num_processes if num_processes else os.cpu_count()
+        self.num_processes = 4
 
         self.bucket_name: Final[str] = os.getenv("AWS_BUCKET_NAME", 'llm4eo-s3')
         if self.save_to_local:
@@ -233,6 +233,6 @@ class DataExtractionS3Pipeline:
 if __name__ == '__main__':
     extractor = DataExtractionS3Pipeline(
         base_dir='data',
-        save_to_local=False,
+        save_to_local=True,
     )
     extractor.process_files()

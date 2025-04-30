@@ -1,3 +1,6 @@
+"""
+This code uses multithreading to extract text from PDF only using nougat
+"""
 import os
 import boto3
 from typing import Final

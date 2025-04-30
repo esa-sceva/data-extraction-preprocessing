@@ -118,8 +118,8 @@ class MarkdownCleaningPipeline:
             if markdown_content:
                 cleaned_markdown = MarkdownCleaningPipeline.clean_markdown(markdown_content)
 
-                if len(cleaned_markdown) < 100:
-                    logger.log(f"[SKIP] {filename} - Less than 100 characters after cleaning")
+                if len(cleaned_markdown) < 1000:
+                    logger.log(f"[SKIP] {filename} - Less than 1000 characters after cleaning")
                     return
 
                 MarkdownCleaningPipeline.save_cleaned_markdown(
