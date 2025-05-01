@@ -4,6 +4,7 @@ from datasketch import MinHash, MinHashLSH
 import os
 from nltk import ngrams
 import time
+from tqdm.auto import tqdm
 
 '''
 Adjust NUM_PERM: Higher values increase accuracy but use more memory.
@@ -49,7 +50,7 @@ class LSH:
 
         start_time = time.time()
 
-        for i, file_path in enumerate(self.file_paths):
+        for i, file_path in tqdm(enumerate(self.file_paths), total = len(self.file_paths)):
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 text = f.read()
                 shingles = self.create_shingles(text)
@@ -96,4 +97,7 @@ class LSH:
 
 lsh = LSH('data', 3, 128, 0.8, 2)
 dupes = lsh.get_duplicates()
-print(dupes)
+
+with open("dupes.txt", 'w') as f:
+    f.write(str(dupes))
+#print(dupes)
