@@ -2,6 +2,7 @@
 
 from gliner import GLiNER
 import torch
+import gc
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -14,7 +15,7 @@ def get_spans_from_mapping(offset_mapping):
 def get_texts_from_spans(text, spans):
     return [text[start:end] for start, end in spans]
 
-def get_entities_from_long_text(model, text, labels):
+def get_entities_from_long_text(model, text, labels, batch_size = 4):
     transformer_tokenizer = model.data_processor.transformer_tokenizer
     max_len = model.config.max_len
     #max_len = 300
@@ -37,12 +38,24 @@ def get_entities_from_long_text(model, text, labels):
     entities = model.batch_predict_entities(texts, labels, threshold=0.5) # batch preds, since if we want a fixed batch size.
 
     all_entities = []
-    for span, entity_list in zip(spans, entities):
-        offset, _ = span
-        for entity in entity_list:
-            entity["start"] += offset
-            entity["end"] += offset
-            all_entities.append(entity)
+    # Manual batching
+    for i in range(0, len(texts), batch_size):
+        batch_texts = texts[i:i + batch_size]
+        batch_spans = spans[i:i + batch_size]
+        
+        # Process each batch
+        entities = model.batch_predict_entities(batch_texts, labels, threshold=0.5)
+        
+        for span, entity_list in zip(batch_spans, entities):
+            offset, _ = span
+            for entity in entity_list:
+                entity["start"] += offset
+                entity["end"] += offset
+                all_entities.append(entity)
+        
+        # Clear memory after each batch
+        torch.cuda.empty_cache()
+        gc.collect()
 
     return all_entities
 
@@ -75,7 +88,7 @@ for _f in tqdm(os.listdir(input_dir)):
     with open(input_path, 'r') as f:
         text = f.read()
 
-        ents = get_entities_from_long_text(model, text, labels = labels)
+        ents = get_entities_from_long_text(model, text, labels)
 
         modified_text = replace_entities_with_labels(text, ents)
 
