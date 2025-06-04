@@ -1,138 +1,85 @@
-"""
-This script is used for data cleaning.
-
-1. Removal of nougat artifacts ([MISSIN_PAGE], WARNING from pdf files. , it seems to be enclosed between +++
-2. Remove the files with < 1000 characters.
-3. Remove repeated punctuations.
-4. Remove table of contents ellipses thingy.
-
-"""
-
+import argparse
 import os
-import boto3
-from typing import Final
-from pathlib import Path
-import re
-from tqdm.auto import tqdm
-from multiprocessing import Pool, Manager
 from functools import partial
-from datetime import datetime
+from multiprocessing import Pool
+from pathlib import Path
+from typing import Final, Optional
 
+from tqdm.auto import tqdm
 
-class SimpleLogger:
-    def __init__(self, filename):
-        self.log_path = Path("logs")
-        self.log_path.mkdir(exist_ok=True)
-        self.file = self.log_path / f"{filename}.log"
-
-    def log(self, message):
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        with open(self.file, 'a', encoding='utf-8') as f:
-            f.write(f"[{timestamp}] {message}\n")
+from helper.logger import Logger
+from components.nougat_artifacts import NougatArtifactRemovalComponent
+from storage.s3 import LocalStorageComponent, S3StorageComponent
 
 
 class MarkdownCleaningPipeline:
-    def __init__(self, base_dir='', sub_folder='', save_to_local=False, num_processes=None):
+    def __init__(self, base_dir: str, save_to_local: bool = True, num_processes: Optional[int] = None, debug: bool = False):
         self.base_dir = Path(base_dir)
         self.save_to_local = save_to_local
-        self.destination_bucket = "raw_data_dedup_cleaned"
-        self.sub_folder = sub_folder
         self.num_processes = num_processes if num_processes else os.cpu_count()
-
         self.bucket_name: Final[str] = os.getenv("AWS_BUCKET_NAME", 'llm4eo-s3')
+        self.destination_bucket: Final[str] = "cleaned_data"
+        self.debug = debug
+        
+        self.logger = Logger("pipeline")
+        if self.debug:
+            self.logger.log("DEBUG mode enabled for pipeline.")
+            
+        self.components = [
+            NougatArtifactRemovalComponent(debug=self.debug),
+            # add other components here
+        ]
+        self.storage = LocalStorageComponent(self.destination_bucket) if save_to_local else S3StorageComponent(self.bucket_name, self.destination_bucket)
+
         if self.save_to_local:
-            print("Saving cleaned markdown files to local directory")
+            self.logger.log("Saving cleaned markdown files to local directory")
             os.makedirs(f"{self.destination_bucket}", exist_ok=True)
-            if self.sub_folder:
-                self._setup_directories(self.sub_folder)
         else:
-            print("Saving cleaned markdown to S3")
-
-        self.manager = Manager()
-
-    def _setup_directories(self, sub_folder):
-        os.makedirs(f"{self.destination_bucket}/{sub_folder}", exist_ok=True)
+            self.logger.log("Saving cleaned markdown to S3")
 
     def process_files(self):
         try:
-            if not self.sub_folder:
-                subdirs = self._discover_subdirectories()
-                for subdir in subdirs:
-                    print(f"Processing subdirectory: {subdir}")
-                    if self.save_to_local:
-                        self._setup_directories(subdir)
-                    subdir_path = self.base_dir / subdir
-                    self._process_directory(subdir_path, subdir)
-            else:
-                self._process_directory(self.base_dir, self.sub_folder)
-        except Exception as e:
-            print(f"Error processing files: {str(e)}")
-
-    def _discover_subdirectories(self):
-        subdirs = []
-        try:
-            for path in self.base_dir.iterdir():
-                if path.is_dir():
-                    subdirs.append(path.name)
-            if not subdirs:
-                subdirs = [self.base_dir.name]
-        except Exception as e:
-            print(f"Error discovering subdirectories: {str(e)}")
-        return subdirs
-
-    def _process_directory(self, directory_path, subdir_name):
-        try:
-            markdown_files = list(directory_path.glob('**/*.md'))
-            print(f"Found {len(markdown_files)} files in {directory_path}")
-
-            with Pool(processes=self.num_processes) as pool:
-                process_func = partial(self.process_file_wrapper,
-                                       subdir_name=subdir_name,
-                                       save_to_local=self.save_to_local,
-                                       bucket_name=self.bucket_name,
-                                       destination_bucket=self.destination_bucket)
+            markdown_files = []
+            for root, _, files in os.walk(self.base_dir):
+                for file in files:
+                    if file.endswith('.md'):
+                        markdown_files.append(Path(root) / file)
+            
+            self.logger.log(f"Found {len(markdown_files)} markdown files in {self.base_dir}")
+            
+            with Pool(processes = self.num_processes) as pool:
+                process_func = partial(self.process_file_wrapper)
                 list(tqdm(pool.imap(process_func, markdown_files),
                           total=len(markdown_files),
-                          desc=f"Cleaning markdown files in {subdir_name}"))
-
+                          desc="Cleaning markdown files"))
         except Exception as e:
-            print(f"Error processing directory {directory_path}: {str(e)}")
+            self.logger.log(f"Error processing files: {str(e)}")
 
-    @staticmethod
-    def process_file_wrapper(file_path, subdir_name, save_to_local, bucket_name, destination_bucket):
-        return MarkdownCleaningPipeline.process_file_static(
-            file_path, subdir_name, save_to_local, bucket_name, destination_bucket)
+    def process_file_wrapper(self, file_path: Path):
+        return self._process_file(file_path)
 
-    @staticmethod
-    def process_file_static(file_path, subdir_name, save_to_local, bucket_name, destination_bucket):
+    def _process_file(self, file_path: Path) -> None:
         filename = file_path.name
-        logger = SimpleLogger(subdir_name)
-
+        logger = Logger("cleaning")
+        logger.log(f"[START] Cleaning {filename}")
+        
         try:
-            logger.log(f"[START] Cleaning {filename}")
-            key = str(file_path.relative_to(file_path.parent.parent)
-                      if file_path.parent.parent != file_path.parent else file_path.name)
-
-            markdown_content = MarkdownCleaningPipeline.read_markdown_file(file_path)
-
-            if markdown_content:
-                cleaned_markdown = MarkdownCleaningPipeline.clean_markdown(markdown_content)
-
-                if len(cleaned_markdown) < 1000:
-                    logger.log(f"[SKIP] {filename} - Less than 1000 characters after cleaning")
-                    return
-
-                MarkdownCleaningPipeline.save_cleaned_markdown(
-                    key, cleaned_markdown, subdir_name, save_to_local, bucket_name, destination_bucket, logger)
-                logger.log(f"[SUCCESS] Cleaned and saved {filename} - {len(cleaned_markdown)} characters")
+            key = str(file_path.relative_to(self.base_dir))
+            content = self.read_markdown_file(file_path)
+            
+            if content:
+                for component in self.components:
+                    cleaned_content = component.process(content, logger, filename)
+                    if cleaned_content is None:
+                        break
+                if cleaned_content:
+                    self.storage.save(key, cleaned_content, "", logger)
             else:
                 logger.log(f"[ERROR] {filename} - Could not read markdown content")
-
         except Exception as e:
-            logger.log(f"[ERROR] {filename} - Exception during cleaning: {str(e)}")
+            logger.log(f"[ERROR] {filename} - Exception during processing: {str(e)}")
 
-    @staticmethod
-    def read_markdown_file(file_path):
+    def read_markdown_file(self, file_path: Path) -> Optional[str]:
         try:
             encodings_to_try = ['utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
             for encoding in encodings_to_try:
@@ -141,63 +88,31 @@ class MarkdownCleaningPipeline:
                         return file.read()
                 except UnicodeDecodeError:
                     continue
+            logger = Logger("read_errors")
+            logger.log(f"[ERROR] {file_path.name} - Failed to decode with any encoding")
             return None
-        except Exception:
-            return None
-
-    @staticmethod
-    def clean_markdown(markdown_text):
-        if not markdown_text:
-            return ""
-
-        try:
-            cleaned_text = re.sub(r'\+\+\+\s*==WARNING: Truncated because of repetitions==.*?\+\+\+',
-                                  '', markdown_text, flags=re.DOTALL)
-            cleaned_text = re.sub(r'\+\+\+\s*==ERROR: No output for this page==.*?\+\+\+',
-                                  '', cleaned_text, flags=re.DOTALL)
-            cleaned_text = re.sub(r'\.{3,}', ' ', cleaned_text)
-            cleaned_text = re.sub(r'([!?.,])\1{2,}', r'\1\1', cleaned_text)
-            return cleaned_text
-        except Exception:
-            return markdown_text
-
-    @staticmethod
-    def save_cleaned_markdown(key, cleaned_markdown, subdir_name, save_to_local, bucket_name, destination_bucket, logger):
-        try:
-            base_filename = MarkdownCleaningPipeline.get_safe_filename(key)
-            file_path = f"{destination_bucket}/{subdir_name}/{base_filename}.md"
-
-            if save_to_local:
-                with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(cleaned_markdown)
-            else:
-                client = boto3.client(
-                    "s3",
-                    region_name=os.getenv("AWS_REGION"),
-                    aws_access_key_id=os.getenv("AWS_ACCESS_KEY"),
-                    aws_secret_access_key=os.getenv("AWS_SECRET_KEY")
-                )
-                client.put_object(
-                    Bucket=bucket_name,
-                    Key=file_path,
-                    Body=cleaned_markdown.encode('utf-8'),
-                    ContentType='text/markdown'
-                )
-            logger.log(f"[SAVE] File saved to {'local' if save_to_local else 'S3'}: {file_path}")
         except Exception as e:
-            logger.log(f"[ERROR] Failed to save cleaned file: {str(e)}")
-
-    @staticmethod
-    def get_safe_filename(key):
-        base_name = os.path.basename(key)
-        base_name = os.path.splitext(base_name)[0]
-        safe_name = re.sub(r'[^a-zA-Z0-9]', '_', base_name)
-        return safe_name
+            logger = Logger("read_errors")
+            logger.log(f"[ERROR] {file_path.name} - Exception during reading: {str(e)}")
+            return None
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Markdown Cleaning Pipeline")
+    parser.add_argument("--base_dir", type=str, required=True, help="Base directory containing markdown files.")
+    parser.add_argument("--save_to_s3", action="store_true", help="Save cleaned files to S3 instead of local. Default is local.")
+    parser.add_argument("--num_processes", type=int, default=None, help="Number of processes to use. Defaults to CPU count.")
+    parser.add_argument("--debug", action="store_true", help="Enable debug logging for components.")
+    
+    args = parser.parse_args()
+
+    save_to_local_flag = not args.save_to_s3
+
     cleaner = MarkdownCleaningPipeline(
-        base_dir='data',
-        save_to_local=True,
+        base_dir=args.base_dir,
+        save_to_local=save_to_local_flag,
+        num_processes=args.num_processes,
+        debug=args.debug
     )
+
     cleaner.process_files()
