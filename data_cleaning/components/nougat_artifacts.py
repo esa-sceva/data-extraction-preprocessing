@@ -1,9 +1,12 @@
 from typing import Optional
-
 import re
+from colorama import Fore, Style, init
 
 from model.base import DataProcessingComponent
 from helper.logger import Logger
+
+# Initialize colorama
+init()
 
 class NougatArtifactRemovalComponent(DataProcessingComponent):
 
@@ -12,7 +15,7 @@ class NougatArtifactRemovalComponent(DataProcessingComponent):
 
     def process(self, content: str, logger: Logger, filename: str) -> Optional[str]:
         if self.debug:
-            logger.log(f"[DEBUG] Before NougatArtifactRemovalComponent ({filename}):\n{content[:500]}{'...' if len(content) > 500 else ''}")
+            print(f"{Fore.YELLOW}[DEBUG] Before NougatArtifactRemovalComponent ({filename}):{Style.RESET_ALL}\n{content[:500]}{'...' if len(content) > 500 else ''}")
 
         if not content:
             logger.log(f"[ERROR] {filename} - Empty content in Nougat artifact removal")
@@ -25,10 +28,8 @@ class NougatArtifactRemovalComponent(DataProcessingComponent):
             cleaned = cleaned.replace('[MISSING_PAGE_POST]', '')
             logger.log(f"[SUCCESS] {filename} - Removed Nougat artifacts")
             if self.debug:
-                logger.log(f"[DEBUG] After NougatArtifactRemovalComponent ({filename}):\n{cleaned[:500]}{'...' if len(cleaned) > 500 else ''}")
+                print(f"\n{Fore.GREEN}[DEBUG] After NougatArtifactRemovalComponent ({filename}):{Style.RESET_ALL}\n{cleaned[:500]}{'...' if len(cleaned) > 500 else ''}")
             return cleaned
         except Exception as e:
             logger.log(f"[ERROR] {filename} - Nougat artifact removal failed: {str(e)}")
-            if self.debug: 
-                logger.log(f"[DEBUG] NougatArtifactRemovalComponent ({filename}) - Returning original content due to error:\n{content[:500]}{'...' if len(content) > 500 else ''}")
             return content
