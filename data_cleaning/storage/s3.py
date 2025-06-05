@@ -11,8 +11,8 @@ class LocalStorageComponent(DataStorageComponent):
 
     def save(self, key: str, content: str, subdir_name: str, logger: Logger) -> None:
         try:
-            base_filename = self.get_safe_filename(key)
-            file_path = f"{self.destination_bucket}/{subdir_name}/{base_filename}.md"
+            safe_key = self.get_safe_filename(key)
+            file_path = f"{self.destination_bucket}/{subdir_name}/{safe_key}".strip('/')
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
             with open(file_path, 'w', encoding='utf-8') as f:
                 f.write(content)
@@ -22,10 +22,15 @@ class LocalStorageComponent(DataStorageComponent):
 
     @staticmethod
     def get_safe_filename(key: str) -> str:
-        base_name = os.path.basename(key)
-        base_name = os.path.splitext(base_name)[0]
-        safe_name = re.sub(r'[^a-zA-Z0-9]', '_', base_name)
-        return safe_name
+        # Split the key into directory and filename
+        dir_path, base_name = os.path.split(key)
+        # Remove the extension (e.g., .md) and sanitize the base filename
+        name_without_ext = os.path.splitext(base_name)[0]
+        safe_name = re.sub(r'[^a-zA-Z0-9]', '_', name_without_ext)
+        # Sanitize the directory path, preserving structure
+        safe_dir = re.sub(r'[^a-zA-Z0-9/]', '_', dir_path) if dir_path else ''
+        # Combine directory and filename, add back .md extension
+        return f"{safe_dir}/{safe_name}.md".lstrip('/')
 
 class S3StorageComponent(DataStorageComponent):
     def __init__(self, bucket_name: str, destination_bucket: str):
@@ -40,8 +45,8 @@ class S3StorageComponent(DataStorageComponent):
 
     def save(self, key: str, content: str, subdir_name: str, logger: Logger) -> None:
         try:
-            base_filename = self.get_safe_filename(key)
-            file_path = f"{self.destination_bucket}/{subdir_name}/{base_filename}.md"
+            safe_key = self.get_safe_filename(key)
+            file_path = f"{self.destination_bucket}/{subdir_name}/{safe_key}".strip('/')
             self.client.put_object(
                 Bucket=self.bucket_name,
                 Key=file_path,
@@ -54,7 +59,12 @@ class S3StorageComponent(DataStorageComponent):
 
     @staticmethod
     def get_safe_filename(key: str) -> str:
-        base_name = os.path.basename(key)
-        base_name = os.path.splitext(base_name)[0]
-        safe_name = re.sub(r'[^a-zA-Z0-9]', '_', base_name)
-        return safe_name
+        # Split the key into directory and filename
+        dir_path, base_name = os.path.split(key)
+        # Remove the extension (e.g., .md) and sanitize the base filename
+        name_without_ext = os.path.splitext(base_name)[0]
+        safe_name = re.sub(r'[^a-zA-Z0-9]', '_', name_without_ext)
+        # Sanitize the directory path, preserving structure
+        safe_dir = re.sub(r'[^a-zA-Z0-9/]', '_', dir_path) if dir_path else ''
+        # Combine directory and filename, add back .md extension
+        return f"{safe_dir}/{safe_name}.md".lstrip('/')
