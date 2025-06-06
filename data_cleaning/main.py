@@ -10,6 +10,7 @@ from tqdm.auto import tqdm
 from helper.logger import Logger
 from components.nougat_artifacts import NougatArtifactRemovalComponent
 from components.latex_artifacts import LatexExtractor
+from components.ocr_corrections import OCRCorrections
 from storage.s3 import LocalStorageComponent, S3StorageComponent
 
 
@@ -29,6 +30,7 @@ class MarkdownCleaningPipeline:
         self.components = [
             NougatArtifactRemovalComponent(debug=self.debug),
             LatexExtractor(debug = self.debug),
+            OCRCorrections(debug = self.debug),
         ]
         self.storage = LocalStorageComponent(self.destination_bucket) if save_to_local else S3StorageComponent(self.bucket_name, self.destination_bucket)
 
