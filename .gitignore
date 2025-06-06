@@ -9,4 +9,8 @@ pdfs/
 logs.txt
 
 fastapi_expts/
+data/
+logs/
+cleaned_data/
+
 
