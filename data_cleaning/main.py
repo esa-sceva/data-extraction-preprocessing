@@ -70,15 +70,21 @@ class MarkdownCleaningPipeline:
             key = str(file_path.relative_to(self.base_dir))
             content = self.read_markdown_file(file_path)
             
-            if content:
-                for component in self.components:
-                    cleaned_content = component.process(content, logger, filename)
-                    if cleaned_content is None:
-                        break
-                if cleaned_content:
-                    self.storage.save(key, cleaned_content, "", logger)
-            else:
+            if not content:
                 logger.log(f"[ERROR] {filename} - Could not read markdown content")
+                return
+                
+            processed_content = content
+            for component in self.components:
+                processed_content = component.process(processed_content, logger, filename)
+                if processed_content is None:
+                    logger.log(f"[WARNING] {filename} - Processing stopped by {component.__class__.__name__}")
+                    return
+                    
+            if processed_content and processed_content != content:
+                self.storage.save(key, processed_content, "", logger)
+            elif processed_content:
+                logger.log(f"[INFO] {filename} - No changes made during processing")
         except Exception as e:
             logger.log(f"[ERROR] {filename} - Exception during processing: {str(e)}")
 
