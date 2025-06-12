@@ -9,7 +9,6 @@ from tqdm.auto import tqdm
 
 from helper.logger import Logger
 from components.nougat_artifacts import NougatArtifactRemovalComponent
-from components.latex_artifacts import LatexExtractor
 from components.ocr_corrections import OCRCorrections
 from components.ocr_deduplication import OCRDuplicateRemover
 from components.rule_based_corrections import RuleBasedCorrections
@@ -34,7 +33,6 @@ class MarkdownCleaningPipeline:
             
         self.components = [
             NougatArtifactRemovalComponent(debug=self.debug),
-            # LatexExtractor(debug = self.debug),
             OCRCorrections(debug = self.debug),
             OCRDuplicateRemover(debug = self.debug),
             NougatCorrection(debug = self.debug),

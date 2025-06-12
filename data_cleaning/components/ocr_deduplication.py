@@ -7,6 +7,7 @@ from datasketch import MinHash, MinHashLSH
 from colorama import Fore, Style, init
 
 from model.base import DataProcessingComponent
+from .latex_artifacts import LatexExtractor
 from helper.logger import Logger
 
 # Initialize colorama
@@ -73,6 +74,11 @@ class OCRDuplicateRemover(DataProcessingComponent):
             return None
 
         try:
+
+            # first remove any stuff latex
+            latex_component = LatexExtractor(debug = True)
+            content = latex_component.process(content, filename = filename)
+            
             # Extract text units (paragraphs or sentences)
             units = self._extract_units(content)
             
