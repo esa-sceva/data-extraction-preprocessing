@@ -13,7 +13,8 @@ from components.latex_artifacts import LatexExtractor
 from components.ocr_corrections import OCRCorrections
 from components.ocr_deduplication import OCRDuplicateRemover
 from components.rule_based_corrections import RuleBasedCorrections
-from components.pii_remover import PIIRemover
+from components.nougat_correction import NougatCorrection
+# from components.pii_remover import PIIRemover
 
 from storage.s3 import LocalStorageComponent, S3StorageComponent
 
@@ -33,11 +34,12 @@ class MarkdownCleaningPipeline:
             
         self.components = [
             NougatArtifactRemovalComponent(debug=self.debug),
-            LatexExtractor(debug = self.debug),
+            # LatexExtractor(debug = self.debug),
             OCRCorrections(debug = self.debug),
             OCRDuplicateRemover(debug = self.debug),
+            NougatCorrection(debug = self.debug),
             RuleBasedCorrections(debug = self.debug),
-            PIIRemover(debug = self.debug),
+            # PIIRemover(debug = self.debug), might have to runs eperatly because of multiprocessing
         ]
         self.storage = LocalStorageComponent(self.destination_bucket) if save_to_local else S3StorageComponent(self.bucket_name, self.destination_bucket)
 
