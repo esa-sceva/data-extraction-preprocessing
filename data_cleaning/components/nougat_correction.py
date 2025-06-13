@@ -29,6 +29,8 @@ class NougatCorrection(DataProcessingComponent):
         # use repr to see the actual content 
         # table = table.replace('\\\\begin{table}', '\begin{table}')
 
+        table = re.sub(r'\\\\\s*(cline\{[^\}]+\})', r'\\\1', table)
+        
         table = re.sub(r'\\\\multicolumn', r'\\multicolumn', table)
         
         table = table.replace('\\\\begin{tabular}', '\\begin{tabular}')
