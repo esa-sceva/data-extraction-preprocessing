@@ -2,8 +2,7 @@
 
 1. Run `main.py` file to remove basic artifacts and regular old data cleaning.
 
-
-Major Refactor - WIP
+(Remember to run PII seperately since its not compactible with multiprocessing)
 
 Sample Usage - 
 
