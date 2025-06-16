@@ -28,8 +28,8 @@ except LookupError:
     
 #     def __init__(self, 
 #                  shingle_size: int = 10,
-#                  num_perm: int = 128,
-#                  threshold: float = 0.9,
+#                  num_perm: int = 256,
+#                  threshold: float = 0.7,
 #                  batch_size: int = 1000,
 #                  unit: str = 'paragraph',
 #                  min_words: int = 10,
@@ -74,10 +74,9 @@ except LookupError:
 #             return None
 
 #         try:
-
 #             # first remove any stuff latex
-#             latex_component = LatexExtractor(debug = self.debug)
-#             content = latex_component.process(content, logger=logger, filename=filename)
+#             # latex_component = LatexExtractor(debug = self.debug)
+#             # content = latex_component.process(content, logger=logger, filename=filename)
             
 #             # Extract text units (paragraphs or sentences)
 #             units = self._extract_units(content)
@@ -100,10 +99,20 @@ except LookupError:
 #                 logger.log(f"[INFO] {filename} - No OCR duplicates identified")
 #                 return content
 
+#             # Log the text being removed
+#             removed_texts = []
+#             for start, end in ocr_duplicates:
+#                 removed_text = content[start:end]
+#                 removed_texts.append(removed_text)
+#                 logger.log(f"[INFO] {filename} - Removing OCR duplicate: {repr(removed_text)}")
+
 #             # Remove duplicates from content
 #             cleaned_content = self._remove_duplicates(content, ocr_duplicates)
             
-#             logger.log(f"[SUCCESS] {filename} - Removed {len(ocr_duplicates)} OCR duplicate segments")
+#             percent_removed = 0.0
+#             if content:
+#                 percent_removed = (len(content) - len(cleaned_content)) / len(content) * 100
+#             logger.log(f"[SUCCESS] {filename} - Removed {len(ocr_duplicates)} OCR duplicate segments, {percent_removed:.2f}% of text removed")
             
 #             if self.debug:
 #                 print(f"\n{Fore.GREEN}[DEBUG] After OCRDuplicateRemover ({filename}):{Style.RESET_ALL}\n{cleaned_content[:500]}{'...' if len(cleaned_content) > 500 else ''}")
@@ -121,7 +130,8 @@ except LookupError:
 #         if self.unit == 'paragraph':
 #             segments = content.split('\n\n')
 #         elif self.unit == 'sentence':
-#             segments = sent_tokenize(content)
+#             # segments = sent_tokenize(content)
+#             segments = content.split("\n")
 #         else:
 #             raise ValueError("Unit must be 'paragraph' or 'sentence'")
 
@@ -248,7 +258,7 @@ class OCRDuplicateRemover(DataProcessingComponent):
     """
     
     def __init__(self, 
-                 threshold: float = 0.8,
+                 threshold: float = 0.99,
                  min_words: int = 5,
                  debug: bool = False):
         """
@@ -281,9 +291,10 @@ class OCRDuplicateRemover(DataProcessingComponent):
         overlap = len(set1 & set2)
         return overlap / len(set1) >= self.threshold or overlap / len(set2) >= self.threshold
     
-    def _remove_near_adjacent_duplicates(self, content):
+    def _remove_near_adjacent_duplicates(self, content, logger=None, filename=None):
         sentences = content.split('\n')
         cleaned = []
+        removed = []
         i = 0
 
         while i < len(sentences):
@@ -299,13 +310,16 @@ class OCRDuplicateRemover(DataProcessingComponent):
                 j += 1
 
             if j < len(sentences) and self._is_similar(current, sentences[j]):
+                if logger:
+                    logger.log(f"[INFO] {filename} - Removing near-duplicate: {repr(sentences[j])}")
+                removed.append(sentences[j])
                 # Skip all noise and the similar sentence
                 i = j
             else:
                 cleaned.append(current)
                 i += 1
 
-        return '\n'.join(cleaned)
+        return '\n'.join(cleaned), removed
     
     def process(self, content: str, logger: Logger, filename: str) -> Optional[str]:
         """
@@ -327,13 +341,17 @@ class OCRDuplicateRemover(DataProcessingComponent):
             return None
 
         try:
-
             # first remove any stuff latex
             # latex_component = LatexExtractor(debug = self.debug)
             # content = latex_component.process(content, logger=logger, filename=filename)
             
-            cleaned_content = self._remove_near_adjacent_duplicates(content)
+            cleaned_content, removed = self._remove_near_adjacent_duplicates(content, logger=logger, filename=filename)
             
+            percent_removed = 0.0
+            if content:
+                percent_removed = (len(content) - len(cleaned_content)) / len(content) * 100
+            logger.log(f"[INFO] {filename} - OCRDuplicateRemover removed {len(removed)} segments, {percent_removed:.2f}% of text removed")
+
             if self.debug:
                 print(f"\n{Fore.GREEN}[DEBUG] After OCRDuplicateRemover ({filename}):{Style.RESET_ALL}\n{cleaned_content[:500]}{'...' if len(cleaned_content) > 500 else ''}")
             
