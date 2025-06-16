@@ -2,13 +2,13 @@
 Helper methods for the Presidio Streamlit app
 """
 from typing import List, Optional, Tuple
-import logging
 from presidio_analyzer import (
     AnalyzerEngine,
     RecognizerResult,
     RecognizerRegistry,
     PatternRecognizer,
     Pattern,
+    predefined_recognizers
 )
 from presidio_analyzer.nlp_engine import NlpEngine
 from presidio_anonymizer import AnonymizerEngine
@@ -19,11 +19,9 @@ from .presidio_nlp_engine_config import (
     create_nlp_engine_with_spacy,
     create_nlp_engine_with_flair,
     create_nlp_engine_with_transformers,
-    create_nlp_engine_with_azure_ai_language,
     create_nlp_engine_with_stanza,
 )
 
-logger = logging.getLogger("presidio-streamlit")
 
 
 def nlp_engine_and_registry(
@@ -51,8 +49,6 @@ def nlp_engine_and_registry(
         return create_nlp_engine_with_flair(model_path)
     elif "huggingface" in model_family.lower():
         return create_nlp_engine_with_transformers(model_path)
-    elif "azure ai language" in model_family.lower():
-        return create_nlp_engine_with_azure_ai_language(ta_key, ta_endpoint)
     else:
         raise ValueError(f"Model family {model_family} not supported")
 
@@ -79,11 +75,9 @@ def analyzer_engine(
     return analyzer
 
 
-
 def anonymizer_engine():
     """Return AnonymizerEngine."""
     return AnonymizerEngine()
-
 
 
 def get_supported_entities(
@@ -95,23 +89,37 @@ def get_supported_entities(
     ).get_supported_entities() + ["GENERIC_PII"]
 
 
-
 def analyze(
     model_family: str, model_path: str, ta_key: str, ta_endpoint: str, **kwargs
 ):
     """Analyze input using Analyzer engine and input arguments (kwargs)."""
-    #if "entities" not in kwargs or "All" in kwargs["entities"]:
+    # if "entities" not in kwargs or "All" in kwargs["entities"]:
     kwargs["entities"] = None
 
+    # Initialize ad_hoc_recognizers list
+    ad_hoc_recognizers = []
+
+    # Add deny list recognizer if provided
     if "deny_list" in kwargs and kwargs["deny_list"] is not None:
-        ad_hoc_recognizer = create_ad_hoc_deny_list_recognizer(kwargs["deny_list"])
-        kwargs["ad_hoc_recognizers"] = [ad_hoc_recognizer] if ad_hoc_recognizer else []
+        deny_list_recognizer = create_ad_hoc_deny_list_recognizer(kwargs["deny_list"])
+        if deny_list_recognizer:
+            ad_hoc_recognizers.append(deny_list_recognizer)
         del kwargs["deny_list"]
 
+    # Add regex recognizer if provided
     if "regex_params" in kwargs and len(kwargs["regex_params"]) > 0:
-        ad_hoc_recognizer = create_ad_hoc_regex_recognizer(*kwargs["regex_params"])
-        kwargs["ad_hoc_recognizers"] = [ad_hoc_recognizer] if ad_hoc_recognizer else []
+        regex_recognizer = create_ad_hoc_regex_recognizer(*kwargs["regex_params"])
+        if regex_recognizer:
+            ad_hoc_recognizers.append(regex_recognizer)
         del kwargs["regex_params"]
+
+    # Add email recognizer
+    email_recognizer = create_email_recognizer()
+    ad_hoc_recognizers.append(email_recognizer)
+
+    # Add all ad_hoc_recognizers to kwargs if any exist
+    if ad_hoc_recognizers:
+        kwargs["ad_hoc_recognizers"] = ad_hoc_recognizers
 
     return analyzer_engine(model_family, model_path, ta_key, ta_endpoint).analyze(
         **kwargs
@@ -223,3 +231,8 @@ def create_ad_hoc_regex_recognizer(
         supported_entity=entity_type, patterns=[pattern], context=context
     )
     return regex_recognizer
+
+
+def create_email_recognizer() -> predefined_recognizers.EmailRecognizer:
+    """Create and return an email recognizer instance."""
+    return predefined_recognizers.EmailRecognizer()

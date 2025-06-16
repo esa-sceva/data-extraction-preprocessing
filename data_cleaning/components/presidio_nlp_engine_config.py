@@ -1,4 +1,3 @@
-import logging
 from typing import Tuple
 
 import spacy
@@ -7,8 +6,6 @@ from presidio_analyzer.nlp_engine import (
     NlpEngine,
     NlpEngineProvider,
 )
-
-logger = logging.getLogger("presidio-streamlit")
 
 
 def create_nlp_engine_with_spacy(
@@ -24,16 +21,7 @@ def create_nlp_engine_with_spacy(
         "ner_model_configuration": {
             "model_to_presidio_entity_mapping": {
                 "PER": "PERSON",
-                "PERSON": "PERSON",
-                "NORP": "NRP",
-                "FAC": "FACILITY",
-                "LOC": "LOCATION",
-                "GPE": "LOCATION",
-                "LOCATION": "LOCATION",
-                "ORG": "ORGANIZATION",
-                "ORGANIZATION": "ORGANIZATION",
-                "DATE": "DATE_TIME",
-                "TIME": "DATE_TIME",
+                "PERSON": "PERSON"
             },
             "low_confidence_score_multiplier": 0.4,
             "low_score_entity_names": ["ORG", "ORGANIZATION"],
@@ -60,17 +48,7 @@ def create_nlp_engine_with_stanza(
         "models": [{"lang_code": "en", "model_name": model_path}],
         "ner_model_configuration": {
             "model_to_presidio_entity_mapping": {
-                "PER": "PERSON",
-                "PERSON": "PERSON",
-                "NORP": "NRP",
-                "FAC": "FACILITY",
-                "LOC": "LOCATION",
-                "GPE": "LOCATION",
-                "LOCATION": "LOCATION",
-                "ORG": "ORGANIZATION",
-                "ORGANIZATION": "ORGANIZATION",
-                "DATE": "DATE_TIME",
-                "TIME": "DATE_TIME",
+                "PERSON": "PERSON"
             }
         },
     }
@@ -104,27 +82,7 @@ def create_nlp_engine_with_transformers(
         ],
         "ner_model_configuration": {
             "model_to_presidio_entity_mapping": {
-                "PER": "PERSON",
-                "PERSON": "PERSON",
-                "LOC": "LOCATION",
-                "LOCATION": "LOCATION",
-                "GPE": "LOCATION",
-                "ORG": "ORGANIZATION",
-                "ORGANIZATION": "ORGANIZATION",
-                "NORP": "NRP",
-                "AGE": "AGE",
-                "ID": "ID",
-                "EMAIL": "EMAIL",
-                "PATIENT": "PERSON",
-                "STAFF": "PERSON",
-                "HOSP": "ORGANIZATION",
-                "PATORG": "ORGANIZATION",
-                "DATE": "DATE_TIME",
-                "TIME": "DATE_TIME",
-                "PHONE": "PHONE_NUMBER",
-                "HCW": "PERSON",
-                "HOSPITAL": "ORGANIZATION",
-                "FACILITY": "LOCATION",
+                "PERSON": "PERSON"
             },
             "low_confidence_score_multiplier": 0.4,
             "low_score_entity_names": ["ID"],
@@ -179,37 +137,5 @@ def create_nlp_engine_with_flair(
     registry.remove_recognizer("SpacyRecognizer")
 
     nlp_engine = NlpEngineProvider(nlp_configuration=nlp_configuration).create_engine()
-
-    return nlp_engine, registry
-
-
-def create_nlp_engine_with_azure_ai_language(ta_key: str, ta_endpoint: str):
-    """
-    Instantiate an NlpEngine with a TextAnalyticsWrapper and a small spaCy model.
-    The TextAnalyticsWrapper would return results from calling Azure Text Analytics PII, the spaCy model
-    would return NlpArtifacts such as POS and lemmas.
-    :param ta_key: Azure Text Analytics key.
-    :param ta_endpoint: Azure Text Analytics endpoint.
-    """
-    from azure_ai_language_wrapper import AzureAIServiceWrapper
-
-    if not ta_key or not ta_endpoint:
-        raise RuntimeError("Please fill in the Text Analytics endpoint details")
-
-    registry = RecognizerRegistry()
-    registry.load_predefined_recognizers()
-
-    azure_ai_language_recognizer = AzureAIServiceWrapper(
-        ta_endpoint=ta_endpoint, ta_key=ta_key
-    )
-    nlp_configuration = {
-        "nlp_engine_name": "spacy",
-        "models": [{"lang_code": "en", "model_name": "en_core_web_sm"}],
-    }
-
-    nlp_engine = NlpEngineProvider(nlp_configuration=nlp_configuration).create_engine()
-
-    registry.add_recognizer(azure_ai_language_recognizer)
-    registry.remove_recognizer("SpacyRecognizer")
 
     return nlp_engine, registry

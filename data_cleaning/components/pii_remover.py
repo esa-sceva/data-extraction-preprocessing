@@ -1,7 +1,8 @@
 from typing import Optional
 from colorama import Fore, Style, init
 
-import re
+from presidio_anonymizer import AnonymizerEngine
+from presidio_anonymizer.entities import OperatorConfig
 
 from .presidio_helpers import analyzer_engine, analyze
 
@@ -23,32 +24,47 @@ analyzer_params = ("flair", "flair/ner-english-large", "", "")
 #         text = text[:res.start] + placeholder + text[res.end:]
 #     return text
 
+# def anonymize_text(text, results):
+#     """with custom email regex handling"""
+
+#     results_sorted = sorted(results, key=lambda r: r.start, reverse=True)
+    
+#     # Create a list of spans already covered (so we don't overlap)
+#     covered_spans = set()
+    
+#     for res in results_sorted:
+#         if res.entity_type not in ['PERSON', 'EMAIL_ADDRESS']:
+#             continue
+#         placeholder = f"[{res.entity_type.upper()}]"
+#         text = text[:res.start] + placeholder + text[res.end:]
+#         covered_spans.update(range(res.start, res.end))
+
+#     # Regex to catch any missed email addresses
+#     email_pattern = re.compile(r'([-a-zA-Z0-9.`?{}]+@\w+(?:\.\w+)+)') #divided into before and after the @ part
+    
+#     # Go through regex matches *after* handling NER results
+#     for match in reversed(list(email_pattern.finditer(text))):
+#         start, end = match.span()
+#         if any(i in covered_spans for i in range(start, end)):
+#             continue  # Skip already covered spans
+#         text = text[:start] + "[EMAIL_ADDRESS]" + text[end:]
+
+#     return text
+
 def anonymize_text(text, results):
-    """with custom email regex handling"""
 
-    results_sorted = sorted(results, key=lambda r: r.start, reverse=True)
-    
-    # Create a list of spans already covered (so we don't overlap)
-    covered_spans = set()
-    
-    for res in results_sorted:
-        if res.entity_type not in ['PERSON', 'EMAIL_ADDRESS']:
-            continue
-        placeholder = f"[{res.entity_type.upper()}]"
-        text = text[:res.start] + placeholder + text[res.end:]
-        covered_spans.update(range(res.start, res.end))
+    engine = AnonymizerEngine()
 
-    # Regex to catch any missed email addresses
-    email_pattern = re.compile(r'([-a-zA-Z0-9.`?{}]+@\w+(?:\.\w+)+)') #divided into before and after the @ part
-    
-    # Go through regex matches *after* handling NER results
-    for match in reversed(list(email_pattern.finditer(text))):
-        start, end = match.span()
-        if any(i in covered_spans for i in range(start, end)):
-            continue  # Skip already covered spans
-        text = text[:start] + "[EMAIL_ADDRESS]" + text[end:]
+    result = engine.anonymize(
+        text = text,
+        analyzer_results = results,
+        operators = {"PERSON": OperatorConfig("replace", {"new_value": "[PERSON]"}),
+                    "EMAIL_ADDRESS": OperatorConfig("replace", {"new_value": "[EMAIL_ADDRESS]"}),
+                    },
+    )
 
-    return text
+    #print(result)
+    return result
 
 class PIIRemover(DataProcessingComponent):
 

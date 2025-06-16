@@ -44,28 +44,19 @@ class FlairRecognizer(EntityRecognizer):
     """
 
     ENTITIES = [
-        "LOCATION",
-        "PERSON",
-        "ORGANIZATION",
-        # "MISCELLANEOUS"   # - There are no direct correlation with Presidio entities.
+        "PERSON"
     ]
 
     DEFAULT_EXPLANATION = "Identified as {} by Flair's Named Entity Recognition"
 
     CHECK_LABEL_GROUPS = [
-        ({"LOCATION"}, {"LOC", "LOCATION"}),
-        ({"PERSON"}, {"PER", "PERSON"}),
-        ({"ORGANIZATION"}, {"ORG"}),
-        # ({"MISCELLANEOUS"}, {"MISC"}), # Probably not PII
+        ({"PERSON"}, {"PER", "PERSON"})
     ]
 
     MODEL_LANGUAGES = {"en": "flair/ner-english-large"}
 
     PRESIDIO_EQUIVALENCES = {
-        "PER": "PERSON",
-        "LOC": "LOCATION",
-        "ORG": "ORGANIZATION",
-        # 'MISC': 'MISCELLANEOUS'   # - Probably not PII
+        "PER": "PERSON"
     }
 
     def __init__(
