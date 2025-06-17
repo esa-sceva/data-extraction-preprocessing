@@ -18,25 +18,27 @@ class NougatCorrection(DataProcessingComponent):
     @staticmethod
     def _clean_latex_table(raw_table: str) -> str:
         # Replace escaped backslashes like \\hline with \hline
-        table = re.sub(r'\\\\(hline)', r'\\\1', raw_table)
+        # table = re.sub(r'\\\\(hline)', r'\\\1', raw_table)
 
-        # Fix row endings: Replace `\\\\` with `\\`
-        table = re.sub(r'\\\\+', r'\\\\', table)
+        # # Fix row endings: Replace `\\\\` with `\\`
+        # table = re.sub(r'\\\\+', r'\\\\', table)
 
-        # Format math expressions like \(a_{min}\) properly
-        table = re.sub(r'\\\((.*?)\\\)', r'\\(\1\\)', table)
+        # # Format math expressions like \(a_{min}\) properly
+        # table = re.sub(r'\\\((.*?)\\\)', r'\\(\1\\)', table)
 
-        # use repr to see the actual content 
-        # table = table.replace('\\\\begin{table}', '\begin{table}')
+        # # use repr to see the actual content 
+        # # table = table.replace('\\\\begin{table}', '\begin{table}')
 
-        table = re.sub(r'\\\\\s*(cline\{[^\}]+\})', r'\\\1', table)
+        # table = re.sub(r'\\\\\s*(cline\{[^\}]+\})', r'\\\1', table)
         
-        table = re.sub(r'\\\\multicolumn', r'\\multicolumn', table)
+        # table = re.sub(r'\\\\multicolumn', r'\\multicolumn', table)
         
-        table = table.replace('\\\\begin{tabular}', '\\begin{tabular}')
+        # table = table.replace('\\\\begin{tabular}', '\\begin{tabular}')
 
-        table = table.replace('\\\\end{table}', '\end{table}')
-        table = table.replace('\\\\end{tabular}', '\end{tabular}')
+        # table = table.replace('\\\\end{table}', '\end{table}')
+        # table = table.replace('\\\\end{tabular}', '\end{tabular}')
+
+        table = re.sub(r'\\{2,}', lambda m: '\\' * (len(m.group()) // 2), raw_table)
 
         return table
     
