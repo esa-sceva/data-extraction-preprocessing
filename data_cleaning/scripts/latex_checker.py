@@ -1,10 +1,11 @@
 # This script uses pylatex to compile latex equations and tables and logs issues if found.
 
-import re
+import logging
+import multiprocessing
 import os
+import re
 import subprocess
 import tempfile
-import logging
 from multiprocessing import Pool
 from pathlib import Path
 from typing import Tuple
@@ -218,4 +219,5 @@ def main(directory: str, num_processes: int = 4):
 
 if __name__ == "__main__":
     directory_to_process = "/content/test"
-    main(directory_to_process, num_processes = 4)
+    cpu_count = multiprocessing.cpu_count()
+    main(directory_to_process, num_processes = cpu_count)
