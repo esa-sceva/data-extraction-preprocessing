@@ -5,6 +5,9 @@ import os
 import subprocess
 import tempfile
 import logging
+from multiprocessing import Pool
+from pathlib import Path
+from typing import Tuple
 
 logging.basicConfig(
     filename ='formula_checker.log',
@@ -70,18 +73,18 @@ class LatexFormulaChecker:
 
         # Create a minimal LaTeX document to test the formula
         if formula_type == 'inline':
-            test_content = r"\documentclass{article}\usepackage{amsmath}\begin{document}$" + formula + r"$\end{document}"
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}$" + formula + r"$\end{document}"
         elif formula_type == 'inline-explicit':
-            test_content = r"\documentclass{article}\usepackage{amsmath}\begin{document}\(" + formula + r"\)\end{document}"
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}\(" + formula + r"\)\end{document}"
         elif formula_type == 'display':
-            test_content = r"\documentclass{article}\usepackage{amsmath}\begin{document}$$" + formula + r"$$\end{document}"
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}$$" + formula + r"$$\end{document}"
         elif formula_type == 'display-explicit':
-            test_content = r"\documentclass{article}\usepackage{amsmath}\begin{document}\[" + formula + r"\]\end{document}"
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}\[" + formula + r"\]\end{document}"
         elif formula_type.startswith('env:'):
             env = formula_type.split(':')[1]
-            test_content = r"\documentclass{article}\usepackage{amsmath}\begin{document}\begin{" + env + "}" + formula + r"\end{" + env + "}\end{document}"
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}\begin{" + env + "}" + formula + r"\end{" + env + "}\end{document}"
         elif formula_type.startswith('table-env:'):
-            test_content = r"\documentclass{article}\usepackage{amsmath}\begin{document}" + formula + r"\end{document}" # dont add $
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}" + formula + r"\end{document}"
 
         # Create a temporary directory for testing
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -114,37 +117,105 @@ class LatexFormulaChecker:
 
                 return False, error_msg
 
-def main():
+# def main():
+#     checker = LatexFormulaChecker()
+#     filename = "/content/018a3eaf_368f_4053_9f77_abfb592b5251.md"
+    
+#     try:
+#         with open(filename, 'r') as f:
+#             data = f.read()
+#     except FileNotFoundError:
+#         logging.error(f"File not found: {filename}")
+#         print(f"Error: File {filename} not found")
+#         return
+
+#     formulas = checker.extract_formulas(data)
+
+#     # print(formulas)
+#     total_formulas = len(formulas)
+
+#     correct_formulas = 0
+#     incorrect_formulas = 0
+
+#     for i, (formula_type, formula) in enumerate(formulas):
+#         valid, message = checker.check_formula_syntax(formula, formula_type)
+#         if valid:
+#             correct_formulas += 1
+#         else:
+#             incorrect_formulas += 1
+#             logging.warning(f"Invalid formula in {filename} (type: {formula_type}): {formula} - Error: {message}")
+
+#     # Log summary
+#     logging.info(f"File: {filename}, Total formulas: {total_formulas}, Correct: {correct_formulas}, Incorrect: {incorrect_formulas}")
+#     print(f"Summary - Total formulas: {total_formulas}, Correct: {correct_formulas}, Incorrect: {incorrect_formulas}")
+
+# if __name__ == "__main__":
+#     main()
+
+
+def process_file(file_path: Path) -> Tuple[str, int, int, int]:
+    """
+    Process a single Markdown file and check its LaTeX formulas.
+    Returns: (filename, total_formulas, correct_formulas, incorrect_formulas)
+    """
     checker = LatexFormulaChecker()
-    filename = "/content/018a3eaf_368f_4053_9f77_abfb592b5251.md"
     
     try:
-        with open(filename, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             data = f.read()
-    except FileNotFoundError:
-        logging.error(f"File not found: {filename}")
-        print(f"Error: File {filename} not found")
-        return
+    except Exception as e:
+        logging.error(f"Error with {file_path}: {str(e)}")
+        return (str(file_path), 0, 0, 0)
 
     formulas = checker.extract_formulas(data)
-
-    # print(formulas)
     total_formulas = len(formulas)
-
     correct_formulas = 0
     incorrect_formulas = 0
 
-    for i, (formula_type, formula) in enumerate(formulas):
+    for formula_type, formula in formulas:
         valid, message = checker.check_formula_syntax(formula, formula_type)
         if valid:
             correct_formulas += 1
         else:
             incorrect_formulas += 1
-            logging.warning(f"Invalid formula in {filename} (type: {formula_type}): {formula} - Error: {message}")
+            logging.warning(f"Invalid formula in {file_path} (type: {formula_type}): {formula} - Error: {message}")
 
-    # Log summary
-    logging.info(f"File: {filename}, Total formulas: {total_formulas}, Correct: {correct_formulas}, Incorrect: {incorrect_formulas}")
-    print(f"Summary - Total formulas: {total_formulas}, Correct: {correct_formulas}, Incorrect: {incorrect_formulas}")
+    logging.info(f"File: {file_path}, Total formulas: {total_formulas}, Correct: {correct_formulas}, Incorrect: {incorrect_formulas}")
+    return (str(file_path), total_formulas, correct_formulas, incorrect_formulas)
+
+def main(directory: str, num_processes: int = 4):
+    """
+    Main function to process all Markdown files in a directory using multiprocessing.
+    """
+    directory_path = Path(directory)
+
+    md_files = list(directory_path.glob('*.md'))
+    if not md_files:
+        logging.info(f"No Markdown files found in {directory}")
+        print(f"No Markdown files found in {directory}")
+        return
+
+    print(f"Found {len(md_files)} Markdown files to process")
+
+    with Pool(processes = num_processes) as pool:
+        results = pool.map(process_file, md_files)
+
+    total_files = len(results)
+    total_formulas_all = sum(r[1] for r in results)
+    total_correct = sum(r[2] for r in results)
+    total_incorrect = sum(r[3] for r in results)
+
+    print("\nOverall Summary:")
+    print(f"Total files processed: {total_files}")
+    print(f"Total formulas: {total_formulas_all}")
+    print(f"Correct formulas: {total_correct}")
+    print(f"Incorrect formulas: {total_incorrect}")
+
+    logging.info(
+        f"Overall Summary: Files: {total_files}, Total formulas: {total_formulas_all}, "
+        f"Correct: {total_correct}, Incorrect: {total_incorrect}"
+    )
 
 if __name__ == "__main__":
-    main()
+    directory_to_process = "/content/test"
+    main(directory_to_process, num_processes = 4)
