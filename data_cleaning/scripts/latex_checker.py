@@ -19,10 +19,10 @@ logging.basicConfig(
 class LatexFormulaChecker:
     def __init__(self):
         # Standard inline formula pattern
-        self.inline_pattern = re.compile(r'(?<!\$)\$(?!\$)(.+?)(?<!\$)\$(?!\$)')
+        self.inline_pattern = re.compile(r'(?<!\$)\$(?!\$)(.+?)(?<!\$)\$(?!\$)') # match $ enclosed by $ if not followed by another $
 
         # Standard display formula patterns
-        self.display_pattern = re.compile(r'\$\$(.*?)\$\$', re.DOTALL)
+        self.display_pattern = re.compile(r'\$\$(.*?)\$\$', re.DOTALL) # match doubel $$
         self.bracket_pattern = re.compile(r'\\[(](.*?)\\[)]', re.DOTALL)  # \( ... \)
         self.square_bracket_pattern = re.compile(r'\\\[(.*?)\\\]', re.DOTALL)  # \[ ... \]
 

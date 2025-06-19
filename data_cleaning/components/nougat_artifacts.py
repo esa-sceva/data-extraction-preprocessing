@@ -21,8 +21,13 @@ class NougatArtifactRemovalComponent(DataProcessingComponent):
             logger.log(f"[ERROR] {filename} - Empty content in Nougat artifact removal")
             return None
         try:
+            # two additional checks to add
+            cleaned = content.strip('"')
+            # Replace the escaped "\n" with actual newline characters
+            cleaned = cleaned.replace('\\n', '\n')
+
             cleaned = re.sub(r'\+\+\+\s*==WARNING: Truncated because of repetitions==.*?\+\+\+',
-                            '', content, flags=re.DOTALL)
+                            '', cleaned, flags=re.DOTALL)
             cleaned = re.sub(r'\+\+\+\s*==ERROR: No output for this page==.*?\+\+\+',
                             '', cleaned, flags=re.DOTALL)
             cleaned = cleaned.replace('[MISSING_PAGE_POST]', '')

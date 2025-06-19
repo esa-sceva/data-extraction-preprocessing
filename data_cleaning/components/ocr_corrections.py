@@ -22,7 +22,8 @@ class OCRCorrections(DataProcessingComponent):
             logger.log(f"[ERROR] {filename} - Empty content in OCRCorrections")
             return None
         try:
-            cleaned = re.sub(r'(\d+)([A-Za-z])', r'\1 \2', content) # add space between number and text
+            #cleaned = re.sub(r'(\d+)([A-Za-z])', r'\1 \2', content) # add space between number and text
+            cleaned = re.sub(r'(\d+)([A-Za-z]{2,})', r'\1 \2', content) # do this to ensure we dont split up things like 20M 100k etc
             # cleaned = re.sub(r'(\d+)([A-Za-z])', r'\1 \2', cleaned) # if needed add a full stop
             logger.log(f"[SUCCESS] {filename} - Fixed OCRCorrections")
             if self.debug:
