@@ -164,6 +164,7 @@ def main(directory: str, num_processes: int = 4):
         return
 
     print(f"Found {len(md_files)} Markdown files to process")
+    print(f"Using {num_processes} workers")
 
     # with Pool(processes = num_processes) as pool:
     #     results = pool.map(process_file, md_files)
