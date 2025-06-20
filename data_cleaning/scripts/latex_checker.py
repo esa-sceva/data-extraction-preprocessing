@@ -127,12 +127,25 @@ def process_file(file_path: Path) -> Tuple[str, int, int, int]:
     """
     checker = LatexFormulaChecker()
     
+    # try:
+    #     with open(file_path, 'r', encoding='utf-8') as f:
+    #         data = f.read()
+    # except Exception as e:
+    #     logging.error(f"Error with {file_path}: {str(e)}")
+    #     return (str(file_path), 0, 0, 0)
+
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            data = f.read()
+        encodings_to_try = [None, 'utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
+
+        for encoding in encodings_to_try:
+            try:
+                with open(file_path, 'r', encoding = encoding) as file:
+                    data = file.read()
+                break
+            except UnicodeDecodeError:
+                continue
     except Exception as e:
-        logging.error(f"Error with {file_path}: {str(e)}")
-        return (str(file_path), 0, 0, 0)
+        print(f"File cannot be read: {str(e)}")
 
     formulas = checker.extract_formulas(data)
     total_formulas = len(formulas)
