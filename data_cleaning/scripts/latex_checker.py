@@ -6,6 +6,8 @@ import os
 import re
 import subprocess
 import tempfile
+import time
+from tqdm.auto import tqdm
 from multiprocessing import Pool
 from pathlib import Path
 from typing import Tuple
@@ -118,42 +120,6 @@ class LatexFormulaChecker:
 
                 return False, error_msg
 
-# def main():
-#     checker = LatexFormulaChecker()
-#     filename = "/content/018a3eaf_368f_4053_9f77_abfb592b5251.md"
-    
-#     try:
-#         with open(filename, 'r') as f:
-#             data = f.read()
-#     except FileNotFoundError:
-#         logging.error(f"File not found: {filename}")
-#         print(f"Error: File {filename} not found")
-#         return
-
-#     formulas = checker.extract_formulas(data)
-
-#     # print(formulas)
-#     total_formulas = len(formulas)
-
-#     correct_formulas = 0
-#     incorrect_formulas = 0
-
-#     for i, (formula_type, formula) in enumerate(formulas):
-#         valid, message = checker.check_formula_syntax(formula, formula_type)
-#         if valid:
-#             correct_formulas += 1
-#         else:
-#             incorrect_formulas += 1
-#             logging.warning(f"Invalid formula in {filename} (type: {formula_type}): {formula} - Error: {message}")
-
-#     # Log summary
-#     logging.info(f"File: {filename}, Total formulas: {total_formulas}, Correct: {correct_formulas}, Incorrect: {incorrect_formulas}")
-#     print(f"Summary - Total formulas: {total_formulas}, Correct: {correct_formulas}, Incorrect: {incorrect_formulas}")
-
-# if __name__ == "__main__":
-#     main()
-
-
 def process_file(file_path: Path) -> Tuple[str, int, int, int]:
     """
     Process a single Markdown file and check its LaTeX formulas.
@@ -188,6 +154,7 @@ def main(directory: str, num_processes: int = 4):
     """
     Main function to process all Markdown files in a directory using multiprocessing.
     """
+    start_time = time.time() 
     directory_path = Path(directory)
 
     md_files = list(directory_path.glob('*.md'))
@@ -198,23 +165,30 @@ def main(directory: str, num_processes: int = 4):
 
     print(f"Found {len(md_files)} Markdown files to process")
 
+    # with Pool(processes = num_processes) as pool:
+    #     results = pool.map(process_file, md_files)
+    
     with Pool(processes = num_processes) as pool:
-        results = pool.map(process_file, md_files)
+        results = list(tqdm(pool.imap(process_file, md_files), total=len(md_files), desc="Processing files"))
 
     total_files = len(results)
     total_formulas_all = sum(r[1] for r in results)
     total_correct = sum(r[2] for r in results)
     total_incorrect = sum(r[3] for r in results)
 
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+
     print("\nOverall Summary:")
     print(f"Total files processed: {total_files}")
     print(f"Total formulas: {total_formulas_all}")
     print(f"Correct formulas: {total_correct}")
     print(f"Incorrect formulas: {total_incorrect}")
+    print(f"Total time taken: {elapsed_time:.2f} seconds")
 
     logging.info(
         f"Overall Summary: Files: {total_files}, Total formulas: {total_formulas_all}, "
-        f"Correct: {total_correct}, Incorrect: {total_incorrect}"
+        f"Correct: {total_correct}, Incorrect: {total_incorrect}, Time taken: {elapsed_time:.2f} seconds"
     )
 
 if __name__ == "__main__":
