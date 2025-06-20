@@ -74,18 +74,18 @@ class LatexFormulaChecker:
 
         # Create a minimal LaTeX document to test the formula
         if formula_type == 'inline':
-            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}$" + formula + r"$\end{document}"
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\usepackage{multirow}\usepackage{bm}\begin{document}$" + formula + r"$\end{document}"
         elif formula_type == 'inline-explicit':
-            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}\(" + formula + r"\)\end{document}"
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\usepackage{multirow}\usepackage{bm}\begin{document}\(" + formula + r"\)\end{document}"
         elif formula_type == 'display':
-            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}$$" + formula + r"$$\end{document}"
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\usepackage{multirow}\usepackage{bm}\begin{document}$$" + formula + r"$$\end{document}"
         elif formula_type == 'display-explicit':
-            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}\[" + formula + r"\]\end{document}"
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\usepackage{multirow}\usepackage{bm}\begin{document}\[" + formula + r"\]\end{document}"
         elif formula_type.startswith('env:'):
             env = formula_type.split(':')[1]
-            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}\begin{" + env + "}" + formula + r"\end{" + env + "}\end{document}"
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\usepackage{multirow}\usepackage{bm}\begin{document}\begin{" + env + "}" + formula + r"\end{" + env + "}\end{document}"
         elif formula_type.startswith('table-env:'):
-            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\begin{document}" + formula + r"\end{document}"
+            test_content = r"\documentclass{article}\usepackage{amsmath}\usepackage{amssymb}\usepackage{multirow}\usepackage{bm}\begin{document}" + formula + r"\end{document}"
 
         # Create a temporary directory for testing
         with tempfile.TemporaryDirectory() as tmp_dir:

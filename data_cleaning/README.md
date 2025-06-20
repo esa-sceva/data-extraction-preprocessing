@@ -7,5 +7,5 @@
 Sample Usage - 
 
 ```
-python main.py --base_dir ../data/test --num_processes 1 --debug
+python main.py --base_dir ../data/arxiv --num_processes 1 --debug
 ```
