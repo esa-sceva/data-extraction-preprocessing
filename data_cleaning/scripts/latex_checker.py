@@ -101,7 +101,9 @@ class LatexFormulaChecker:
                 cwd=tmp_dir,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                text=True
+                text=True,
+                encoding='utf-8',
+                errors='replace'
             )
 
             # Check if compilation was successful
