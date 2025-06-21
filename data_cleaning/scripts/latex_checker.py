@@ -134,18 +134,21 @@ def process_file(file_path: Path) -> Tuple[str, int, int, int]:
     #     logging.error(f"Error with {file_path}: {str(e)}")
     #     return (str(file_path), 0, 0, 0)
 
-    try:
-        encodings_to_try = [None, 'utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
+    encodings_to_try = [None, 'utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
+    for encoding in encodings_to_try:
+        try:
+            with open(file_path, 'r', encoding=encoding) as file:
+                data = file.read()
+            break
+        except (UnicodeDecodeError, UnicodeError):
+            continue
+        except Exception as e:
+            logging.error(f"File read error ({file_path}) with encoding {encoding}: {e}")
+            return (str(file_path), 0, 0, 0)
 
-        for encoding in encodings_to_try:
-            try:
-                with open(file_path, 'r', encoding = encoding) as file:
-                    data = file.read()
-                break
-            except UnicodeDecodeError:
-                continue
-    except Exception as e:
-        print(f"File cannot be read: {str(e)}")
+    if data is None:
+        logging.error(f"Could not decode file {file_path} with tried encodings.")
+        return (str(file_path), 0, 0, 0)
 
     formulas = checker.extract_formulas(data)
     total_formulas = len(formulas)
