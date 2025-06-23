@@ -1,22 +1,14 @@
-from typing import Optional, List, Tuple
+from typing import Optional
 import re
 
-import nltk
-from nltk import ngrams, sent_tokenize
-from datasketch import MinHash, MinHashLSH
 from colorama import Fore, Style, init
 
 from model.base import DataProcessingComponent
-from .latex_artifacts import LatexExtractor
+# from .latex_artifacts import LatexExtractor
 from helper.logger import Logger
 
 # Initialize colorama
 init()
-
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
 
 
 # class OCRDuplicateRemover(DataProcessingComponent):
@@ -25,7 +17,18 @@ except LookupError:
 #     Uses LSH (Locality Sensitive Hashing) to efficiently find near-duplicate
 #     paragraphs or sentences and removes redundant copies.
 #     """
-    
+
+    # add lazy imports
+    # from typing import List, Tuple
+    # from nltk import ngrams, sent_tokenize
+    # from datasketch import MinHash, MinHashLSH
+    # import nltk
+
+    # try:
+    #     nltk.data.find('tokenizers/punkt')
+    # except LookupError:
+    #     nltk.download('punkt')
+
 #     def __init__(self, 
 #                  shingle_size: int = 10,
 #                  num_perm: int = 256,
