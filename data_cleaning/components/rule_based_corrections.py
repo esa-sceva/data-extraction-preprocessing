@@ -35,6 +35,9 @@ class RuleBasedCorrections(DataProcessingComponent):
             cleaned = '\n'.join(cleaned_lines)
             # replace 3+ consecutive newlines with exactly 2 if present
             cleaned = re.sub(r'\n{3,}', '\n\n', cleaned)
+
+            # remove any leading or trailing whitespaces
+            cleaned = cleaned.strip()
             logger.log(f"[SUCCESS] {filename} - Fixed Rule Based Correction ")
             if self.debug:
                 print(f"\n{Fore.GREEN}[DEBUG] After Rule Based Correction  ({filename}):{Style.RESET_ALL}\n{cleaned[:500]}{'...' if len(cleaned) > 500 else ''}")

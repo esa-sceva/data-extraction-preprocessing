@@ -12,7 +12,12 @@ class LocalStorageComponent(DataStorageComponent):
     def save(self, key: str, content: str, subdir_name: str, logger: Logger) -> None:
         try:
             safe_key = self.get_safe_filename(key)
-            file_path = f"{self.destination_bucket}/{subdir_name}/{safe_key}".strip('/')
+            # Only include subdir_name if it's not empty
+            if subdir_name:
+                file_path = f"{self.destination_bucket}/{subdir_name}/{safe_key}"
+            else:
+                file_path = f"{self.destination_bucket}/{safe_key}"
+            file_path = file_path.strip('/')
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
             with open(file_path, 'w', encoding='utf-8') as f:
                 f.write(content)
@@ -46,7 +51,13 @@ class S3StorageComponent(DataStorageComponent):
     def save(self, key: str, content: str, subdir_name: str, logger: Logger) -> None:
         try:
             safe_key = self.get_safe_filename(key)
-            file_path = f"{self.destination_bucket}/{subdir_name}/{safe_key}".strip('/')
+            # Only include subdir_name if it's not empty
+            if subdir_name:
+                file_path = f"{self.destination_bucket}/{subdir_name}/{safe_key}"
+            else:
+                file_path = f"{self.destination_bucket}/{safe_key}"
+            file_path = file_path.strip('/')
+            
             self.client.put_object(
                 Bucket=self.bucket_name,
                 Key=file_path,

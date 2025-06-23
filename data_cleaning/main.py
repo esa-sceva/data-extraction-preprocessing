@@ -24,7 +24,7 @@ class MarkdownCleaningPipeline:
         self.save_to_local = save_to_local
         self.num_processes = num_processes if num_processes else os.cpu_count()
         self.bucket_name: Final[str] = os.getenv("AWS_BUCKET_NAME", 'llm4eo-s3')
-        self.destination_bucket: Final[str] = "cleaned_data"
+        self.destination_bucket: Final[str] = "raw_data_dedup_cleaned_v2"
         self.debug = debug
         
         self.logger = Logger("pipeline")
@@ -39,13 +39,19 @@ class MarkdownCleaningPipeline:
             RuleBasedCorrections(debug = self.debug),
             # PIIRemover(debug = self.debug), might have to runs eperatly because of multiprocessing
         ]
-        self.storage = LocalStorageComponent(self.destination_bucket) if save_to_local else S3StorageComponent(self.bucket_name, self.destination_bucket)
-
-        if self.save_to_local:
+        
+        self.storage = None
+        if save_to_local:
+            self.storage = LocalStorageComponent(self.destination_bucket)
             self.logger.log("Saving cleaned markdown files to local directory")
             os.makedirs(f"{self.destination_bucket}", exist_ok=True)
         else:
-            self.logger.log("Saving cleaned markdown to S3")
+            self.logger.log("Will save cleaned markdown to S3")
+
+    def _init_worker(self):
+        """Initialize worker-specific resources"""
+        if not self.save_to_local and self.storage is None:
+            self.storage = S3StorageComponent(self.bucket_name, self.destination_bucket)
 
     def process_files(self):
         try:
@@ -57,16 +63,21 @@ class MarkdownCleaningPipeline:
             
             self.logger.log(f"Found {len(markdown_files)} markdown files in {self.base_dir}")
             
-            with Pool(processes = self.num_processes) as pool:
-                process_func = partial(self.process_file_wrapper)
-                list(tqdm(pool.imap(process_func, markdown_files),
-                          total=len(markdown_files),
-                          desc="Cleaning markdown files"))
+            if self.num_processes > 1:
+                # for multiprocessing, use initializer to set up each worker
+                with Pool(processes=self.num_processes, 
+                         initializer=self._init_worker) as pool:
+                    list(tqdm(pool.imap(self._process_file, markdown_files),
+                            total=len(markdown_files),
+                            desc="Cleaning markdown files"))
+            else:
+                # single process mode
+                self._init_worker()
+                for file_path in tqdm(markdown_files, desc="Cleaning markdown files"):
+                    self._process_file(file_path)
         except Exception as e:
             self.logger.log(f"Error processing files: {str(e)}")
-
-    def process_file_wrapper(self, file_path: Path):
-        return self._process_file(file_path)
+            raise
 
     def _process_file(self, file_path: Path) -> None:
         filename = file_path.name
@@ -74,7 +85,7 @@ class MarkdownCleaningPipeline:
         logger.log(f"[START] Cleaning {filename}")
         
         try:
-            key = str(file_path.relative_to(self.base_dir))
+            key = str(file_path.relative_to(self.base_dir)).replace('\\', '/').lstrip('/')
             content = self.read_markdown_file(file_path)
             
             if not content:
@@ -89,11 +100,16 @@ class MarkdownCleaningPipeline:
                     return
                     
             if processed_content and processed_content != content:
+                if self.storage is None:
+                    self._init_worker()
                 self.storage.save(key, processed_content, "", logger)
             elif processed_content:
                 logger.log(f"[INFO] {filename} - No changes made during processing")
         except Exception as e:
             logger.log(f"[ERROR] {filename} - Exception during processing: {str(e)}")
+            if self.debug:
+                import traceback
+                logger.log(f"[DEBUG] {filename} - {traceback.format_exc()}")
 
     def read_markdown_file(self, file_path: Path) -> Optional[str]:
         try:
