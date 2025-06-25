@@ -31,11 +31,11 @@ class MarkdownCleaningPipeline:
             self.logger.log("DEBUG mode enabled for pipeline.")
             
         self.components = [
-            NougatArtifactRemovalComponent(debug=self.debug),
             OCRCorrections(debug = self.debug),
             OCRDuplicateRemover(debug = self.debug),
             NougatCorrection(debug = self.debug),
             RuleBasedCorrections(debug = self.debug),
+            NougatArtifactRemovalComponent(debug=self.debug), # flip ordering since nougat helper adds artifact
             # PIIRemover(debug = self.debug), might have to runs eperatly because of multiprocessing
         ]
         

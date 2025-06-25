@@ -262,7 +262,7 @@ class OCRDuplicateRemover(DataProcessingComponent):
     
     def __init__(self, 
                  threshold: float = 0.99,
-                 min_words: int = 5,
+                 min_words: int = 2,
                  debug: bool = False):
         """
         Initialize the OCR duplicate remover.
