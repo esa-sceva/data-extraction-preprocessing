@@ -1,5 +1,7 @@
 data/
 raw_data_dedup_cleaned/
+raw_data_dedup_cleaned_v2/
+
 logs/
 
 .flair/
