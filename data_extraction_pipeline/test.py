@@ -18,18 +18,18 @@ class DataExtractionS3Pipeline:
         self.sub_folder = sub_folder
 
         self.bucket_name: Final[str] = os.getenv("AWS_BUCKET_NAME", 'llm4eo-s3')
+
+        print(f"[DEBUG] Initialized with base_dir={self.base_dir.resolve()}, sub_folder={self.sub_folder}, save_to_local={self.save_to_local}")
+
         if self.save_to_local:
-            print("Saving files to local directory")
             os.makedirs(f"{self.destination_bucket}", exist_ok=True)
             if self.sub_folder:
                 self._setup_directories(self.sub_folder)
         else:
-            print("Saving to S3")
-        
-        self.model = PdfConverter(
-            artifact_dict=create_model_dict(),
-        )
-        print("Initialized the model.")
+            print("[DEBUG] S3 saving mode enabled")
+
+        self.model = PdfConverter(artifact_dict=create_model_dict())
+        print("[DEBUG] Marker PDF model initialized")
 
     def _setup_directories(self, sub_folder):
         os.makedirs(f"{self.destination_bucket}/{sub_folder}", exist_ok=True)
@@ -39,7 +39,7 @@ class DataExtractionS3Pipeline:
             if not self.sub_folder:
                 subdirs = self._discover_subdirectories()
                 for subdir in subdirs:
-                    print(f"Processing subdirectory: {subdir}")
+                    print(f"[DEBUG] Processing subdir: {subdir}")
                     if self.save_to_local:
                         self._setup_directories(subdir)
                     subdir_path = self.base_dir / subdir
@@ -47,7 +47,7 @@ class DataExtractionS3Pipeline:
             else:
                 self._process_directory(self.base_dir, self.sub_folder)
         except Exception as e:
-            print(f"Error processing files: {str(e)}")
+            print(f"[ERROR] process_files failed: {e}")
 
     def _discover_subdirectories(self):
         subdirs = []
@@ -58,104 +58,89 @@ class DataExtractionS3Pipeline:
             if not subdirs:
                 subdirs = [self.base_dir.name]
         except Exception as e:
-            print(f"Error discovering subdirectories: {str(e)}")
+            print(f"[ERROR] _discover_subdirectories: {e}")
         return subdirs
-
-    def get_relative_provider_path(self, filepath: Path, subdir_name: str) -> Path:
-        parts = filepath.parts
-        subfolder_index = parts.index(subdir_name)
-        result_parts = parts[subfolder_index:]
-        return Path(*result_parts)
 
     def _process_directory(self, directory_path, subdir_name):
         try:
             file_list = list(directory_path.glob('**/*'))
             files = [f for f in file_list if f.is_file()]
-            print(f"Found {len(files)} files in {directory_path}")
+            print(f"[DEBUG] Found {len(files)} files in {directory_path.resolve()}")
 
             total_start = time.time()
             processed_count = 0
 
-            print(f"Starting sequential processing for {len(files)} files in {subdir_name}")
             for file_path in files:
-                file_extension = file_path.suffix.lower().lstrip('.')
-                if file_extension == "pdf":
-                    print(f"Processing {processed_count+1}/{len(files)}: {file_path.name}")
-                    processing_time = self.process_pdf_file(
-                        file_path, 
-                        subdir_name, 
-                        self.save_to_local,
-                        self.bucket_name, 
-                        self.destination_bucket, 
+                print(f"[DEBUG] Inspecting: {file_path}")
+                ext = file_path.suffix.lower().lstrip('.')
+                if ext == "pdf":
+                    print(f"[DEBUG] Processing {processed_count+1}/{len(files)}: {file_path.name}")
+                    duration = self.process_pdf_file(
+                        file_path, subdir_name,
+                        self.save_to_local, self.bucket_name,
+                        self.destination_bucket
                     )
+                    print(f"[DEBUG] Done in {duration:.2f}s")
                     processed_count += 1
-                    print(f"Completed in {processing_time:.2f}s")
                 else:
-                    print(f"Skipping unsupported file type: {file_path}")
-            total_duration = time.time() - total_start
-            print(f"Total processing time: {total_duration:.2f}s for {processed_count} files")
+                    print(f"[SKIP] Unsupported file type ({ext}): {file_path.name}")
+            print(f"[DEBUG] Finished {processed_count} PDFs in {time.time() - total_start:.2f}s")
         except Exception as e:
-            print(f"Error processing directory {directory_path}: {str(e)}")
+            print(f"[ERROR] _process_directory: {e}")
 
     def process_pdf_file(self, file_path, subdir_name, save_to_local, bucket_name, destination_bucket):
-        filename = file_path.name
-        parts = file_path.parts
-        subdir_index = parts.index(subdir_name)
-        result_parts = parts[subdir_index:-1]
-        provider_path = Path(*result_parts)
         start_time = time.time()
-        
         try:
-            key = str(file_path.relative_to(file_path.parent.parent)
-                    if file_path.parent.parent != file_path.parent else file_path.name)
+            # Construct a consistent key
+            rel_key = str(file_path.relative_to(self.base_dir))
+            print(f"[DEBUG] Relative key: {rel_key}")
+
             extracted_text = self.extract_pdf_text(file_path)
-            duration = time.time() - start_time
-            
-            if extracted_text:
-                result = self.save_extracted_markdown(
-                    key, 
-                    extracted_text, 
-                    "PDF", 
-                    provider_path, 
-                    save_to_local, 
-                    bucket_name, 
-                    destination_bucket
-                )
-                return duration
+            if not extracted_text:
+                print(f"[WARN] Empty extraction: {file_path.name}")
+                return time.time() - start_time
+
+            result = self.save_extracted_markdown(
+                rel_key, extracted_text, "PDF", str(subdir_name),
+                save_to_local, bucket_name, destination_bucket
+            )
+            if result:
+                print(f"[DEBUG] Saved markdown for: {file_path.name}")
             else:
-                print(f"Text extraction failed: {file_path}")
-                return duration
+                print(f"[ERROR] Save failed for: {file_path.name}")
+            return time.time() - start_time
         except Exception as e:
-            print(f"Error processing file {file_path}: {str(e)}")
+            print(f"[ERROR] process_pdf_file: {e}")
             return time.time() - start_time
 
     def extract_pdf_text(self, file_path):
         try:
             rendered = self.model(str(file_path))
             text, _, _ = text_from_rendered(rendered)
+            print(f"[DEBUG] Extracted {len(text)} characters from {file_path.name}")
             return text
         except Exception as e:
-            print(f"PDF extraction error: {str(e)}")
+            print(f"[ERROR] extract_pdf_text: {e}")
             return None
 
     @staticmethod
     def process_text(text):
-        text = text.strip('"')
-        text = text.replace('\\n', '\n')
-        return text
+        return text.strip('"').replace('\\n', '\n')
 
     @staticmethod
-    def save_extracted_markdown(key, extracted_text, file_type, subdir_name, save_to_local, bucket_name,
-                              destination_bucket):
+    def save_extracted_markdown(key, extracted_text, file_type, subdir_name,
+                                 save_to_local, bucket_name, destination_bucket):
         try:
             base_filename = DataExtractionS3Pipeline.get_safe_filename(key)
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            file_path = f"{destination_bucket}/{subdir_name}/{base_filename}.md"
-            extracted_text = DataExtractionS3Pipeline.process_text(extracted_text)
+            s3_key = f"{destination_bucket}/{subdir_name}/{base_filename}.md"
+            processed_text = DataExtractionS3Pipeline.process_text(extracted_text)
 
             if save_to_local:
-                with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(extracted_text)
+                os.makedirs(os.path.dirname(s3_key), exist_ok=True)
+                with open(s3_key, 'w', encoding='utf-8') as f:
+                    f.write(processed_text)
+                print(f"[DEBUG] Saved locally: {s3_key}")
             else:
                 client = boto3.client(
                     "s3",
@@ -163,15 +148,19 @@ class DataExtractionS3Pipeline:
                     aws_access_key_id=os.getenv("AWS_ACCESS_KEY"),
                     aws_secret_access_key=os.getenv("AWS_SECRET_KEY")
                 )
-                client.put_object(
+                response = client.put_object(
                     Bucket=bucket_name,
-                    Key=file_path,
-                    Body=extracted_text.encode('utf-8'),
+                    Key=s3_key,
+                    Body=processed_text.encode('utf-8'),
                     ContentType='text/markdown'
                 )
+                status_code = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
+                print(f"[DEBUG] S3 upload status for {s3_key}: {status_code}")
+                if status_code != 200:
+                    raise RuntimeError(f"S3 put_object failed with status {status_code}")
             return True
         except Exception as e:
-            print(f"Error saving markdown: {str(e)}")
+            print(f"[ERROR] save_extracted_markdown: {e}")
             return False
 
     @staticmethod
@@ -185,6 +174,6 @@ class DataExtractionS3Pipeline:
 if __name__ == '__main__':
     extractor = DataExtractionS3Pipeline(
         base_dir='data',
-        save_to_local=False,
+        save_to_local=False, 
     )
     extractor.process_files()
