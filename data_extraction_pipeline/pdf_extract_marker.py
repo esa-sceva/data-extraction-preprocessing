@@ -19,7 +19,7 @@ class DataExtractionS3Pipeline:
     def __init__(self, base_dir='', sub_folder='', save_to_local=False):
         self.base_dir = Path(base_dir)
         self.save_to_local = save_to_local
-        self.destination_bucket = "raw_data_dedup_extractions"
+        self.destination_bucket = "marker_5k"
         self.sub_folder = sub_folder
 
         self.bucket_name: Final[str] = os.getenv("AWS_BUCKET_NAME", 'llm4eo-s3')
@@ -250,7 +250,7 @@ class DataExtractionS3Pipeline:
 
 if __name__ == '__main__':
     extractor = DataExtractionS3Pipeline(
-        base_dir='data2',
+        base_dir='data',
         save_to_local=False,
     )
     extractor.process_files()
