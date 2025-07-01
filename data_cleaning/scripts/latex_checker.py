@@ -175,7 +175,7 @@ def main(directory: str, num_processes: int = 4):
     start_time = time.time() 
     directory_path = Path(directory)
 
-    md_files = list(directory_path.glob('*.md'))
+    md_files = list(directory_path.rglob('*.md'))
     if not md_files:
         logging.info(f"No Markdown files found in {directory}")
         print(f"No Markdown files found in {directory}")
