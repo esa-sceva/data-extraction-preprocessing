@@ -23,9 +23,13 @@ from nougat.utils.checkpoint import get_checkpoint
 from nougat.dataset.rasterize import rasterize_paper
 from nougat.utils.device import move_to_device, default_batch_size
 from tqdm import tqdm
+import logging
+
+logger = logging.getLogger("uvicorn.error")
 
 
 SAVE_DIR = Path("./pdfs")
+SAVE_DIR.mkdir(exist_ok=True, parents=True)
 BATCHSIZE = 4
 NOUGAT_CHECKPOINT = get_checkpoint()
 if NOUGAT_CHECKPOINT is None:
@@ -87,6 +91,7 @@ async def predict(
     """
     pdfbin = file.file.read()
     pdf = pypdfium2.PdfDocument(pdfbin)
+    logger.debug(f"Loaded PDF with {len(pdf)} pages")
     md5 = hashlib.md5(pdfbin).hexdigest()
     save_path = SAVE_DIR / md5
 
@@ -149,18 +154,18 @@ async def predict(
                 markdown_compatible(output) + disclaimer
             )
 
-    #(save_path / "pages").mkdir(parents=True, exist_ok=True)
-    #pdf.save(save_path / "doc.pdf")
-    # if len(images) > 0:
-    #     thumb = Image.open(images[0])
-    #     thumb.thumbnail((400, 400))
-    #     thumb.save(save_path / "thumb.jpg")
-    # for idx, page_num in enumerate(pages):
-    #     (save_path / "pages" / ("%02d.mmd" % (page_num + 1))).write_text(
-    #         predictions[idx], encoding="utf-8"
-    #     )
+    (save_path / "pages").mkdir(parents=True, exist_ok=True)
+    pdf.save(save_path / "doc.pdf")
+    if len(images) > 0:
+        thumb = Image.open(images[0])
+        thumb.thumbnail((400, 400))
+        thumb.save(save_path / "thumb.jpg")
+    for idx, page_num in enumerate(pages):
+        (save_path / "pages" / ("%02d.mmd" % (page_num + 1))).write_text(
+            predictions[idx], encoding="utf-8"
+        )
     final = "".join(predictions).strip()
-    #(save_path / "doc.mmd").write_text(final, encoding="utf-8")
+    (save_path / "doc.mmd").write_text(final, encoding="utf-8")
     return final
 
 
