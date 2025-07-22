@@ -1,15 +1,35 @@
-### How to run this pipeline
+## Data Extraction pipeline
 
+This pipeline consists of tranforming PDFs contained in a S3 bucket/prefix or in local into a MarkDown text (.md or .mmd). To do that you need to:
 
-#### Process pdf files using NOUGAT
+### 1. Start the fastapi server
 
-1. Start the fastapi server after changing the port number in `app.py` in one terminal.
+To start the fastapi server, after changing the port number in `app.py` in one terminal, run
 
 ```
-python app.py
+python app.py --port <port_number>
 ```
 
-2. Open another terminal, run the `pdf_extract_nougat.py` file after matching the port number of the fastapi endpoint.
+You caan ope up to 4 workers at the same time, just be sure that some of the ports are not already opened, if so run to identify the PID:
+
+```
+ss -tulnp | grep ':<port_number_busy>'
+```
+then:
+
+```
+kill -9 <PID> 
+```
+to kill it.
+
+
+### 2. Process PDFs with Nougat
+
+Open another terminal, run the `pdf_extract_nougat.py` file after matching the port number of the fastapi endpoint.
+
+```
+python pdf_extract_nougat.py
+```
 
 
 #### Process pdf files using MARKER
