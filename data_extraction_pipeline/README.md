@@ -1,6 +1,6 @@
 ## Data Extraction pipeline
 
-This pipeline transforms PDFs—stored either locally or in an S3 bucket—into Markdown files (.md or .mmd).
+This pipeline transforms PDFs, stored either locally or in an S3 bucket, into Markdown files (.md or .mmd).
 Follow the steps below to set it up and run the extraction.
 
 
@@ -35,11 +35,3 @@ python pdf_extract_nougat.py --bucket <bucket_name> --prefix <prefix/to/folders/
 ```
 NOTE: When using the --prefix option, all PDF files in the specified folder and its subfolders will be processed.
 
-#### Process pdf files using MARKER
-
-1. Run the `pdf_extract_marker.py` file, this uses a sequential pipeline.
-(Move the file from rerun_files.txt first using move.py script)
-
-#### Process non-pdf
-
-1. Run the `non_pdf_extract.py`, after adjusting the number of processes needed.
