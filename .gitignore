@@ -1,7 +1,7 @@
 __pycache__/
 
 play.ipynb
-
+.ipynb_checkpoints/
 .venv/
 .env
 sql_queries/
