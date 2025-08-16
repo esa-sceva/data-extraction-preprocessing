@@ -4,6 +4,7 @@ Copyright (c) Meta Platforms, Inc. and affiliates.
 This source code is licensed under the MIT license found in the
 LICENSE file in the root directory of this source tree.
 """
+
 import argparse
 import os
 import sys
@@ -29,7 +30,6 @@ logger = logging.getLogger("uvicorn.error")
 
 
 SAVE_DIR = Path("./pdfs")
-SAVE_DIR.mkdir(exist_ok=True, parents=True)
 BATCHSIZE = 4
 NOUGAT_CHECKPOINT = get_checkpoint()
 if NOUGAT_CHECKPOINT is None:
@@ -49,9 +49,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 model = None
+# Global flag to control file saving
+SAVE_FILES = True
 
 
 @app.on_event("startup")
+async def startup_event():
+    global SAVE_FILES, SAVE_DIR
+    # Create directory only if we're saving files
+    if SAVE_FILES:
+        SAVE_DIR.mkdir(exist_ok=True, parents=True)
+    await load_model()
+
+
 async def load_model(
     checkpoint: str = NOUGAT_CHECKPOINT,
 ):
@@ -76,7 +86,10 @@ def root():
 
 @app.post("/predict/")
 async def predict(
-    file: UploadFile = File(...), start: int = None, stop: int = None
+    file: UploadFile = File(...), 
+    start: int = None, 
+    stop: int = None,
+    save_files: bool = None
 ) -> str:
     """
     Perform predictions on a PDF document and return the extracted text in Markdown format.
@@ -85,15 +98,25 @@ async def predict(
         file (UploadFile): The uploaded PDF file to process.
         start (int, optional): The starting page number for prediction.
         stop (int, optional): The ending page number for prediction.
+        save_files (bool, optional): Whether to save files locally. If None, uses global setting.
 
     Returns:
         str: The extracted text in Markdown format.
     """
+    global SAVE_FILES, SAVE_DIR
+    
+    # Determine if we should save files for this request
+    should_save = SAVE_FILES if save_files is None else save_files
+    
     pdfbin = file.file.read()
     pdf = pypdfium2.PdfDocument(pdfbin)
     logger.debug(f"Loaded PDF with {len(pdf)} pages")
-    md5 = hashlib.md5(pdfbin).hexdigest()
-    save_path = SAVE_DIR / md5
+    
+    if should_save:
+        md5 = hashlib.md5(pdfbin).hexdigest()
+        save_path = SAVE_DIR / md5
+    else:
+        save_path = None
 
     if start is not None and stop is not None:
         pages = list(range(start - 1, stop))
@@ -101,7 +124,8 @@ async def predict(
         pages = list(range(len(pdf)))
     predictions = [""] * len(pages)
     dellist = []
-    if save_path.exists():
+    
+    if should_save and save_path and save_path.exists():
         for computed in (save_path / "pages").glob("*.mmd"):
             try:
                 idx = int(computed.stem) - 1
@@ -112,6 +136,7 @@ async def predict(
                     dellist.append(idx)
             except Exception as e:
                 print(e)
+    
     compute_pages = pages.copy()
     for el in dellist:
         compute_pages.remove(el)
@@ -154,28 +179,39 @@ async def predict(
                 markdown_compatible(output) + disclaimer
             )
 
-    (save_path / "pages").mkdir(parents=True, exist_ok=True)
-    pdf.save(save_path / "doc.pdf")
-    if len(images) > 0:
-        thumb = Image.open(images[0])
-        thumb.thumbnail((400, 400))
-        thumb.save(save_path / "thumb.jpg")
-    for idx, page_num in enumerate(pages):
-        (save_path / "pages" / ("%02d.mmd" % (page_num + 1))).write_text(
-            predictions[idx], encoding="utf-8"
-        )
+    # Only save files if requested
+    if should_save and save_path:
+        (save_path / "pages").mkdir(parents=True, exist_ok=True)
+        pdf.save(save_path / "doc.pdf")
+        if len(images) > 0:
+            thumb = Image.open(images[0])
+            thumb.thumbnail((400, 400))
+            thumb.save(save_path / "thumb.jpg")
+        for idx, page_num in enumerate(pages):
+            (save_path / "pages" / ("%02d.mmd" % (page_num + 1))).write_text(
+                predictions[idx], encoding="utf-8"
+            )
+    
     final = "".join(predictions).strip()
-    (save_path / "doc.mmd").write_text(final, encoding="utf-8")
+    
+    if should_save and save_path:
+        (save_path / "doc.mmd").write_text(final, encoding="utf-8")
+    
     return final
 
 
 def main():
     import uvicorn
 
-    # Add argument parser for port number
+    # Add argument parser for port number and save option
     parser = argparse.ArgumentParser(description='Nougat API Server')
     parser.add_argument('--port', type=int, default=8002, help='Port number to run the server on')
+    parser.add_argument('--no-save', action='store_true', help='Disable saving files locally')
     args = parser.parse_args()
+
+    # Set global save flag based on command line argument
+    global SAVE_FILES
+    SAVE_FILES = not args.no_save
 
     # Use the port number from command line arguments
     uvicorn.run("app:app", port=args.port, host="0.0.0.0")
