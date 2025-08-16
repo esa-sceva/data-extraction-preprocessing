@@ -49,8 +49,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 model = None
-# Global flag to control file saving
-SAVE_FILES = True
+SAVE_FILES = False
 
 
 @app.on_event("startup")
@@ -88,8 +87,7 @@ def root():
 async def predict(
     file: UploadFile = File(...), 
     start: int = None, 
-    stop: int = None,
-    save_files: bool = None
+    stop: int = None
 ) -> str:
     """
     Perform predictions on a PDF document and return the extracted text in Markdown format.
@@ -98,21 +96,17 @@ async def predict(
         file (UploadFile): The uploaded PDF file to process.
         start (int, optional): The starting page number for prediction.
         stop (int, optional): The ending page number for prediction.
-        save_files (bool, optional): Whether to save files locally. If None, uses global setting.
 
     Returns:
         str: The extracted text in Markdown format.
     """
     global SAVE_FILES, SAVE_DIR
     
-    # Determine if we should save files for this request
-    should_save = SAVE_FILES if save_files is None else save_files
-    
     pdfbin = file.file.read()
     pdf = pypdfium2.PdfDocument(pdfbin)
     logger.debug(f"Loaded PDF with {len(pdf)} pages")
     
-    if should_save:
+    if SAVE_FILES:
         md5 = hashlib.md5(pdfbin).hexdigest()
         save_path = SAVE_DIR / md5
     else:
@@ -209,7 +203,6 @@ def main():
     parser.add_argument('--no-save', action='store_true', help='Disable saving files locally')
     args = parser.parse_args()
 
-    # Set global save flag based on command line argument
     global SAVE_FILES
     SAVE_FILES = not args.no_save
 

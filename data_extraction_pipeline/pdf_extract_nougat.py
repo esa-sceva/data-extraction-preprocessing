@@ -19,6 +19,7 @@ from dataclasses import dataclass
 import hashlib
 import re
 import tempfile
+from datetime import datetime
 
 LOG_FILE = "nougat_extraction.log"
 
@@ -292,7 +293,7 @@ class NougatPDFExtractor:
             processing_time_seconds=0,
             error_message=None,
             server_used=endpoint,
-            markdown_filename=None,  # Explicitly initialize
+            markdown_filename=None,
             file_size_bytes=0,
             md5_hash=None,
             retries=0
@@ -326,12 +327,12 @@ class NougatPDFExtractor:
                                 result.status = "success"
                                 result.characters_extracted = len(extracted_text)
                                 result.processing_time_seconds = duration
-                                result.markdown_filename = upload_result['filename']  # Always set
+                                result.markdown_filename = upload_result['filename']
                                 logger.info(
-                                f"Extracted {result.characters_extracted} characters from {key} "
-                                f"(Size: {result.file_size_bytes} bytes, "
-                                f"Time: {result.processing_time_seconds:.2f}s)"
-                            )
+                                    f"Extracted {result.characters_extracted} characters from {key} "
+                                    f"(Size: {result.file_size_bytes} bytes, "
+                                    f"Time: {result.processing_time_seconds:.2f}s)"
+                                )
                                 result.retries = attempt
                                 break
                             else:
@@ -341,33 +342,23 @@ class NougatPDFExtractor:
                             
                     except Exception as e:
                         if attempt == self.max_retries:
-                            # Save error version if we got any text
                             if extracted_text:
                                 error_upload = self.save_extracted_markdown(key, extracted_text, is_error=True)
-                                result.markdown_filename = error_upload['filename']  # Set even on error
+                                result.markdown_filename = error_upload['filename']
                                 result.characters_extracted = len(extracted_text)
                             result.status = "error"
                             result.error_message = str(e)
                         else:
                             time.sleep(2 ** attempt)
-            
-            return result
-            
+        
         except Exception as e:
             result.status = "error"
             result.error_message = str(e)
-            return result
         
         finally:
             self.results.append(result)
             return result
-            try:
-                os.remove(local_path)
-            except OSError:
-                pass
-           
-
-
+    
     def _generate_report(self) -> None:
         """Generate and save report both locally and to S3."""
         try:
@@ -375,15 +366,15 @@ class NougatPDFExtractor:
             error_count = len(self.results) - success_count
             total_chars = sum(r.characters_extracted for r in self.results if r.status == "success")
             avg_time = sum(r.processing_time_seconds for r in self.results) / len(self.results) if self.results else 0
-            
-            # Create safe filename from destination bucket
-            safe_bucket_name = re.sub(r'[^\w\-]', '_', self.destination_bucket)
-            report_filename = f"processing_report_{safe_bucket_name}.json"
+    
+            # Extract final prefix name from destination bucket
+            prefix_name = self.destination_bucket.split('/')[-1] if self.destination_bucket else "unknown"
+            report_filename = f"report_extraction_{prefix_name}.json"
             
             # Create report content
             report_content = json.dumps({
                 "metadata": {
-                    "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+                    "timestamp": datetime.now().isoformat(),
                     "destination_bucket": self.destination_bucket,
                     "total_files": len(self.results),
                     "success_count": success_count,
@@ -392,29 +383,36 @@ class NougatPDFExtractor:
                 },
                 "processing_stats": {
                     "total_characters_extracted": total_chars,
-                    "average_processing_time_seconds": avg_time,
+                    "average_processing_time_seconds": f"{avg_time:.2f}",
                 },
                 "error_details": {
                     "unique_error_messages": list({r.error_message for r in self.results if r.error_message}),
                     "error_examples": [r.s3_key for r in self.results if r.status == "error"][:5]
+                },
+                "performance_metrics": {
+                    "files_per_minute": len(self.results) / (avg_time * len(self.results) / 60) if self.results and avg_time > 0 else 0
                 }
             }, indent=2)
-
+    
             # Save locally
             with open(report_filename, "w", encoding="utf-8") as f:
                 f.write(report_content)
             logger.info(f"Saved report locally to {report_filename}")
-
+    
             # Save to S3
-            s3_report_key = f"{self.destination_bucket}/analytics/{report_filename}"
+            s3_report_key = f"data_extracted/_analytics_/{prefix_name}/{report_filename}"
             self.s3_client.put_object(
                 Bucket=self.bucket,
                 Key=s3_report_key,
                 Body=report_content.encode('utf-8'),
-                ContentType='application/json'
+                ContentType='application/json',
+                Metadata={
+                    'success-count': str(success_count),
+                    'error-count': str(error_count)
+                }
             )
             logger.info(f"Uploaded report to s3://{self.bucket}/{s3_report_key}")
-
+    
         except Exception as e:
             logger.error(f"Failed to generate report: {str(e)}")
             raise
@@ -494,13 +492,14 @@ class ProgressTracker:
         """Mark completion and upload final reports to S3"""
         self.progress_data["status"] = "completed"
         self.progress_data["completion_time"] = time.strftime("%Y-%m-%d %H:%M:%S")
-        
+        prefix_name = self.destination_prefix.rstrip('/').split('/')[-1]
+
         # Save local JSON first
         self._save()
         
         # Upload to S3
         try:
-            s3_key = f"data_extracted/analytics/{prefix_name}/{os.path.basename(self.output_path)}"
+            s3_key = f"data_extracted/_analytics_/{prefix_name}/{os.path.basename(self.output_path)}"
             self.s3_client.put_object(
                 Bucket=self.bucket,
                 Key=s3_key,
