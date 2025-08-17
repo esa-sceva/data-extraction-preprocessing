@@ -119,7 +119,7 @@ async def predict(
     predictions = [""] * len(pages)
     dellist = []
     
-    if should_save and save_path and save_path.exists():
+    if SAVE_FILES and save_path and save_path.exists():
         for computed in (save_path / "pages").glob("*.mmd"):
             try:
                 idx = int(computed.stem) - 1
@@ -174,7 +174,7 @@ async def predict(
             )
 
     # Only save files if requested
-    if should_save and save_path:
+    if SAVE_FILES and save_path:
         (save_path / "pages").mkdir(parents=True, exist_ok=True)
         pdf.save(save_path / "doc.pdf")
         if len(images) > 0:
@@ -188,7 +188,7 @@ async def predict(
     
     final = "".join(predictions).strip()
     
-    if should_save and save_path:
+    if SAVE_FILES and save_path:
         (save_path / "doc.mmd").write_text(final, encoding="utf-8")
     
     return final
