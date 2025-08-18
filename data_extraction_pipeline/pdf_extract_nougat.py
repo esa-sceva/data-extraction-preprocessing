@@ -87,8 +87,7 @@ class NougatPDFExtractor:
         # Set up Nougat servers (no health check)
         default_servers = [
             "http://127.0.0.1:8002/predict/",
-            "http://127.0.0.1:8003/predict/",
-            "http://127.0.0.1:8004/predict/"
+            "http://127.0.0.1:8003/predict/"
         ]
         self.pdf_servers = nougat_servers if nougat_servers else default_servers
         logger.info(f"Using Nougat servers: {self.pdf_servers}")
@@ -360,43 +359,74 @@ class NougatPDFExtractor:
             return result
     
     def _generate_report(self) -> None:
-        """Generate and save report both locally and to S3."""
+        """Generate and save report both locally and to S3 with standardized format."""
         try:
-            success_count = sum(1 for r in self.results if r.status == "success")
-            error_count = len(self.results) - success_count
-            total_chars = sum(r.characters_extracted for r in self.results if r.status == "success")
-            avg_time = sum(r.processing_time_seconds for r in self.results) / len(self.results) if self.results else 0
+            # Calculate metrics
+            success_results = [r for r in self.results if r.status == "success"]
+            error_results = [r for r in self.results if r.status == "error"]
+            success_count = len(success_results)
+            error_count = len(error_results)
+            total_files = len(self.results)
+            
+            # Processing stats
+            total_chars = sum(r.characters_extracted for r in success_results)
+            processing_times = [r.processing_time_seconds for r in self.results if hasattr(r, 'processing_time_seconds')]
+            avg_time = sum(processing_times) / len(processing_times) if processing_times else 0
+            servers_used = len({r.server_used for r in self.results if hasattr(r, 'server_used')})
+            
+            # Performance metrics - using current time since we don't have start/end times
+            current_time = datetime.now()
+            total_time_seconds = 0  # Default value since we can't calculate actual processing duration
+            total_time_minutes = 0
+            files_per_min = 0
+            
+            # If we have processing times, we can estimate performance metrics
+            if processing_times:
+                total_time_seconds = sum(processing_times)
+                total_time_minutes = total_time_seconds / 60
+                files_per_min = total_files / total_time_minutes if total_time_minutes > 0 else 0
+            
+            # Error details
+            unique_errors = list({r.error_message for r in error_results if hasattr(r, 'error_message') and r.error_message})
+            error_examples = [
+                {"file": r.s3_key, "error": r.error_message, "server": r.server_used} 
+                for r in error_results[:3] 
+                if hasattr(r, 's3_key') and hasattr(r, 'error_message') and hasattr(r, 'server_used')
+            ] if error_results else []
+    
+            # Create report content with desired format
+            report_content = {
+                "metadata": {
+                    "timestamp": current_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    "destination_bucket": self.destination_bucket,
+                    "total_files": total_files,
+                    "success_count": success_count,
+                    "error_count": error_count,
+                    "success_rate": f"{(success_count / total_files * 100):.1f}%" if total_files > 0 else "0.0%",
+                },
+                "processing_stats": {
+                    "total_characters_extracted": total_chars,
+                    "average_processing_time_seconds": round(avg_time, 2),
+                    "servers_used": servers_used
+                },
+                "error_details": {
+                    "unique_error_messages": unique_errors,
+                    "error_examples": error_examples
+                },
+                "performance_metrics": {
+                    "files_per_minute": round(files_per_min, 2),
+                    "total_processing_time_minutes": round(total_time_minutes, 2),
+                    "total_processing_time_seconds": round(total_time_seconds, 1)
+                }
+            }
     
             # Extract final prefix name from destination bucket
             prefix_name = self.destination_bucket.split('/')[-1] if self.destination_bucket else "unknown"
             report_filename = f"report_extraction_{prefix_name}.json"
             
-            # Create report content
-            report_content = json.dumps({
-                "metadata": {
-                    "timestamp": datetime.now().isoformat(),
-                    "destination_bucket": self.destination_bucket,
-                    "total_files": len(self.results),
-                    "success_count": success_count,
-                    "error_count": error_count,
-                    "success_rate": f"{(success_count / len(self.results)) * 100:.1f}%" if self.results else "0%",
-                },
-                "processing_stats": {
-                    "total_characters_extracted": total_chars,
-                    "average_processing_time_seconds": f"{avg_time:.2f}",
-                },
-                "error_details": {
-                    "unique_error_messages": list({r.error_message for r in self.results if r.error_message}),
-                    "error_examples": [r.s3_key for r in self.results if r.status == "error"][:5]
-                },
-                "performance_metrics": {
-                    "files_per_minute": len(self.results) / (avg_time * len(self.results) / 60) if self.results and avg_time > 0 else 0
-                }
-            }, indent=2)
-    
             # Save locally
             with open(report_filename, "w", encoding="utf-8") as f:
-                f.write(report_content)
+                json.dump(report_content, f, indent=2)
             logger.info(f"Saved report locally to {report_filename}")
     
             # Save to S3
@@ -404,7 +434,7 @@ class NougatPDFExtractor:
             self.s3_client.put_object(
                 Bucket=self.bucket,
                 Key=s3_report_key,
-                Body=report_content.encode('utf-8'),
+                Body=json.dumps(report_content, indent=2).encode('utf-8'),
                 ContentType='application/json',
                 Metadata={
                     'success-count': str(success_count),
