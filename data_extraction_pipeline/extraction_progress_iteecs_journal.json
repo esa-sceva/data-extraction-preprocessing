@@ -1,0 +1,436 @@
+{
+  "timestamp": "2025-08-18 18:28:10",
+  "status": "completed",
+  "processed": [
+    {
+      "file": "data/iteecs_journal/0a762438-7f0c-498f-9387-80d7a6b5e531.pdf",
+      "markdown_file": "0a762438-7f0c-498f-9387-80d7a6b5e531.md",
+      "chars_extracted": 12625,
+      "time_sec": 9.842437744140625,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/01affe2e-a5fc-4a81-b95e-6096f0b431b2.pdf",
+      "markdown_file": "01affe2e-a5fc-4a81-b95e-6096f0b431b2.md",
+      "chars_extracted": 33536,
+      "time_sec": 11.809379816055298,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/1262790c-b2a5-4e30-9e87-0b8d16c8102f.pdf",
+      "markdown_file": "1262790c-b2a5-4e30-9e87-0b8d16c8102f.md",
+      "chars_extracted": 18802,
+      "time_sec": 10.638018608093262,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/0502b293-2be1-4cbf-8186-b9d2273f4bca.pdf",
+      "markdown_file": "0502b293-2be1-4cbf-8186-b9d2273f4bca.md",
+      "chars_extracted": 54729,
+      "time_sec": 23.800443172454834,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/0d0c6080-2f0d-4f19-a726-a8b260e73356.pdf",
+      "markdown_file": "0d0c6080-2f0d-4f19-a726-a8b260e73356.md",
+      "chars_extracted": 33752,
+      "time_sec": 31.52641248703003,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/11617132-d0ab-434a-ac95-1597280ecedd.pdf",
+      "markdown_file": "11617132-d0ab-434a-ac95-1597280ecedd.md",
+      "chars_extracted": 19115,
+      "time_sec": 21.23881220817566,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/17403784-6b49-4b19-9992-0d28087dc8be.pdf",
+      "markdown_file": "17403784-6b49-4b19-9992-0d28087dc8be.md",
+      "chars_extracted": 15649,
+      "time_sec": 16.423715829849243,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/20bb6fe2-8b19-45ab-bca7-3b2bb0ab2a21.pdf",
+      "markdown_file": "20bb6fe2-8b19-45ab-bca7-3b2bb0ab2a21.md",
+      "chars_extracted": 17758,
+      "time_sec": 11.23747706413269,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/1646dd61-116c-4fff-b2b0-c78c53603aba.pdf",
+      "markdown_file": "1646dd61-116c-4fff-b2b0-c78c53603aba.md",
+      "chars_extracted": 43239,
+      "time_sec": 27.37236189842224,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/245faf4e-f644-4675-a55c-3e53e71c2d2c.pdf",
+      "markdown_file": "245faf4e-f644-4675-a55c-3e53e71c2d2c.md",
+      "chars_extracted": 20305,
+      "time_sec": 13.030687093734741,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/2530e82b-3480-4e59-b798-4cf95dd748d1.pdf",
+      "markdown_file": "2530e82b-3480-4e59-b798-4cf95dd748d1.md",
+      "chars_extracted": 27774,
+      "time_sec": 18.097914218902588,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/20c0ca1f-1aea-4c93-ac2b-d130222a8fa8.pdf",
+      "markdown_file": "20c0ca1f-1aea-4c93-ac2b-d130222a8fa8.md",
+      "chars_extracted": 25533,
+      "time_sec": 32.38781428337097,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/2d6fd35f-9863-4e90-8731-a0e7fccd1391.pdf",
+      "markdown_file": "2d6fd35f-9863-4e90-8731-a0e7fccd1391.md",
+      "chars_extracted": 17189,
+      "time_sec": 19.0938081741333,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/35b261c1-f659-44b0-8eb4-5fcf0607fadf.pdf",
+      "markdown_file": "35b261c1-f659-44b0-8eb4-5fcf0607fadf.md",
+      "chars_extracted": 44824,
+      "time_sec": 28.582143545150757,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/47f944cd-5920-4b46-97c0-239fb2b970d6.pdf",
+      "markdown_file": "47f944cd-5920-4b46-97c0-239fb2b970d6.md",
+      "chars_extracted": 10301,
+      "time_sec": 13.34417986869812,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/3d20c571-4202-42ac-a159-80e36d89cce4.pdf",
+      "markdown_file": "3d20c571-4202-42ac-a159-80e36d89cce4.md",
+      "chars_extracted": 66258,
+      "time_sec": 29.97064757347107,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/4ee9f1c1-1bc7-4135-8f57-5cebed8d1182.pdf",
+      "markdown_file": "4ee9f1c1-1bc7-4135-8f57-5cebed8d1182.md",
+      "chars_extracted": 27090,
+      "time_sec": 20.071655988693237,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/2779672c-9b77-4831-b740-403efe6e81a6.pdf",
+      "markdown_file": "2779672c-9b77-4831-b740-403efe6e81a6.md",
+      "chars_extracted": 105769,
+      "time_sec": 76.81583023071289,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/4d9a7a77-1167-4930-9850-74b73c077668.pdf",
+      "markdown_file": "4d9a7a77-1167-4930-9850-74b73c077668.md",
+      "chars_extracted": 27208,
+      "time_sec": 32.475582122802734,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/4f5e99f2-d879-4c99-bb9c-5d26f70cecb7.pdf",
+      "markdown_file": "4f5e99f2-d879-4c99-bb9c-5d26f70cecb7.md",
+      "chars_extracted": 28756,
+      "time_sec": 20.062914848327637,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/605e304c-d9c4-4310-b464-5bbaf0cb5cc3.pdf",
+      "markdown_file": "605e304c-d9c4-4310-b464-5bbaf0cb5cc3.md",
+      "chars_extracted": 28749,
+      "time_sec": 34.04667353630066,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/6390587f-a972-4498-b6bf-98b3ce2c65ce.pdf",
+      "markdown_file": "6390587f-a972-4498-b6bf-98b3ce2c65ce.md",
+      "chars_extracted": 17730,
+      "time_sec": 10.524603366851807,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/654d49d3-ad87-4b8d-a4ab-c6c4c8be3ce9.pdf",
+      "markdown_file": "654d49d3-ad87-4b8d-a4ab-c6c4c8be3ce9.md",
+      "chars_extracted": 31313,
+      "time_sec": 16.182316303253174,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/74b7301a-d679-4bfc-be89-9d13cee02bae.pdf",
+      "markdown_file": "74b7301a-d679-4bfc-be89-9d13cee02bae.md",
+      "chars_extracted": 18315,
+      "time_sec": 13.0250403881073,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/7570269a-f798-4691-821f-34277df6cf32.pdf",
+      "markdown_file": "7570269a-f798-4691-821f-34277df6cf32.md",
+      "chars_extracted": 23621,
+      "time_sec": 14.009138345718384,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/3c574387-46e7-419d-a1a9-138cc7921a84.pdf",
+      "markdown_file": "3c574387-46e7-419d-a1a9-138cc7921a84.md",
+      "chars_extracted": 111979,
+      "time_sec": 154.90473628044128,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/66402e80-8d8b-4bee-84b7-c7df158f0ce4.pdf",
+      "markdown_file": "66402e80-8d8b-4bee-84b7-c7df158f0ce4.md",
+      "chars_extracted": 19687,
+      "time_sec": 59.91965103149414,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/7ad8fa36-ad4b-4726-80dd-3fce35626484.pdf",
+      "markdown_file": "7ad8fa36-ad4b-4726-80dd-3fce35626484.md",
+      "chars_extracted": 62552,
+      "time_sec": 37.59729886054993,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/827f7c60-b59c-4c4e-9b0f-122cdc792343.pdf",
+      "markdown_file": "827f7c60-b59c-4c4e-9b0f-122cdc792343.md",
+      "chars_extracted": 22687,
+      "time_sec": 22.73046088218689,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/878a55fe-eb73-45d3-b5f6-9cadcbf97f85.pdf",
+      "markdown_file": "878a55fe-eb73-45d3-b5f6-9cadcbf97f85.md",
+      "chars_extracted": 20037,
+      "time_sec": 11.366111755371094,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/78f20546-3ea1-4307-80e9-81efe9fc2983.pdf",
+      "markdown_file": "78f20546-3ea1-4307-80e9-81efe9fc2983.md",
+      "chars_extracted": 23021,
+      "time_sec": 66.8797435760498,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/8df524d8-6ecf-4eb8-8362-03a03c2a6053.pdf",
+      "markdown_file": "8df524d8-6ecf-4eb8-8362-03a03c2a6053.md",
+      "chars_extracted": 15903,
+      "time_sec": 7.393155813217163,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/973a00d4-911b-4cc9-a3b9-7f9124d5f73c.pdf",
+      "markdown_file": "973a00d4-911b-4cc9-a3b9-7f9124d5f73c.md",
+      "chars_extracted": 13010,
+      "time_sec": 10.076821088790894,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/962a41bb-7cea-495c-b333-943eb1d5719d.pdf",
+      "markdown_file": "962a41bb-7cea-495c-b333-943eb1d5719d.md",
+      "chars_extracted": 24147,
+      "time_sec": 15.001304149627686,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/935b1057-8942-40dd-ae71-07747162139e.pdf",
+      "markdown_file": "935b1057-8942-40dd-ae71-07747162139e.md",
+      "chars_extracted": 46877,
+      "time_sec": 22.042195558547974,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/9afdd52c-3680-46da-9660-1a019f07c24a.pdf",
+      "markdown_file": "9afdd52c-3680-46da-9660-1a019f07c24a.md",
+      "chars_extracted": 29235,
+      "time_sec": 16.928106784820557,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/a0f7d723-f861-4d3c-9423-2b0c1bd8d7b1.pdf",
+      "markdown_file": "a0f7d723-f861-4d3c-9423-2b0c1bd8d7b1.md",
+      "chars_extracted": 26205,
+      "time_sec": 16.635145902633667,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/84756a91-67df-4e8e-997a-2756da9e0e83.pdf",
+      "markdown_file": "84756a91-67df-4e8e-997a-2756da9e0e83.md",
+      "chars_extracted": 51055,
+      "time_sec": 62.114299058914185,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/a34bab22-2bfd-4e79-990f-6478110259c4.pdf",
+      "markdown_file": "a34bab22-2bfd-4e79-990f-6478110259c4.md",
+      "chars_extracted": 14529,
+      "time_sec": 12.69632363319397,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/ae62ff5f-4072-4232-a65a-f91cb3759a86.pdf",
+      "markdown_file": "ae62ff5f-4072-4232-a65a-f91cb3759a86.md",
+      "chars_extracted": 30808,
+      "time_sec": 14.932554006576538,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/98afe595-491c-4145-9037-d8e06a9dadb9.pdf",
+      "markdown_file": "98afe595-491c-4145-9037-d8e06a9dadb9.md",
+      "chars_extracted": 32280,
+      "time_sec": 47.31562805175781,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/a87e64b8-9551-46d1-ba27-4cb32c22282b.pdf",
+      "markdown_file": "a87e64b8-9551-46d1-ba27-4cb32c22282b.md",
+      "chars_extracted": 29656,
+      "time_sec": 30.622064113616943,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/b6292ef1-b7ae-4b27-acdf-23c0bfe84b5e.pdf",
+      "markdown_file": "b6292ef1-b7ae-4b27-acdf-23c0bfe84b5e.md",
+      "chars_extracted": 24753,
+      "time_sec": 22.345746278762817,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/aee8f4df-680e-40d1-bcd5-e285ee4b1672.pdf",
+      "markdown_file": "aee8f4df-680e-40d1-bcd5-e285ee4b1672.md",
+      "chars_extracted": 29072,
+      "time_sec": 29.91330313682556,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/b8d94665-0490-4fd5-b351-e2801bc31abc.pdf",
+      "markdown_file": "b8d94665-0490-4fd5-b351-e2801bc31abc.md",
+      "chars_extracted": 14492,
+      "time_sec": 21.987996339797974,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/be6e5a72-fd86-4d9c-8635-68bb50ff6280.pdf",
+      "markdown_file": "be6e5a72-fd86-4d9c-8635-68bb50ff6280.md",
+      "chars_extracted": 17893,
+      "time_sec": 12.521022081375122,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/bfb2981f-357f-42d1-8036-b68010730ad4.pdf",
+      "markdown_file": "bfb2981f-357f-42d1-8036-b68010730ad4.md",
+      "chars_extracted": 12204,
+      "time_sec": 11.037077903747559,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/c827fffd-923d-4496-b740-4b4341f1ef22.pdf",
+      "markdown_file": "c827fffd-923d-4496-b740-4b4341f1ef22.md",
+      "chars_extracted": 26662,
+      "time_sec": 12.247682094573975,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/bc0bc1b6-8d49-433c-8add-ace31cb9cd95.pdf",
+      "markdown_file": "bc0bc1b6-8d49-433c-8add-ace31cb9cd95.md",
+      "chars_extracted": 45113,
+      "time_sec": 38.75001335144043,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/c77fddfb-45fe-4495-9e47-b9c2f019fdcf.pdf",
+      "markdown_file": "c77fddfb-45fe-4495-9e47-b9c2f019fdcf.md",
+      "chars_extracted": 38357,
+      "time_sec": 18.227576971054077,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/c8bacb5f-fd5c-436c-8bb9-0278a337c967.pdf",
+      "markdown_file": "c8bacb5f-fd5c-436c-8bb9-0278a337c967.md",
+      "chars_extracted": 35639,
+      "time_sec": 20.787134408950806,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/cefa0b3a-f116-4d24-a3d2-6a5f6d3bb3da.pdf",
+      "markdown_file": "cefa0b3a-f116-4d24-a3d2-6a5f6d3bb3da.md",
+      "chars_extracted": 9161,
+      "time_sec": 19.94465708732605,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/dacfbbc7-cc85-4372-b0c7-36c2d5932cee.pdf",
+      "markdown_file": "dacfbbc7-cc85-4372-b0c7-36c2d5932cee.md",
+      "chars_extracted": 45399,
+      "time_sec": 16.592408895492554,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/c50a3649-abb9-4d3e-8c93-0ba71870607e.pdf",
+      "markdown_file": "c50a3649-abb9-4d3e-8c93-0ba71870607e.md",
+      "chars_extracted": 116424,
+      "time_sec": 71.2226881980896,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/d79273dd-f563-491e-aa5b-21f5010ce42c.pdf",
+      "markdown_file": "d79273dd-f563-491e-aa5b-21f5010ce42c.md",
+      "chars_extracted": 24977,
+      "time_sec": 38.41549205780029,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/dd39059e-c314-459c-ae48-af0527798660.pdf",
+      "markdown_file": "dd39059e-c314-459c-ae48-af0527798660.md",
+      "chars_extracted": 33597,
+      "time_sec": 20.129544496536255,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/c8a7d828-6c41-4a58-ab38-2d1232f3e25b.pdf",
+      "markdown_file": "c8a7d828-6c41-4a58-ab38-2d1232f3e25b.md",
+      "chars_extracted": 13808,
+      "time_sec": 73.51943778991699,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/eba6a28f-6f0e-4fe3-b30b-59566c1aeedb.pdf",
+      "markdown_file": "eba6a28f-6f0e-4fe3-b30b-59566c1aeedb.md",
+      "chars_extracted": 30101,
+      "time_sec": 15.97374439239502,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/f3e5b001-7682-4c02-8190-5acfaaa90a41.pdf",
+      "markdown_file": "f3e5b001-7682-4c02-8190-5acfaaa90a41.md",
+      "chars_extracted": 23013,
+      "time_sec": 15.445186853408813,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/e4ffa345-9466-40be-a3dc-bd74fcdd6ae5.pdf",
+      "markdown_file": "e4ffa345-9466-40be-a3dc-bd74fcdd6ae5.md",
+      "chars_extracted": 20811,
+      "time_sec": 38.0977897644043,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/iteecs_journal/fd63b088-e974-4512-8134-bcebbc40dbf3.pdf",
+      "markdown_file": "fd63b088-e974-4512-8134-bcebbc40dbf3.md",
+      "chars_extracted": 41197,
+      "time_sec": 28.947484016418457,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    }
+  ],
+  "pending": [],
+  "failed": [],
+  "completion_time": "2025-08-18 18:36:04"
+}

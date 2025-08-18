@@ -1,0 +1,1248 @@
+{
+  "timestamp": "2025-08-18 17:52:12",
+  "status": "completed",
+  "processed": [
+    {
+      "file": "data/jaec_journal/02fd625b-b4b3-4478-920e-2b811ba6902f.pdf",
+      "markdown_file": "02fd625b-b4b3-4478-920e-2b811ba6902f.md",
+      "chars_extracted": 30470,
+      "time_sec": 13.883459091186523,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/02620e0b-d8c3-40d8-aef4-8ced08c8c289.pdf",
+      "markdown_file": "02620e0b-d8c3-40d8-aef4-8ced08c8c289.md",
+      "chars_extracted": 34844,
+      "time_sec": 29.915924787521362,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/01de9802-835a-46da-ac6d-8c2432ab4392.pdf",
+      "markdown_file": "01de9802-835a-46da-ac6d-8c2432ab4392.md",
+      "chars_extracted": 68585,
+      "time_sec": 39.428631067276,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/09499c65-c68d-4931-9016-736fb78dc064.pdf",
+      "markdown_file": "09499c65-c68d-4931-9016-736fb78dc064.md",
+      "chars_extracted": 22951,
+      "time_sec": 8.227574348449707,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/04e31ecd-b4a4-42c6-a6b5-fca5ea2e5eae.pdf",
+      "markdown_file": "04e31ecd-b4a4-42c6-a6b5-fca5ea2e5eae.md",
+      "chars_extracted": 23101,
+      "time_sec": 49.38079762458801,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/06c7fbb1-ae74-4637-8ab7-644a3ffc683c.pdf",
+      "markdown_file": "06c7fbb1-ae74-4637-8ab7-644a3ffc683c.md",
+      "chars_extracted": 41926,
+      "time_sec": 36.423518657684326,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/09ec99e3-7b62-459e-b9d0-5c15b2653d9d.pdf",
+      "markdown_file": "09ec99e3-7b62-459e-b9d0-5c15b2653d9d.md",
+      "chars_extracted": 24764,
+      "time_sec": 21.060452222824097,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/0b1f7d4b-2a02-40d9-8a4a-88b80b209873.pdf",
+      "markdown_file": "0b1f7d4b-2a02-40d9-8a4a-88b80b209873.md",
+      "chars_extracted": 22788,
+      "time_sec": 20.69307518005371,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/0f233d09-dfb3-4b4a-919d-f583c5ff624d.pdf",
+      "markdown_file": "0f233d09-dfb3-4b4a-919d-f583c5ff624d.md",
+      "chars_extracted": 45895,
+      "time_sec": 33.32615900039673,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/108866e3-54de-44bb-8209-6a3df0efa527.pdf",
+      "markdown_file": "108866e3-54de-44bb-8209-6a3df0efa527.md",
+      "chars_extracted": 26932,
+      "time_sec": 27.06911301612854,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/10ab4bc7-baa4-45af-baf0-4d1c9657b446.pdf",
+      "markdown_file": "10ab4bc7-baa4-45af-baf0-4d1c9657b446.md",
+      "chars_extracted": 21968,
+      "time_sec": 30.426503658294678,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/0fee13a6-29b4-4654-a900-29d9d7dd0125.pdf",
+      "markdown_file": "0fee13a6-29b4-4654-a900-29d9d7dd0125.md",
+      "chars_extracted": 36039,
+      "time_sec": 42.15172243118286,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/11409e04-1ca1-4b41-921d-b30c8c50d14b.pdf",
+      "markdown_file": "11409e04-1ca1-4b41-921d-b30c8c50d14b.md",
+      "chars_extracted": 23725,
+      "time_sec": 20.334640502929688,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/131ea805-b87d-46d2-8e0d-5f9508caf18e.pdf",
+      "markdown_file": "131ea805-b87d-46d2-8e0d-5f9508caf18e.md",
+      "chars_extracted": 32252,
+      "time_sec": 18.07737708091736,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/155b57d0-f94b-4788-a4dd-823048ab3b15.pdf",
+      "markdown_file": "155b57d0-f94b-4788-a4dd-823048ab3b15.md",
+      "chars_extracted": 24420,
+      "time_sec": 27.893168449401855,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/17a1bf76-a051-4d77-aa62-ba917e8819c0.pdf",
+      "markdown_file": "17a1bf76-a051-4d77-aa62-ba917e8819c0.md",
+      "chars_extracted": 25956,
+      "time_sec": 16.63427734375,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/11e79a1a-308a-4404-9eb7-8f69cc8718d9.pdf",
+      "markdown_file": "11e79a1a-308a-4404-9eb7-8f69cc8718d9.md",
+      "chars_extracted": 47223,
+      "time_sec": 40.28275680541992,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/1840c86f-3ea3-404b-8a0e-d1fe1530eafb.pdf",
+      "markdown_file": "1840c86f-3ea3-404b-8a0e-d1fe1530eafb.md",
+      "chars_extracted": 24180,
+      "time_sec": 13.73459243774414,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/176aa95c-c6aa-4361-9b74-09303131cf2a.pdf",
+      "markdown_file": "176aa95c-c6aa-4361-9b74-09303131cf2a.md",
+      "chars_extracted": 24986,
+      "time_sec": 35.10113763809204,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/1ba1c550-4d40-4931-9914-a06cefd21243.pdf",
+      "markdown_file": "1ba1c550-4d40-4931-9914-a06cefd21243.md",
+      "chars_extracted": 25275,
+      "time_sec": 12.65639877319336,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/1859a710-257b-4483-85dc-59aa5f2fb37d.pdf",
+      "markdown_file": "1859a710-257b-4483-85dc-59aa5f2fb37d.md",
+      "chars_extracted": 49082,
+      "time_sec": 34.379236698150635,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/1913b4bf-67e6-4ff4-a26c-10108f491ce0.pdf",
+      "markdown_file": "1913b4bf-67e6-4ff4-a26c-10108f491ce0.md",
+      "chars_extracted": 58156,
+      "time_sec": 35.173941135406494,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/1d78c1d5-2e47-42ff-9477-5283ffb382a5.pdf",
+      "markdown_file": "1d78c1d5-2e47-42ff-9477-5283ffb382a5.md",
+      "chars_extracted": 34475,
+      "time_sec": 30.713321208953857,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/1f35015b-8d54-4346-a474-c81842b4f087.pdf",
+      "markdown_file": "1f35015b-8d54-4346-a474-c81842b4f087.md",
+      "chars_extracted": 40797,
+      "time_sec": 30.469609022140503,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/2510135c-4781-4f85-9947-68be383689b5.pdf",
+      "markdown_file": "2510135c-4781-4f85-9947-68be383689b5.md",
+      "chars_extracted": 18683,
+      "time_sec": 12.155625820159912,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/1c1a759f-090e-4916-af60-4e87119258cc.pdf",
+      "markdown_file": "1c1a759f-090e-4916-af60-4e87119258cc.md",
+      "chars_extracted": 62264,
+      "time_sec": 58.736011028289795,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/2cc7c843-63c4-4a76-8746-571335470a20.pdf",
+      "markdown_file": "2cc7c843-63c4-4a76-8746-571335470a20.md",
+      "chars_extracted": 37186,
+      "time_sec": 21.61538052558899,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/1f5bc4ee-d653-451d-9542-a01e31d2a197.pdf",
+      "markdown_file": "1f5bc4ee-d653-451d-9542-a01e31d2a197.md",
+      "chars_extracted": 46664,
+      "time_sec": 69.80617260932922,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/25cbe3e7-0522-4925-9130-00d3533c2240.pdf",
+      "markdown_file": "25cbe3e7-0522-4925-9130-00d3533c2240.md",
+      "chars_extracted": 59357,
+      "time_sec": 64.45783758163452,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/2bd9df59-0e56-4ce7-aa25-34562e14f345.pdf",
+      "markdown_file": "2bd9df59-0e56-4ce7-aa25-34562e14f345.md",
+      "chars_extracted": 60340,
+      "time_sec": 75.37088441848755,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/31651373-32e5-40ae-9eff-de9c1b4c3029.pdf",
+      "markdown_file": "31651373-32e5-40ae-9eff-de9c1b4c3029.md",
+      "chars_extracted": 22331,
+      "time_sec": 11.303270101547241,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/2de6c18f-a986-4c5f-abce-5995e0ca04fc.pdf",
+      "markdown_file": "2de6c18f-a986-4c5f-abce-5995e0ca04fc.md",
+      "chars_extracted": 76177,
+      "time_sec": 83.91394186019897,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/347fa61f-01be-4e41-980c-aa0cc0592194.pdf",
+      "markdown_file": "347fa61f-01be-4e41-980c-aa0cc0592194.md",
+      "chars_extracted": 22339,
+      "time_sec": 45.714367389678955,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/35b9e44b-adb3-4345-b92a-a9e9edbeefe0.pdf",
+      "markdown_file": "35b9e44b-adb3-4345-b92a-a9e9edbeefe0.md",
+      "chars_extracted": 33410,
+      "time_sec": 16.131523847579956,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/2e024d4c-f8c2-4833-8846-7cbd44c9a222.pdf",
+      "markdown_file": "2e024d4c-f8c2-4833-8846-7cbd44c9a222.md",
+      "chars_extracted": 98680,
+      "time_sec": 96.22925972938538,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/3c5d5d7c-e243-4eeb-ba49-f395035d2b9d.pdf",
+      "markdown_file": "3c5d5d7c-e243-4eeb-ba49-f395035d2b9d.md",
+      "chars_extracted": 985,
+      "time_sec": 1.0998365879058838,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/3a9db5eb-7d48-4bf6-b239-1f69498ed3bd.pdf",
+      "markdown_file": "3a9db5eb-7d48-4bf6-b239-1f69498ed3bd.md",
+      "chars_extracted": 40910,
+      "time_sec": 23.876304149627686,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/3c2011db-0640-45c3-a1fd-9aa974255872.pdf",
+      "markdown_file": "3c2011db-0640-45c3-a1fd-9aa974255872.md",
+      "chars_extracted": 34405,
+      "time_sec": 24.345829010009766,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/3d55218e-64d2-48bb-807f-d9f094415713.pdf",
+      "markdown_file": "3d55218e-64d2-48bb-807f-d9f094415713.md",
+      "chars_extracted": 25581,
+      "time_sec": 25.63467502593994,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/354dbf39-b9fc-42c4-bf84-f3c4ce702fd2.pdf",
+      "markdown_file": "354dbf39-b9fc-42c4-bf84-f3c4ce702fd2.md",
+      "chars_extracted": 34965,
+      "time_sec": 99.17731523513794,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/44c654a3-2568-4921-b5c4-3ecd81e012fb.pdf",
+      "markdown_file": "44c654a3-2568-4921-b5c4-3ecd81e012fb.md",
+      "chars_extracted": 26082,
+      "time_sec": 16.513537645339966,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/42b9ee3b-a1f1-42ca-a50d-3bc9e757c9cc.pdf",
+      "markdown_file": "42b9ee3b-a1f1-42ca-a50d-3bc9e757c9cc.md",
+      "chars_extracted": 40078,
+      "time_sec": 27.630428791046143,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/3d7646cc-6651-4249-bd78-7568a5a0d871.pdf",
+      "markdown_file": "3d7646cc-6651-4249-bd78-7568a5a0d871.md",
+      "chars_extracted": 41568,
+      "time_sec": 46.458303689956665,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/47de3af2-770d-4640-8b76-6106bef6b217.pdf",
+      "markdown_file": "47de3af2-770d-4640-8b76-6106bef6b217.md",
+      "chars_extracted": 34365,
+      "time_sec": 18.704107761383057,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/481d9510-4c0e-4f55-af1e-67827c5758b4.pdf",
+      "markdown_file": "481d9510-4c0e-4f55-af1e-67827c5758b4.md",
+      "chars_extracted": 46553,
+      "time_sec": 23.96978998184204,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/45b21ec4-c186-4e2a-abb5-eaa0d2800c0a.pdf",
+      "markdown_file": "45b21ec4-c186-4e2a-abb5-eaa0d2800c0a.md",
+      "chars_extracted": 23269,
+      "time_sec": 34.61529755592346,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/48b8102a-c315-429f-aa98-72949caaa336.pdf",
+      "markdown_file": "48b8102a-c315-429f-aa98-72949caaa336.md",
+      "chars_extracted": 36221,
+      "time_sec": 24.60859251022339,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/489ff3b1-c01a-4330-aa06-502ba260466f.pdf",
+      "markdown_file": "489ff3b1-c01a-4330-aa06-502ba260466f.md",
+      "chars_extracted": 29615,
+      "time_sec": 33.64414310455322,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/495e7206-f5f8-47af-900e-28564726f9c8.pdf",
+      "markdown_file": "495e7206-f5f8-47af-900e-28564726f9c8.md",
+      "chars_extracted": 35921,
+      "time_sec": 25.12324810028076,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/4c74cdcc-54bd-437a-aea5-81a655583af9.pdf",
+      "markdown_file": "4c74cdcc-54bd-437a-aea5-81a655583af9.md",
+      "chars_extracted": 42097,
+      "time_sec": 21.166142463684082,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/5060433c-ec4b-4e65-a376-b33b5adc2d10.pdf",
+      "markdown_file": "5060433c-ec4b-4e65-a376-b33b5adc2d10.md",
+      "chars_extracted": 34381,
+      "time_sec": 21.9698965549469,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/53da285a-3251-496d-bda2-c999d4b41736.pdf",
+      "markdown_file": "53da285a-3251-496d-bda2-c999d4b41736.md",
+      "chars_extracted": 27126,
+      "time_sec": 14.943849086761475,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/5484ad3e-81ea-4883-b6bb-726c6816391d.pdf",
+      "markdown_file": "5484ad3e-81ea-4883-b6bb-726c6816391d.md",
+      "chars_extracted": 28980,
+      "time_sec": 16.464110612869263,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/583fc331-e216-49f6-8a7a-bcbb0303085b.pdf",
+      "markdown_file": "583fc331-e216-49f6-8a7a-bcbb0303085b.md",
+      "chars_extracted": 22912,
+      "time_sec": 10.073668479919434,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/5d4a31de-b38b-4a19-94fb-802491bca4c3.pdf",
+      "markdown_file": "5d4a31de-b38b-4a19-94fb-802491bca4c3.md",
+      "chars_extracted": 39687,
+      "time_sec": 15.773911952972412,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/537985f2-6891-4504-87f1-cf8940222e07.pdf",
+      "markdown_file": "537985f2-6891-4504-87f1-cf8940222e07.md",
+      "chars_extracted": 50133,
+      "time_sec": 69.92956829071045,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/559b3347-7c1d-4e21-b69b-bb55bccd8ea6.pdf",
+      "markdown_file": "559b3347-7c1d-4e21-b69b-bb55bccd8ea6.md",
+      "chars_extracted": 24682,
+      "time_sec": 50.07716512680054,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/4b303daa-9426-48e3-a32c-dfbf48291f7d.pdf",
+      "markdown_file": "4b303daa-9426-48e3-a32c-dfbf48291f7d.md",
+      "chars_extracted": 58264,
+      "time_sec": 105.6493136882782,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/5d5500c2-119e-4ce5-9006-4fd179eda9e4.pdf",
+      "markdown_file": "5d5500c2-119e-4ce5-9006-4fd179eda9e4.md",
+      "chars_extracted": 20293,
+      "time_sec": 23.3386127948761,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/5f6831cc-f7fb-4a77-9013-ddf33dc14442.pdf",
+      "markdown_file": "5f6831cc-f7fb-4a77-9013-ddf33dc14442.md",
+      "chars_extracted": 29792,
+      "time_sec": 15.47150182723999,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/61d8b9b8-05b9-42b8-973a-cb4359205b0c.pdf",
+      "markdown_file": "61d8b9b8-05b9-42b8-973a-cb4359205b0c.md",
+      "chars_extracted": 41163,
+      "time_sec": 22.927258014678955,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/5d4a85a0-b368-419c-b4d0-a6e2b8edef8c.pdf",
+      "markdown_file": "5d4a85a0-b368-419c-b4d0-a6e2b8edef8c.md",
+      "chars_extracted": 58393,
+      "time_sec": 58.879082918167114,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/63468735-cdc3-4369-aa59-c497bd56d977.pdf",
+      "markdown_file": "63468735-cdc3-4369-aa59-c497bd56d977.md",
+      "chars_extracted": 49334,
+      "time_sec": 35.330936908721924,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/64a55f99-54b1-49c4-8446-39751611309e.pdf",
+      "markdown_file": "64a55f99-54b1-49c4-8446-39751611309e.md",
+      "chars_extracted": 31653,
+      "time_sec": 19.466333389282227,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/6560b503-6569-4474-962a-980872bd6688.pdf",
+      "markdown_file": "6560b503-6569-4474-962a-980872bd6688.md",
+      "chars_extracted": 26190,
+      "time_sec": 15.889636278152466,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/6755570a-e50d-4592-a5dc-be3f2fae65d3.pdf",
+      "markdown_file": "6755570a-e50d-4592-a5dc-be3f2fae65d3.md",
+      "chars_extracted": 20555,
+      "time_sec": 11.270771980285645,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/676c9e86-07d5-4bb2-a093-a20a5fc00d5e.pdf",
+      "markdown_file": "676c9e86-07d5-4bb2-a093-a20a5fc00d5e.md",
+      "chars_extracted": 30807,
+      "time_sec": 14.147097826004028,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/63d875bd-408b-4281-a8a2-25dcc7527327.pdf",
+      "markdown_file": "63d875bd-408b-4281-a8a2-25dcc7527327.md",
+      "chars_extracted": 66662,
+      "time_sec": 64.9997787475586,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/68791b5f-cd72-4799-a128-de00ffe434ff.pdf",
+      "markdown_file": "68791b5f-cd72-4799-a128-de00ffe434ff.md",
+      "chars_extracted": 29933,
+      "time_sec": 15.565274953842163,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/6710fcf2-cfe9-400a-a9ed-2c53d28902b2.pdf",
+      "markdown_file": "6710fcf2-cfe9-400a-a9ed-2c53d28902b2.md",
+      "chars_extracted": 42402,
+      "time_sec": 58.78053140640259,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/69a0785b-d0c1-4556-9c89-a75c648fa223.pdf",
+      "markdown_file": "69a0785b-d0c1-4556-9c89-a75c648fa223.md",
+      "chars_extracted": 46761,
+      "time_sec": 19.37077236175537,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/67e14a16-46ae-4935-aaa7-1621db4d92ad.pdf",
+      "markdown_file": "67e14a16-46ae-4935-aaa7-1621db4d92ad.md",
+      "chars_extracted": 34520,
+      "time_sec": 46.547086238861084,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/61664605-ff3b-465b-bd1e-3bb7cee37123.pdf",
+      "markdown_file": "61664605-ff3b-465b-bd1e-3bb7cee37123.md",
+      "chars_extracted": 23944,
+      "time_sec": 158.8634169101715,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/6a254732-2da3-4e6c-987a-6bc5759c7a66.pdf",
+      "markdown_file": "6a254732-2da3-4e6c-987a-6bc5759c7a66.md",
+      "chars_extracted": 30026,
+      "time_sec": 20.666248083114624,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/6a1bb3ed-74ee-4eb6-af33-cd61cbfac722.pdf",
+      "markdown_file": "6a1bb3ed-74ee-4eb6-af33-cd61cbfac722.md",
+      "chars_extracted": 24763,
+      "time_sec": 43.581337690353394,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/6ab9f878-ed42-49f2-9bbb-fd2af9585477.pdf",
+      "markdown_file": "6ab9f878-ed42-49f2-9bbb-fd2af9585477.md",
+      "chars_extracted": 30431,
+      "time_sec": 23.649856567382812,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/6ba03912-4227-4aa8-86f1-4a6b8baa2baf.pdf",
+      "markdown_file": "6ba03912-4227-4aa8-86f1-4a6b8baa2baf.md",
+      "chars_extracted": 24664,
+      "time_sec": 11.308010339736938,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/6cc7213c-7212-4e09-9e3b-45a38db7917a.pdf",
+      "markdown_file": "6cc7213c-7212-4e09-9e3b-45a38db7917a.md",
+      "chars_extracted": 27249,
+      "time_sec": 13.479687690734863,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/709efe98-ff8e-4b2a-89b2-51fec7d15e2a.pdf",
+      "markdown_file": "709efe98-ff8e-4b2a-89b2-51fec7d15e2a.md",
+      "chars_extracted": 24236,
+      "time_sec": 12.825366258621216,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/6b704784-1406-4ec0-a4a3-ed92bec01342.pdf",
+      "markdown_file": "6b704784-1406-4ec0-a4a3-ed92bec01342.md",
+      "chars_extracted": 30525,
+      "time_sec": 29.381556510925293,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/70b7b392-a13e-46da-9b15-43735676db6d.pdf",
+      "markdown_file": "70b7b392-a13e-46da-9b15-43735676db6d.md",
+      "chars_extracted": 26320,
+      "time_sec": 15.018657207489014,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/6ef8a05c-48d8-4106-9429-02ba9b632926.pdf",
+      "markdown_file": "6ef8a05c-48d8-4106-9429-02ba9b632926.md",
+      "chars_extracted": 20964,
+      "time_sec": 30.418619632720947,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/7331f5b5-edc5-4b37-b5d2-21e138df7784.pdf",
+      "markdown_file": "7331f5b5-edc5-4b37-b5d2-21e138df7784.md",
+      "chars_extracted": 27846,
+      "time_sec": 20.3463077545166,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/72a1152a-26cb-440b-a7bc-9dd99e05fb9d.pdf",
+      "markdown_file": "72a1152a-26cb-440b-a7bc-9dd99e05fb9d.md",
+      "chars_extracted": 27351,
+      "time_sec": 27.982810974121094,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/791c58b9-d0d5-4c1a-9a20-32d3ded7819a.pdf",
+      "markdown_file": "791c58b9-d0d5-4c1a-9a20-32d3ded7819a.md",
+      "chars_extracted": 36040,
+      "time_sec": 29.694481372833252,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/77afa6cd-ff20-4902-a09c-9dbaf3711b80.pdf",
+      "markdown_file": "77afa6cd-ff20-4902-a09c-9dbaf3711b80.md",
+      "chars_extracted": 62882,
+      "time_sec": 48.93487858772278,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/7cb53fae-b5a8-478d-b4d0-16487f86e069.pdf",
+      "markdown_file": "7cb53fae-b5a8-478d-b4d0-16487f86e069.md",
+      "chars_extracted": 45945,
+      "time_sec": 25.01293134689331,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/7951e345-2116-4614-8d8f-f8817792e1d6.pdf",
+      "markdown_file": "7951e345-2116-4614-8d8f-f8817792e1d6.md",
+      "chars_extracted": 37617,
+      "time_sec": 64.50273966789246,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/7ac501af-692b-4402-82ef-0d47687f9cbc.pdf",
+      "markdown_file": "7ac501af-692b-4402-82ef-0d47687f9cbc.md",
+      "chars_extracted": 31702,
+      "time_sec": 40.58792805671692,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/78b49ec3-9ffa-407f-9608-09772496f770.pdf",
+      "markdown_file": "78b49ec3-9ffa-407f-9608-09772496f770.md",
+      "chars_extracted": 88106,
+      "time_sec": 78.55801653862,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/7f68ba5b-0e84-45bb-b4ad-5efc9ae03d83.pdf",
+      "markdown_file": "7f68ba5b-0e84-45bb-b4ad-5efc9ae03d83.md",
+      "chars_extracted": 1672,
+      "time_sec": 1.7293345928192139,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/7d0df79e-cd20-4e18-a4ed-e5a0203db7de.pdf",
+      "markdown_file": "7d0df79e-cd20-4e18-a4ed-e5a0203db7de.md",
+      "chars_extracted": 37995,
+      "time_sec": 20.4145610332489,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/83ad31cd-9a31-49ee-9b86-85dc38a66981.pdf",
+      "markdown_file": "83ad31cd-9a31-49ee-9b86-85dc38a66981.md",
+      "chars_extracted": 35579,
+      "time_sec": 35.68310880661011,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/7cef533b-96c7-475c-81e6-c2e22668afd8.pdf",
+      "markdown_file": "7cef533b-96c7-475c-81e6-c2e22668afd8.md",
+      "chars_extracted": 113927,
+      "time_sec": 56.58545207977295,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/869278cb-f01e-4b12-a58a-d9d1091a7fd2.pdf",
+      "markdown_file": "869278cb-f01e-4b12-a58a-d9d1091a7fd2.md",
+      "chars_extracted": 34677,
+      "time_sec": 17.585763692855835,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/81b061df-8f67-48b6-bea5-18f5b7fc837b.pdf",
+      "markdown_file": "81b061df-8f67-48b6-bea5-18f5b7fc837b.md",
+      "chars_extracted": 44576,
+      "time_sec": 87.13606643676758,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/8709f84f-5e1d-4bc3-9c57-eb885f95d403.pdf",
+      "markdown_file": "8709f84f-5e1d-4bc3-9c57-eb885f95d403.md",
+      "chars_extracted": 26114,
+      "time_sec": 23.727774620056152,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/84c777ab-297a-472e-98fc-5dff5c768b24.pdf",
+      "markdown_file": "84c777ab-297a-472e-98fc-5dff5c768b24.md",
+      "chars_extracted": 104870,
+      "time_sec": 77.85975885391235,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/88597e6f-5cdc-4e2d-9540-ae0546fc514c.pdf",
+      "markdown_file": "88597e6f-5cdc-4e2d-9540-ae0546fc514c.md",
+      "chars_extracted": 21890,
+      "time_sec": 15.543320894241333,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/8821fe4a-953c-46be-8f3f-ce4984f11c0c.pdf",
+      "markdown_file": "8821fe4a-953c-46be-8f3f-ce4984f11c0c.md",
+      "chars_extracted": 31473,
+      "time_sec": 20.379085540771484,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/8583749d-d6a2-47e9-9b5a-de24e8e5f0f7.pdf",
+      "markdown_file": "8583749d-d6a2-47e9-9b5a-de24e8e5f0f7.md",
+      "chars_extracted": 63055,
+      "time_sec": 92.36152029037476,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/89f7b9b1-833c-4fd7-8693-ae5541702bf1.pdf",
+      "markdown_file": "89f7b9b1-833c-4fd7-8693-ae5541702bf1.md",
+      "chars_extracted": 25591,
+      "time_sec": 13.137168169021606,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/88a58035-a238-41ef-895a-6317b674460c.pdf",
+      "markdown_file": "88a58035-a238-41ef-895a-6317b674460c.md",
+      "chars_extracted": 19320,
+      "time_sec": 25.29458999633789,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/8d2fa421-f5f3-4981-a807-b1b8385cfbfb.pdf",
+      "markdown_file": "8d2fa421-f5f3-4981-a807-b1b8385cfbfb.md",
+      "chars_extracted": 27420,
+      "time_sec": 14.491185188293457,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/875188c6-6dfd-4c0e-b138-4f5b8eef5970.pdf",
+      "markdown_file": "875188c6-6dfd-4c0e-b138-4f5b8eef5970.md",
+      "chars_extracted": 36360,
+      "time_sec": 79.81237149238586,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/8c988055-4551-41f6-8ee1-7337c43f9c9a.pdf",
+      "markdown_file": "8c988055-4551-41f6-8ee1-7337c43f9c9a.md",
+      "chars_extracted": 35318,
+      "time_sec": 46.540669202804565,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/8a023c2e-3054-4acd-8e6d-ab51ae9a02a9.pdf",
+      "markdown_file": "8a023c2e-3054-4acd-8e6d-ab51ae9a02a9.md",
+      "chars_extracted": 108953,
+      "time_sec": 66.63037157058716,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/903e422d-30a3-4797-9adc-fa9b1bb6e90d.pdf",
+      "markdown_file": "903e422d-30a3-4797-9adc-fa9b1bb6e90d.md",
+      "chars_extracted": 31743,
+      "time_sec": 35.74362397193909,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/90d06643-71f1-4498-9d77-f6c8bf03d462.pdf",
+      "markdown_file": "90d06643-71f1-4498-9d77-f6c8bf03d462.md",
+      "chars_extracted": 32036,
+      "time_sec": 19.86917281150818,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/8fb60cb0-5be3-49bb-badd-50b5c3a63846.pdf",
+      "markdown_file": "8fb60cb0-5be3-49bb-badd-50b5c3a63846.md",
+      "chars_extracted": 37304,
+      "time_sec": 65.8999285697937,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/9316d3df-92ab-48a6-840b-5a596d91b82f.pdf",
+      "markdown_file": "9316d3df-92ab-48a6-840b-5a596d91b82f.md",
+      "chars_extracted": 28151,
+      "time_sec": 15.846539735794067,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/916bbe40-11e4-45a1-8e7c-4a51eb749b1d.pdf",
+      "markdown_file": "916bbe40-11e4-45a1-8e7c-4a51eb749b1d.md",
+      "chars_extracted": 40083,
+      "time_sec": 28.387572050094604,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/910ae1a2-4059-4581-828b-f9c8ce395fea.pdf",
+      "markdown_file": "910ae1a2-4059-4581-828b-f9c8ce395fea.md",
+      "chars_extracted": 59983,
+      "time_sec": 53.44985914230347,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/98213b36-0c47-42a9-947a-619896837ce6.pdf",
+      "markdown_file": "98213b36-0c47-42a9-947a-619896837ce6.md",
+      "chars_extracted": 47104,
+      "time_sec": 25.933276653289795,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/97410b67-be8d-45d3-9218-74f58886728c.pdf",
+      "markdown_file": "97410b67-be8d-45d3-9218-74f58886728c.md",
+      "chars_extracted": 47018,
+      "time_sec": 37.90454983711243,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/93395226-c911-4cc8-8e97-0baa0a8a1450.pdf",
+      "markdown_file": "93395226-c911-4cc8-8e97-0baa0a8a1450.md",
+      "chars_extracted": 36096,
+      "time_sec": 47.75223422050476,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/9adb1bcc-a343-41c7-a46f-7a29567dd2ec.pdf",
+      "markdown_file": "9adb1bcc-a343-41c7-a46f-7a29567dd2ec.md",
+      "chars_extracted": 17232,
+      "time_sec": 9.606661319732666,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/9a109c7a-ed8c-4e78-82e4-18aca7bb4549.pdf",
+      "markdown_file": "9a109c7a-ed8c-4e78-82e4-18aca7bb4549.md",
+      "chars_extracted": 20454,
+      "time_sec": 35.61313819885254,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/9a5b0894-6990-4c01-92bd-d9064d5f514d.pdf",
+      "markdown_file": "9a5b0894-6990-4c01-92bd-d9064d5f514d.md",
+      "chars_extracted": 53957,
+      "time_sec": 28.019948959350586,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/a43d3704-399d-41f2-a0fc-82e0e14c1068.pdf",
+      "markdown_file": "a43d3704-399d-41f2-a0fc-82e0e14c1068.md",
+      "chars_extracted": 3108,
+      "time_sec": 2.109762668609619,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/a3ae1d0d-2716-4aa2-8407-5762262d94c4.pdf",
+      "markdown_file": "a3ae1d0d-2716-4aa2-8407-5762262d94c4.md",
+      "chars_extracted": 40435,
+      "time_sec": 28.348764896392822,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/9fd1ac7d-a04d-45f0-bc85-8d295729a436.pdf",
+      "markdown_file": "9fd1ac7d-a04d-45f0-bc85-8d295729a436.md",
+      "chars_extracted": 56941,
+      "time_sec": 51.54579424858093,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/a57f0864-c2a3-47c9-ae76-024c55f08c1a.pdf",
+      "markdown_file": "a57f0864-c2a3-47c9-ae76-024c55f08c1a.md",
+      "chars_extracted": 31339,
+      "time_sec": 17.900638580322266,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/a4de59e7-fea4-49d1-8c9f-d2ed817963a4.pdf",
+      "markdown_file": "a4de59e7-fea4-49d1-8c9f-d2ed817963a4.md",
+      "chars_extracted": 20939,
+      "time_sec": 49.495694398880005,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/a50993e9-4df7-465b-b0ea-5dbab112d02b.pdf",
+      "markdown_file": "a50993e9-4df7-465b-b0ea-5dbab112d02b.md",
+      "chars_extracted": 41249,
+      "time_sec": 55.400609731674194,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/a72155d0-ca44-4de4-a9f4-caec64ca8423.pdf",
+      "markdown_file": "a72155d0-ca44-4de4-a9f4-caec64ca8423.md",
+      "chars_extracted": 30129,
+      "time_sec": 27.54322338104248,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ac38b839-c19d-45e7-969b-bcca96c9a950.pdf",
+      "markdown_file": "ac38b839-c19d-45e7-969b-bcca96c9a950.md",
+      "chars_extracted": 34064,
+      "time_sec": 25.82609272003174,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/a80eea8c-c962-486c-977e-265f5eb67f74.pdf",
+      "markdown_file": "a80eea8c-c962-486c-977e-265f5eb67f74.md",
+      "chars_extracted": 28917,
+      "time_sec": 28.542873859405518,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/adc1862f-58db-4730-8e31-9b3cb5042842.pdf",
+      "markdown_file": "adc1862f-58db-4730-8e31-9b3cb5042842.md",
+      "chars_extracted": 22176,
+      "time_sec": 23.622046947479248,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/b20122c6-62f1-4a4b-acfb-ae74fa856aa5.pdf",
+      "markdown_file": "b20122c6-62f1-4a4b-acfb-ae74fa856aa5.md",
+      "chars_extracted": 37326,
+      "time_sec": 20.888878345489502,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ad002a84-b2a2-4340-92b1-5d1a0ed5deca.pdf",
+      "markdown_file": "ad002a84-b2a2-4340-92b1-5d1a0ed5deca.md",
+      "chars_extracted": 56179,
+      "time_sec": 45.40543293952942,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/b24c0428-6c4c-4c9d-9914-9db2c185bfe2.pdf",
+      "markdown_file": "b24c0428-6c4c-4c9d-9914-9db2c185bfe2.md",
+      "chars_extracted": 31475,
+      "time_sec": 44.20669937133789,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/b7aeb943-0e5d-459b-90bb-6f0bde66235f.pdf",
+      "markdown_file": "b7aeb943-0e5d-459b-90bb-6f0bde66235f.md",
+      "chars_extracted": 29739,
+      "time_sec": 26.05223560333252,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/b2d1d2cc-6e3b-4e57-83c7-c8794c9cf5e1.pdf",
+      "markdown_file": "b2d1d2cc-6e3b-4e57-83c7-c8794c9cf5e1.md",
+      "chars_extracted": 54248,
+      "time_sec": 33.21295762062073,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/b8ed8450-7ef7-4624-a040-5aeb31921b20.pdf",
+      "markdown_file": "b8ed8450-7ef7-4624-a040-5aeb31921b20.md",
+      "chars_extracted": 31585,
+      "time_sec": 32.94140148162842,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/be49b791-3812-432a-91f4-6e47916bd134.pdf",
+      "markdown_file": "be49b791-3812-432a-91f4-6e47916bd134.md",
+      "chars_extracted": 30548,
+      "time_sec": 14.645195007324219,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/bedd8f15-5bad-4e99-a2ad-2c3b3b0303ca.pdf",
+      "markdown_file": "bedd8f15-5bad-4e99-a2ad-2c3b3b0303ca.md",
+      "chars_extracted": 25467,
+      "time_sec": 20.73595666885376,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/c3ddd056-014f-42c3-bc59-a75fba248f12.pdf",
+      "markdown_file": "c3ddd056-014f-42c3-bc59-a75fba248f12.md",
+      "chars_extracted": 26371,
+      "time_sec": 16.05059838294983,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/bb48f51e-5ac2-46f5-b163-09eaf3e688d9.pdf",
+      "markdown_file": "bb48f51e-5ac2-46f5-b163-09eaf3e688d9.md",
+      "chars_extracted": 52463,
+      "time_sec": 40.17010736465454,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/c132b3ed-b623-43a9-88ce-d7076c5b29f8.pdf",
+      "markdown_file": "c132b3ed-b623-43a9-88ce-d7076c5b29f8.md",
+      "chars_extracted": 24982,
+      "time_sec": 40.56088638305664,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/c766a374-47e2-43d9-abd3-67f5c8c06c12.pdf",
+      "markdown_file": "c766a374-47e2-43d9-abd3-67f5c8c06c12.md",
+      "chars_extracted": 39333,
+      "time_sec": 36.434760332107544,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/d1c3bd66-8491-40b6-b650-6ba61cb7f14e.pdf",
+      "markdown_file": "d1c3bd66-8491-40b6-b650-6ba61cb7f14e.md",
+      "chars_extracted": 27290,
+      "time_sec": 19.646846532821655,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ca4384a9-6fdf-4d44-8531-a69889063958.pdf",
+      "markdown_file": "ca4384a9-6fdf-4d44-8531-a69889063958.md",
+      "chars_extracted": 35289,
+      "time_sec": 60.52194690704346,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/c237e461-7c19-47b8-8ff9-dd5bc2b74fa5.pdf",
+      "markdown_file": "c237e461-7c19-47b8-8ff9-dd5bc2b74fa5.md",
+      "chars_extracted": 106133,
+      "time_sec": 83.75005173683167,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/d64d10ec-6152-4080-b445-873e828f3ceb.pdf",
+      "markdown_file": "d64d10ec-6152-4080-b445-873e828f3ceb.md",
+      "chars_extracted": 15834,
+      "time_sec": 11.543628692626953,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/d2082f1f-2306-44d6-b26e-c0d383c894c8.pdf",
+      "markdown_file": "d2082f1f-2306-44d6-b26e-c0d383c894c8.md",
+      "chars_extracted": 39894,
+      "time_sec": 18.990652084350586,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/cee3baf6-28f5-4d12-8a02-9faf9f6406ae.pdf",
+      "markdown_file": "cee3baf6-28f5-4d12-8a02-9faf9f6406ae.md",
+      "chars_extracted": 134229,
+      "time_sec": 70.66799640655518,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/d9441367-8792-458c-aec7-87bf461347d9.pdf",
+      "markdown_file": "d9441367-8792-458c-aec7-87bf461347d9.md",
+      "chars_extracted": 26887,
+      "time_sec": 18.864827156066895,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/d76dcdc3-aa59-4559-9566-7d0fd4397fa6.pdf",
+      "markdown_file": "d76dcdc3-aa59-4559-9566-7d0fd4397fa6.md",
+      "chars_extracted": 26681,
+      "time_sec": 25.257628440856934,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/db5f1e41-6e3a-40c6-81df-07f77c8c7b0e.pdf",
+      "markdown_file": "db5f1e41-6e3a-40c6-81df-07f77c8c7b0e.md",
+      "chars_extracted": 26639,
+      "time_sec": 19.05258822441101,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/da4b5436-93c4-47fb-81f6-c280c9a4a640.pdf",
+      "markdown_file": "da4b5436-93c4-47fb-81f6-c280c9a4a640.md",
+      "chars_extracted": 48171,
+      "time_sec": 36.502596378326416,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/d4cba047-e388-4801-9af3-e2634b5aaf32.pdf",
+      "markdown_file": "d4cba047-e388-4801-9af3-e2634b5aaf32.md",
+      "chars_extracted": 62293,
+      "time_sec": 61.09727144241333,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/e1331563-d436-4680-984e-eb62ab6bfc8f.pdf",
+      "markdown_file": "e1331563-d436-4680-984e-eb62ab6bfc8f.md",
+      "chars_extracted": 30733,
+      "time_sec": 19.670308828353882,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/dfd6c037-45a9-4e63-b90c-ce60600b8d06.pdf",
+      "markdown_file": "dfd6c037-45a9-4e63-b90c-ce60600b8d06.md",
+      "chars_extracted": 22640,
+      "time_sec": 23.1423442363739,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/e73547ed-ae3b-493d-a97e-c5f20927ad98.pdf",
+      "markdown_file": "e73547ed-ae3b-493d-a97e-c5f20927ad98.md",
+      "chars_extracted": 21388,
+      "time_sec": 13.18346118927002,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/e6e7f4a4-a542-42fa-961f-f22f08faf5e9.pdf",
+      "markdown_file": "e6e7f4a4-a542-42fa-961f-f22f08faf5e9.md",
+      "chars_extracted": 29598,
+      "time_sec": 23.91077709197998,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/dd29147f-4964-4141-b769-147115878da4.pdf",
+      "markdown_file": "dd29147f-4964-4141-b769-147115878da4.md",
+      "chars_extracted": 58337,
+      "time_sec": 68.52934956550598,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/e2ef9783-3ed8-48fb-b450-1ef6d3b5ac82.pdf",
+      "markdown_file": "e2ef9783-3ed8-48fb-b450-1ef6d3b5ac82.md",
+      "chars_extracted": 37497,
+      "time_sec": 66.99333500862122,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ea1f304d-1b73-498d-b9e9-26e3837b020a.pdf",
+      "markdown_file": "ea1f304d-1b73-498d-b9e9-26e3837b020a.md",
+      "chars_extracted": 26671,
+      "time_sec": 20.489471673965454,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/e841dd0f-491f-4b68-8f4e-77220ed56ff4.pdf",
+      "markdown_file": "e841dd0f-491f-4b68-8f4e-77220ed56ff4.md",
+      "chars_extracted": 42176,
+      "time_sec": 28.423166513442993,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ec3f0d6c-b3cd-4858-89cd-ed08f01e8ca2.pdf",
+      "markdown_file": "ec3f0d6c-b3cd-4858-89cd-ed08f01e8ca2.md",
+      "chars_extracted": 30832,
+      "time_sec": 17.166883945465088,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/e75b4927-c0bc-4d6c-99cc-e6a0aefcd38d.pdf",
+      "markdown_file": "e75b4927-c0bc-4d6c-99cc-e6a0aefcd38d.md",
+      "chars_extracted": 43791,
+      "time_sec": 60.588663816452026,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ea3acc0c-cdec-42f1-b3af-5a6bf56fa122.pdf",
+      "markdown_file": "ea3acc0c-cdec-42f1-b3af-5a6bf56fa122.md",
+      "chars_extracted": 48481,
+      "time_sec": 41.826257944107056,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ea2e66b3-18d3-4808-bc64-dcb15fb1208e.pdf",
+      "markdown_file": "ea2e66b3-18d3-4808-bc64-dcb15fb1208e.md",
+      "chars_extracted": 50450,
+      "time_sec": 58.13846039772034,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ec40fe35-166f-439e-b4f7-da559bb0b433.pdf",
+      "markdown_file": "ec40fe35-166f-439e-b4f7-da559bb0b433.md",
+      "chars_extracted": 22880,
+      "time_sec": 42.255669593811035,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ed61586a-c94c-4924-b98c-b27b956dea57.pdf",
+      "markdown_file": "ed61586a-c94c-4924-b98c-b27b956dea57.md",
+      "chars_extracted": 35059,
+      "time_sec": 26.28647017478943,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ee6ab65f-5d0f-4113-a9ed-75ae82bfc012.pdf",
+      "markdown_file": "ee6ab65f-5d0f-4113-a9ed-75ae82bfc012.md",
+      "chars_extracted": 27876,
+      "time_sec": 25.726539850234985,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/f4a4b1f1-428d-4a0e-8b20-a19ee644b9bc.pdf",
+      "markdown_file": "f4a4b1f1-428d-4a0e-8b20-a19ee644b9bc.md",
+      "chars_extracted": 27515,
+      "time_sec": 15.99698543548584,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ec932300-a185-4f11-900a-02f0486c0fa1.pdf",
+      "markdown_file": "ec932300-a185-4f11-900a-02f0486c0fa1.md",
+      "chars_extracted": 84117,
+      "time_sec": 58.307727098464966,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/f505c863-082b-48cc-b4ef-2f65e9efbe18.pdf",
+      "markdown_file": "f505c863-082b-48cc-b4ef-2f65e9efbe18.md",
+      "chars_extracted": 29163,
+      "time_sec": 17.925706148147583,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/f271fb46-8077-43d5-bae8-0fcc2388a7f8.pdf",
+      "markdown_file": "f271fb46-8077-43d5-bae8-0fcc2388a7f8.md",
+      "chars_extracted": 39531,
+      "time_sec": 35.41759657859802,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/f8dad116-a4a8-483e-ac3e-bbcc7a7675c7.pdf",
+      "markdown_file": "f8dad116-a4a8-483e-ac3e-bbcc7a7675c7.md",
+      "chars_extracted": 37040,
+      "time_sec": 24.74513602256775,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/f70a4726-2190-45e8-b277-fe55b6b1e11c.pdf",
+      "markdown_file": "f70a4726-2190-45e8-b277-fe55b6b1e11c.md",
+      "chars_extracted": 26247,
+      "time_sec": 33.12558150291443,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/f954f212-41de-4140-ae31-c38afb2d6603.pdf",
+      "markdown_file": "f954f212-41de-4140-ae31-c38afb2d6603.md",
+      "chars_extracted": 42788,
+      "time_sec": 23.9635226726532,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    },
+    {
+      "file": "data/jaec_journal/fbd04d9d-b826-45e3-b50c-6bdace32de44.pdf",
+      "markdown_file": "fbd04d9d-b826-45e3-b50c-6bdace32de44.md",
+      "chars_extracted": 26246,
+      "time_sec": 18.529495239257812,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    },
+    {
+      "file": "data/jaec_journal/fa9794cb-2838-4ddf-b302-1b0982358910.pdf",
+      "markdown_file": "fa9794cb-2838-4ddf-b302-1b0982358910.md",
+      "chars_extracted": 45178,
+      "time_sec": 54.16328740119934,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "data/jaec_journal/ffbf3c58-770e-4b62-8271-1346b6543f8f.pdf",
+      "markdown_file": "ffbf3c58-770e-4b62-8271-1346b6543f8f.md",
+      "chars_extracted": 104493,
+      "time_sec": 58.9493670463562,
+      "server_used": "http://127.0.0.1:8004/predict/"
+    }
+  ],
+  "pending": [],
+  "failed": [],
+  "completion_time": "2025-08-18 18:19:59"
+}

@@ -87,7 +87,8 @@ class NougatPDFExtractor:
         # Set up Nougat servers (no health check)
         default_servers = [
             "http://127.0.0.1:8002/predict/",
-            "http://127.0.0.1:8003/predict/"
+            "http://127.0.0.1:8003/predict/",
+            "http://127.0.0.1:8004/predict/"
         ]
         self.pdf_servers = nougat_servers if nougat_servers else default_servers
         logger.info(f"Using Nougat servers: {self.pdf_servers}")
@@ -374,23 +375,49 @@ class NougatPDFExtractor:
             avg_time = sum(processing_times) / len(processing_times) if processing_times else 0
             servers_used = len({r.server_used for r in self.results if hasattr(r, 'server_used')})
             
-            # Performance metrics - using current time since we don't have start/end times
+            # Performance metrics - calculate total time from progress tracker timestamps
             current_time = datetime.now()
-            total_time_seconds = 0  # Default value since we can't calculate actual processing duration
+            total_time_seconds = 0  
             total_time_minutes = 0
             files_per_min = 0
             
-            # If we have processing times, we can estimate performance metrics
-            if processing_times:
-                total_time_seconds = sum(processing_times)
-                total_time_minutes = total_time_seconds / 60
-                files_per_min = total_files / total_time_minutes if total_time_minutes > 0 else 0
+            # Use completion_time - timestamp from progress tracker for accurate total time
+            try:
+                if hasattr(self.progress_tracker, 'progress_data'):
+                    start_time_str = self.progress_tracker.progress_data.get('timestamp')
+                    end_time_str = self.progress_tracker.progress_data.get('completion_time')
+                    
+                    if start_time_str and end_time_str:
+                        start_time = datetime.strptime(start_time_str, "%Y-%m-%d %H:%M:%S")
+                        end_time = datetime.strptime(end_time_str, "%Y-%m-%d %H:%M:%S")
+                        total_time_seconds = (end_time - start_time).total_seconds()
+                        total_time_minutes = total_time_seconds / 60
+                        files_per_min = total_files / total_time_minutes if total_time_minutes > 0 else 0
+                    else:
+                        # Fallback to individual processing times if timestamps not available
+                        if processing_times:
+                            total_time_seconds = sum(processing_times)
+                            total_time_minutes = total_time_seconds / 60
+                            files_per_min = total_files / total_time_minutes if total_time_minutes > 0 else 0
+                else:
+                    # Fallback to individual processing times if progress tracker not available
+                    if processing_times:
+                        total_time_seconds = sum(processing_times)
+                        total_time_minutes = total_time_seconds / 60
+                        files_per_min = total_files / total_time_minutes if total_time_minutes > 0 else 0
+            except Exception as e:
+                logger.warning(f"Failed to calculate time from progress tracker: {str(e)}, using fallback")
+                # Fallback to individual processing times
+                if processing_times:
+                    total_time_seconds = sum(processing_times)
+                    total_time_minutes = total_time_seconds / 60
+                    files_per_min = total_files / total_time_minutes if total_time_minutes > 0 else 0
             
             # Error details
             unique_errors = list({r.error_message for r in error_results if hasattr(r, 'error_message') and r.error_message})
             error_examples = [
                 {"file": r.s3_key, "error": r.error_message, "server": r.server_used} 
-                for r in error_results[:3] 
+                for r in error_results 
                 if hasattr(r, 's3_key') and hasattr(r, 'error_message') and hasattr(r, 'server_used')
             ] if error_results else []
     

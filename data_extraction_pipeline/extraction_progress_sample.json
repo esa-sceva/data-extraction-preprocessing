@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-08-18 17:49:14",
+  "status": "completed",
+  "processed": [
+    {
+      "file": "MS2/sample/pdfs/example_1/On_the_Distortion_of_UWB_Circularly_Polarized_Time_Domain_Pulses_in_Presence_of_Rotation.pdf",
+      "markdown_file": "On_the_Distortion_of_UWB_Circularly_Polarized_Time_Domain_Pulses_in_Presence_of_Rotation.md",
+      "chars_extracted": 7599,
+      "time_sec": 7.174340486526489,
+      "server_used": "http://127.0.0.1:8002/predict/"
+    },
+    {
+      "file": "MS2/sample/pdfs/example_1/_NeuroSat_Magazine.pdf",
+      "markdown_file": "_NeuroSat_Magazine.md",
+      "chars_extracted": 43706,
+      "time_sec": 16.63156223297119,
+      "server_used": "http://127.0.0.1:8003/predict/"
+    }
+  ],
+  "pending": [],
+  "failed": [],
+  "completion_time": "2025-08-18 17:49:34"
+}
