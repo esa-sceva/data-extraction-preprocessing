@@ -111,3 +111,5 @@ websockets==15.0.1
 xxhash==3.5.0
 yarl==1.19.0
 backoff
+trafilatura
+html2text
