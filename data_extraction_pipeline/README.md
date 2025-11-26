@@ -211,8 +211,8 @@ python html_extract.py \
 
 | Parameter | Description | Default | Required |
 |-----------|-------------|---------|----------|
-| `--bucket` | S3 bucket name | `esa-satcom-s3` | No |
-| `--prefix` | S3 prefix to scan for HTML files | `MS2/sample/html/` | No |
+| `--bucket` | S3 bucket name | - | No |
+| `--prefix` | S3 prefix to scan for HTML files | - | No |
 | `--destination-bucket` | Destination folder for extracted .md files | - | **Yes** |
 | `--max-workers` | Number of parallel threads | `4` | No |
 | `--timeout` | Operation timeout in seconds | `300` | No |
