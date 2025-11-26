@@ -5,11 +5,11 @@ from tqdm import tqdm
 from botocore.exceptions import ClientError
 
 # --- CONFIG ---
-bucket_name = "esa-satcom-s3"
-local_root_extracted = "/data_cleaned"
+bucket_name = ""
+local_root_extracted = ""
 json_file = "./comparison_results.json"
-s3_root_cleaned = "data_pii_removal"  # S3 folder prefix
-s3_root_extracted = "data_cleaned"  # S3 folder prefix where missing files are currently
+s3_root_cleaned = ""  # S3 folder prefix
+s3_root_extracted = ""  # S3 folder prefix where missing files are currently
 
 s3 = boto3.client("s3")
 

@@ -22,7 +22,7 @@ class DataExtractionS3Pipeline:
         self.destination_bucket = "marker_5k"
         self.sub_folder = sub_folder
 
-        self.bucket_name: Final[str] = os.getenv("AWS_BUCKET_NAME", 'llm4eo-s3')
+        self.bucket_name: Final[str] = os.getenv("AWS_BUCKET_NAME")
         if self.save_to_local:
             print("Saving files to local directory")
             os.makedirs(f"{self.destination_bucket}", exist_ok=True)

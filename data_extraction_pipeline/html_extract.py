@@ -626,8 +626,8 @@ class ProgressTracker:
 import click
 
 @click.command()
-@click.option("--bucket", default="esa-satcom-s3", help="S3 bucket")
-@click.option("--prefix", default="MS2/sample/html/", help="S3 prefix to scan for HTML files")
+@click.option("--bucket", default="", help="S3 bucket")
+@click.option("--prefix", default="", help="S3 prefix to scan for HTML files")
 @click.option("--save-to-local", is_flag=True, help="Save extracted Markdown locally")
 @click.option("--destination-bucket", required=True, help="Destination bucket/folder")
 @click.option("--max-workers", default=4, help="Number of parallel threads")

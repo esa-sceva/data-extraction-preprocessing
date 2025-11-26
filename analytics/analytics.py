@@ -64,9 +64,9 @@ def list_subfolders(bucket_name, prefix, s3_client):
 
 
 if __name__ == "__main__":
-    bucket = "esa-satcom-s3"
+    bucket = ""
     root_path = ""  # adjust if your data folder is nested
-    cleaned_prefix = os.path.join(root_path, "data_pii_removal/").replace("\\", "/")
+    cleaned_prefix = os.path.join(root_path, "data/").replace("\\", "/")
     output_file = "chars_and_files_in_data_pii_removal.json"
 
     s3_client = boto3.client("s3")
@@ -87,4 +87,4 @@ if __name__ == "__main__":
     with open(output_file, "w") as f:
         json.dump(results, f, indent=4)
 
-    print(f"\n✅ Character counts and file numbers saved to {output_file}")
+    print(f"\nCharacter counts and file numbers saved to {output_file}")

@@ -91,7 +91,7 @@ def compare_extracted_vs_cleaned(bucket_name, root_path, s3_client, debug=False)
 
 
 if __name__ == "__main__":
-    bucket = "esa-satcom-s3"
+    bucket = ""
     root_path = ""  # adjust if your data folder is nested
     output_file = "comparison_results.json"
 
@@ -102,4 +102,4 @@ if __name__ == "__main__":
     with open(output_file, "w") as f:
         json.dump(results, f, indent=4)
 
-    print(f"\n✅ Results saved to {output_file}")
+    print(f"\nResults saved to {output_file}")
