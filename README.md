@@ -573,4 +573,9 @@ Contributions welcome! Each component has its own README with development guidel
 - **Deduplication**: See [duplication/README.md](duplication/README.md)
 - **Analytics**: See [analytics/README.md](analytics/README.md)
 
+---
+
+## License
+
+This project is released under the Apache 2.0 License. See the [LICENSE](LICENSE) file for more details.
 
